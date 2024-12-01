@@ -73,7 +73,6 @@ class AuthController extends Controller
 
     public function submitRegister(Request $request)
     {
-        
         $apiUrl = env('API_URL') . '/register';
         $response = HTTP::post($apiUrl, [
             'username' => $request->get('username'),
@@ -84,7 +83,40 @@ class AuthController extends Controller
         return response()->json([
             'ok' => isset($res['success']) ? $res['success'] : false,
             'message' => $res['message'] ?? 'An error occurred during registration.',
-        ], $response->status());    
+        ], $response->status());
+    }
+
+    public function manualLogin(Request $request)
+    {
+        Log::info($request->all());
+        $apiUrl = env('API_URL') . '/manualLogin';
+        $response = HTTP::post($apiUrl, [
+            'usernameOrEmail' => $request->get('usernameOrEmail'),
+            'loginPassword' => $request->get('loginPassword')
+        ]);
+        Log::info($response);
+        if ($response->failed()) {
+            return redirect()->route('loginOrRegist')->with('Error', 'There was an issue with the login request.');
+        }
+
+        $responseData = $response->json();
+        $storedUser = $responseData['data'];
+        if (!isset($storedUser['email'], $storedUser['name'], $storedUser['token'])) {
+            return redirect()->route('loginOrRegist')->with('Error', 'Invalid response structure from the API.');
+        }
+
+        session([
+            'email' => $storedUser['email'],
+            'name' => $storedUser['name'],
+            'token' => $storedUser['token']
+        ]);
+        $url = session('url');
+        if ($url) {
+            session()->forget('url');
+            return redirect()->to($url);
+        }
+        Log::info(session()->all());
+        return redirect()->route('loginOrRegist');
     }
 
 
