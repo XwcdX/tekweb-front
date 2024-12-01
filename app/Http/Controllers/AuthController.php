@@ -9,16 +9,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-    public function regist(Request $request)
+    public function loginOrRegist(Request $request)
     {
-        return view("regist", [
-            'title' => 'Regist',
-        ]);
-    }
-    public function login(Request $request)
-    {
-        return view("login", [
-            'title' => 'Login',
+        return view("loginOrRegist", [
+            'title' => 'LoginOrRegist',
         ]);
     }
     public function googleAuth()
@@ -32,17 +26,16 @@ class AuthController extends Controller
             $user = Socialite::driver('google')->stateless()->user();
 
             if (!$user) {
-                return redirect()->route('login')->with('Error', 'Please try to log in again!');
+                return redirect()->route('loginOrRegist')->with('Error', 'Please try to log in again!');
             }
 
             $email = strtolower($user->getEmail());
             $name = $user->getName();
 
             if (!str_ends_with($email, '@john.petra.ac.id')) {
-                return redirect()->route('login')->with('Error', 'Please use your Petra Christian University email to log in!');
+                return redirect()->route('loginOrRegist')->with('Error', 'Please use your Petra Christian University email to log in!');
             }
 
-            $nrp = strtolower(substr($email, 0, 9));
             $apiUrl = env('API_URL') . '/login';
 
             $response = Http::post($apiUrl, [
@@ -52,13 +45,13 @@ class AuthController extends Controller
             ]);
 
             if ($response->failed()) {
-                return redirect()->route('login')->with('Error', 'There was an issue with the login request.');
+                return redirect()->route('loginOrRegist')->with('Error', 'There was an issue with the login request.');
             }
 
             $responseData = $response->json();
             $storedUser = $responseData['data'];
             if (!isset($storedUser['email'], $storedUser['name'], $storedUser['token'])) {
-                return redirect()->route('login')->with('Error', 'Invalid response structure from the API.');
+                return redirect()->route('loginOrRegist')->with('Error', 'Invalid response structure from the API.');
             }
 
             session([
@@ -71,15 +64,27 @@ class AuthController extends Controller
                 session()->forget('url');
                 return redirect()->to($url);
             }
-            return redirect()->route('login');
+            return redirect()->route('loginOrRegist');
         } catch (\Exception $e) {
             Log::error('Login error: ' . $e->getMessage());
-            return redirect()->route('login')->with('Error', 'An unexpected error occurred. Please try again.');
+            return redirect()->route('loginOrRegist')->with('Error', 'An unexpected error occurred. Please try again.');
         }
     }
 
-    public function register(){
+    public function submitRegister(Request $request)
+    {
         
+        $apiUrl = env('API_URL') . '/register';
+        $response = HTTP::post($apiUrl, [
+            'username' => $request->get('username'),
+            'email' => $request->get('email'),
+            'password' => $request->get('password')
+        ]);
+        $res = $response->json();
+        return response()->json([
+            'ok' => isset($res['success']) ? $res['success'] : false,
+            'message' => $res['message'] ?? 'An error occurred during registration.',
+        ], $response->status());    
     }
 
 

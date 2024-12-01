@@ -209,13 +209,15 @@
                     <form action="" class="w-full px-8">
                         <h1 class="text-[36px] mb-6 text-black font-bold text-center">Login</h1>
                         <div class="input-box relative w-full mb-6">
-                            <input id="emailOrUsername" type="text" aria-label="Username or Email" placeholder="Username/Email" required=""
+                            <input id="emailOrUsername" type="text" aria-label="Username or Email"
+                                placeholder="Username/Email" required=""
                                 class="w-full pr-[50px] pl-5 py-3 bg-gray-200 rounded-[8px] border-none outline-none text-[16px] placeholder-gray-500 placeholder:font-semibold">
                             <i
                                 class="fa-solid fa-user absolute right-5 top-1/2 -translate-y-1/2 text-[20px] text-gray-400"></i>
                         </div>
                         <div class="input-box relative w-full mb-6">
-                            <input id="password" type="password" aria-label="Password" placeholder="Password" required=""
+                            <input id="loginPassword" type="password" aria-label="Password" placeholder="Password"
+                                required=""
                                 class="w-full pr-[50px] pl-5 py-3 bg-gray-200 rounded-[8px] border-none outline-none text-[16px] placeholder-gray-500 placeholder:font-semibold">
                             <i
                                 class="fa-solid fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-[20px] text-gray-400"></i>
@@ -233,22 +235,31 @@
                 <!-- Registration Form -->
                 <div
                     class="form-box registration absolute right-0 w-[50%] h-full flex flex-col items-center justify-center text-black">
-                    <form action="" class="w-full px-8">
+                    <form class="w-full px-8" id="submitRegister">
+                        @csrf
                         <h1 class="text-[36px] mb-6 text-black font-bold text-center">Registration</h1>
                         <div class="input-box relative w-full mb-6">
-                            <input type="text" aria-label="Username" placeholder="Username" required=""
+                            <input type="text" aria-label="Username" placeholder="Username" required="" id="username"
                                 class="w-full pr-[50px] pl-5 py-3 bg-gray-200 rounded-[8px] border-none outline-none text-[16px] placeholder-gray-500 placeholder:font-semibold">
                             <i
                                 class="fa-solid fa-user absolute right-5 top-1/2 -translate-y-1/2 text-[20px] text-gray-400"></i>
                         </div>
                         <div class="input-box relative w-full mb-6">
-                            <input type="email" aria-label="Email" placeholder="Email" required=""
+                            <input type="email" aria-label="Email" placeholder="Email" required="" id="email"
                                 class="w-full pr-[50px] pl-5 py-3 bg-gray-200 rounded-[8px] border-none outline-none text-[16px] placeholder-gray-500 placeholder:font-semibold">
                             <i
                                 class="fa-solid fa-envelope absolute right-5 top-1/2 -translate-y-1/2 text-[20px] text-gray-400"></i>
                         </div>
                         <div class="input-box relative w-full mb-6">
                             <input type="password" aria-label="Password" placeholder="Password" required=""
+                                id="password" minlength="8"
+                                class="w-full pr-[50px] pl-5 py-3 bg-gray-200 rounded-[8px] border-none outline-none text-[16px] placeholder-gray-500 placeholder:font-semibold">
+                            <i
+                                class="fa-solid fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-[20px] text-gray-400"></i>
+                        </div>
+                        <div class="input-box relative w-full mb-6">
+                            <input type="password" aria-label="Confirm Password" placeholder="Confirm Password"
+                                id="confirmPassword" minlength="8" required=""
                                 class="w-full pr-[50px] pl-5 py-3 bg-gray-200 rounded-[8px] border-none outline-none text-[16px] placeholder-gray-500 placeholder:font-semibold">
                             <i
                                 class="fa-solid fa-lock absolute right-5 top-1/2 -translate-y-1/2 text-[20px] text-gray-400"></i>
@@ -257,6 +268,7 @@
                             class="w-full bg-[#7494ec] text-white font-bold py-2 px-4 rounded hover:bg-emerald-900">Register</button>
                     </form>
                 </div>
+                    
                 <div class="toggle-box absolute w-full h-full">
                     <div
                         class="toggle-panel toggle-left left-0 absolute w-[50%] h-[100%] flex flex-col justify-center items-center text-white">
@@ -288,6 +300,71 @@
             loginBtn.addEventListener('click', () => {
                 container.classList.remove('active');
             });
+
+            const submitRegister = document.getElementById('submitRegister');
+                submitRegister.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    Swal.fire({
+                        title: "Submitting...",
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    try {
+                        const username = document.getElementById('username').value;
+                        const email = document.getElementById('email').value;
+                        const password = document.getElementById('password').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+
+                        if (password !== confirmPassword) {
+                            Swal.close();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Passwords do not match!',
+                            });
+                            return;
+                        }
+
+                        const response = await fetch("{{ route('submitRegister') }}", {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                username,
+                                email,
+                                password
+                            }),
+                        });
+                        const data = await response.json();
+                        console.log(data);
+                        
+                        Swal.close();
+                        if (data.ok) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Registration successful!',
+                            });
+                            container.classList.remove('active');
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message || 'Registration failed.',
+                            });
+                        }
+                    } catch (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An unexpected error occurred.',
+                        });
+                    }
+                });
         </script>
     </body>
 @endsection
