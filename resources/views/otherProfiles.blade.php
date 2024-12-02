@@ -110,27 +110,28 @@
                         </div>
                     </div>
                     <!-- Top Tags Section -->
-                    <div class="mt-6">
-                        <h3 class="text-[#7494ec] text-xl font-bold">Top Tags</h3>
-                        <ul class="mt-4 space-y-2">
-                            <li class="flex justify-between">
-                                <span>angular</span>
-                                <span>1,850 score</span>
-                            </li>
-                            <li class="flex justify-between">
-                                <span>javascript</span>
-                                <span>631 score</span>
-                            </li>
-                            <li class="flex justify-between">
-                                <span>typescript</span>
-                                <span>483 score</span>
-                            </li>
-                            <li class="flex justify-between">
-                                <span>css</span>
-                                <span>467 score</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <div class="border-2 border-[#7494ec] shadow-lg rounded-lg p-4 mt-6">
+                      <h3 class="text-[#7494ec] text-xl font-bold">Top Tags</h3>
+                      <ul class="mt-4 space-y-2">
+                          <li class="flex justify-between">
+                              <span>angular</span>
+                              <span>1,850 score</span>
+                          </li>
+                          <li class="flex justify-between">
+                              <span>javascript</span>
+                              <span>631 score</span>
+                          </li>
+                          <li class="flex justify-between">
+                              <span>typescript</span>
+                              <span>483 score</span>
+                          </li>
+                          <li class="flex justify-between">
+                              <span>css</span>
+                              <span>467 score</span>
+                          </li>
+                      </ul>
+                  </div>
+                  
                     <!-- Top Posts Section -->
                     <h2 class="mt-6 mb-2 text-[#7494ec] text-xl font-bold">Top Posts</h2>
                     <div class="border border-[#7494ec] shadow-lg rounded-lg p-4">
