@@ -42,7 +42,7 @@
                 </div>
                 <!-- Edit Profile Button -->
                 <div class="text-center sm:text-right">
-                    <button class="px-4 py-2 bg-[#7494ec] text-white rounded-lg hover:bg-[#7494ec] transition">
+                    <button onclick="nembakFollow()" class="px-4 py-2 bg-[#7494ec] text-white rounded-lg hover:bg-[#7494ec] transition">
                         Follow
                     </button>
                 </div>
@@ -172,4 +172,10 @@
             </div>
         </div>
     </div>
+    <script>
+
+        function nembakFollow(){
+            window.location.href('{{ route('nembakFollow') }}');
+        }
+    </script>
 @endsection
