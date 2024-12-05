@@ -6,102 +6,45 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class  UserController extends Controller
 {
-    private $trie;
+    public function viewOther(string $id){ //Ganti Ke email
+        $api_url = env('API_URL').'/users/'.$id;
+        $response = Http::get($api_url);
 
-    public function __construct()
-    {
-        $this->trie = new Trie();
-        $this->initializeTrie();
-    }
+        $user = $response['data'] ?? ['username'=>'User Profile','followers'=>[]];
+        
+        $currUserId = session('email');
 
-    // Initialize the Trie with all usernames from the database.
-    private function initializeTrie()
-    {
-        $users = User::select('username')->get();
-        foreach ($users as $user) {
-            $this->trie->insert($user->username);
+        $followers = collect($user['followers']); // Apakah currUser masuk/exist di user->followers
+
+        $apakahFollow = false;
+    
+        foreach ($followers as $follower){
+            if($follower['email'] == $currUserId){
+                $apakahFollow = True;
+                break;
+            }
         }
+        $countFollowers = count($followers);
+        
+        $title = 'PROFILE | '.$user['username'];
+        return view('otherProfiles', compact('title','user','apakahFollow', 'countFollowers'));
     }
-
-    public function search(Request $request)
-    {
-        $query = $request->get('query', '');
-    
-        // If there's no query parameter, return the search view
-        if (empty($query)) {
-            return view('searchUser'); // Return the view with the search bar
-        }
-    
-        // If a query parameter exists, process the search
-        $results = $this->trie->search($query);
-        return response()->json($results); // Return the results as JSON
-    }
-    
 
     public function nembakFollow(Request $reqs)
     {
-        $api_url = env('API_URL').'/user/'.$reqs->id.'/follow';
-        $response = Http::post($api_url, [
-            'email' => $reqs->email,
+        $api_url = env('API_URL') . '/users/' . $reqs->email . '/follow';
+        $response = Http::post($api_url,[
+            'emailCurr' =>session('email')
         ]);
-        Log::info($api_url);
+
+        return response()->json([
+            'ok' => isset($response['success']) ? $response['success'] : false,
+            'message' => $response['message'] ?? 'An error occurred during execution.',
+            'data'=> $response['data'] ?? ''
+        ], $response->status());
     }
-
-}
-
-class TrieNode
-{
-    public $children = [];
-    public $isEndOfWord = false;
-}
-
-class Trie
-{
-    private $root;
-
-    public function __construct()
-    {
-        $this->root = new TrieNode();
-    }
-
-    public function insert(string $word)
-    {
-        $node = $this->root;
-        foreach (str_split($word) as $char) {
-            if (!isset($node->children[$char])) {
-                $node->children[$char] = new TrieNode();
-            }
-            $node = $node->children[$char];
-        }
-        $node->isEndOfWord = true;
-    }
-
-    public function search(string $prefix): array
-    {
-        $node = $this->root;
-        foreach (str_split($prefix) as $char) {
-            if (!isset($node->children[$char])) {
-                return [];
-            }
-            $node = $node->children[$char];
-        }
-        return $this->findAllWords($node, $prefix);
-    }
-
-    private function findAllWords(TrieNode $node, string $prefix): array
-    {
-        $words = [];
-        if ($node->isEndOfWord) {
-            $words[] = $prefix;
-        }
-        foreach ($node->children as $char => $childNode) {
-            $words = array_merge($words, $this->findAllWords($childNode, $prefix . $char));
-        }
-        return $words;
-    }
-
-
 }
