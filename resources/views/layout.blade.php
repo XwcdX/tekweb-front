@@ -83,7 +83,6 @@
 
 <body>
     @yield('content')
-
     {{-- Insert <script> CDN below --}}
 
     {{-- TW Elements --}}

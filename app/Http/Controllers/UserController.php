@@ -47,4 +47,16 @@ class  UserController extends Controller
             'data'=> $response['data'] ?? ''
         ], $response->status());
     }
+
+    public function home()
+    {
+        $data['title'] = 'Home';
+        return view('home', $data);
+    }
+
+    public function askPage()
+    {
+        $data['title'] = 'Home';
+        return view('home', $data);
+    }
 }
