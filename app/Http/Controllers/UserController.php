@@ -64,4 +64,9 @@ class  UserController extends Controller
         $data['title'] = 'Popular';
         return view('popular', $data);
     }
+    public function testUI()
+    {
+        $data['title'] = 'Popular';
+        return view('question', $data);
+    }
 }

@@ -40,7 +40,7 @@
         <div class="border-y-2 py-4 flex">
             <div class="me-5 mx-1">
                 <!-- Ganti route -->
-                <h2 class="text-2xl text-2xl text-[#7494ec] hover:cursor-pointer hover:text-[#485d93]"><a href="#route pertanyaan"></a>Title Pertanyaan <small class="text-sm text-gray-400">- asked by [user]</small>
+                <h2 class="text-2xl text-2xl text-[#7494ec] cursor-pointer hover:text-[#485d93]"><a href="#route pertanyaan"></a>Title Pertanyaan <small class="text-sm text-gray-400">- asked by [user]</small>
                 </h2>
                 <!-- klo ada image -->
                 <p class="text-md text-justify">Snippet pertanyaan Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
@@ -65,16 +65,19 @@
                         <span id="votes" class="text-gray-900">11</span>
                     </span>
                     <div class="p-0 font-semibold inline-flex items-center cursor-auto"><i
+                            class="text-sm mx-1 fa-regular fa-hand bg-transparent text-gray-500 hover:text-blue-500 focus-visible:text-blue-500"></i><span
+                            class="text-gray-900 text-xs">12</span></div>
+                    <div class="p-0 font-semibold inline-flex items-center cursor-auto"><i
                             class="text-sm mx-1 fa-regular fa-comment bg-transparent text-gray-500 hover:text-blue-500 focus-visible:text-blue-500"></i><span
                             class="text-gray-900 text-xs">7</span></div>
 
                 </div>
                 <!-- Ganti route -->
                 <div id="tags" class="mt-3 flex flex-wrap space-x-3 text-white">
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>angular</span>
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>html</span>
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>css</span>
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>javascript</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>angular</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>html</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>css</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>javascript</span>
                 </div>
             </div>
             <img class="relative lg:w-52 md:w-52 sm:w-48 w-32 object-contain" src="https://dummyimage.com/600x400/000/fff" alt="">
@@ -83,7 +86,7 @@
         <div class="border-b-2 py-4 flex">
             <div class="me-5 mx-1">
                 <!-- Ganti route -->
-                <h2 class="text-2xl text-[#7494ec] hover:cursor-pointer hover:text-[#485d93]"><a href="#routepertanyaan"></a>Title Pertanyaan <small class="text-sm text-gray-400">- asked by [user]</small>
+                <h2 class="text-2xl text-[#7494ec] cursor-pointer hover:text-[#485d93]"><a href="#routepertanyaan"></a>Title Pertanyaan <small class="text-sm text-gray-400">- asked by [user]</small>
                 </h2>
                 <!-- klo ada image -->
                 <p class="text-md text-justify">Snippet pertanyaan Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
@@ -108,16 +111,19 @@
                         <span id="votes" class="text-gray-900">11</span>
                     </span>
                     <div class="p-0 font-semibold inline-flex items-center cursor-auto"><i
+                            class="text-sm mx-1 fa-regular fa-hand bg-transparent text-gray-500 hover:text-blue-500 focus-visible:text-blue-500"></i><span
+                            class="text-gray-900 text-xs">12</span></div>
+                    <div class="p-0 font-semibold inline-flex items-center cursor-auto"><i
                             class="text-sm mx-1 fa-regular fa-comment bg-transparent text-gray-500 hover:text-blue-500 focus-visible:text-blue-500"></i><span
                             class="text-gray-900 text-xs">7</span></div>
 
                 </div>
                  <!-- Ganti route -->
                  <div id="tags" class="mt-3 flex flex-wrap space-x-3 text-white">
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>angular</span>
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>html</span>
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>css</span>
-                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a href="#route tags"></a>javascript</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>angular</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>html</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>css</span>
+                    <span class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a href="#route tags"></a>javascript</span>
                 </div>
             </div>
             <img class="relative lg:w-52 md:w-52 sm:w-48 w-32 object-contain" src="https://dummyimage.com/600x400/000/fff" alt="">

@@ -144,16 +144,16 @@
             <div id="tags" class="mt-3 flex flex-wrap space-x-3 text-white">
 
                 <span
-                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a
+                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a
                         href="#route tags"></a>angular</span>
                 <span
-                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a
+                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a
                         href="#route tags"></a>html</span>
                 <span
-                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a
+                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a
                         href="#route tags"></a>css</span>
                 <span
-                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] hover:cursor-pointer"><a
+                    class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a
                         href="#route tags"></a>javascript</span>
             </div>
             <button type="submit"
