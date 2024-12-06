@@ -32,7 +32,7 @@
         animation: gradient 30s ease infinite;
     }
 </style>
-@include('nav')
+@include('partials.nav')
 <div class="text-gray-900 min-h-screen p-6">
     <!-- Main Content -->
     <div class="w-full bg-white rounded-lg p-6 shadow-lg">

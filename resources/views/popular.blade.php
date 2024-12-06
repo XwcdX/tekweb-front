@@ -32,16 +32,11 @@
         animation: gradient 30s ease infinite;
     }
 </style>
-@include('nav')
+@include('partials.nav')
 <div class="text-gray-900 min-h-screen p-6">
     <!-- Main Content -->
     <div class="w-full bg-white rounded-lg p-6 shadow-lg">
-        @if (session()->has('email'))
-
-            <h3>Welcome! {{$user['username']}}</h3>
-        @endif
-
-        <h1 class="text-5xl mt-5 mb-10">Newest Questions</h1>
+        <h1 class="text-5xl mt-5 mb-10">Popular Questions <i class="fa-solid fa-fire text-[#ec9074]"></i></h1>
         <div class="border-y-2 py-4 flex">
             <div class="me-5 mx-1">
                 <!-- Ganti route -->

@@ -56,7 +56,12 @@ class  UserController extends Controller
 
     public function askPage()
     {
-        $data['title'] = 'Home';
-        return view('home', $data);
+        $data['title'] = 'Ask a Question';
+        return view('ask', $data);
+    }
+    public function popular()
+    {
+        $data['title'] = 'Popular';
+        return view('popular', $data);
     }
 }
