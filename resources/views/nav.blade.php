@@ -12,6 +12,15 @@
             <a href="#" class="text-gray-900 hover:text-gray-700">Ask a Question</a>
         </div>
 
+        
+        <!-- Search Input  -->
+        <div class="hidden md:flex items-center">
+            <input type="text" placeholder="Search..." class="px-4 py-2 rounded-s-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#485d93]-500 text-sm">
+            <button type="submit" class="hover:text-[#485d93] hover:bg-[#a8bcf3] bg-[#7494ec] px-3 py-2 text-white rounded-e-lg focus:outline-none">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
         <!-- User Action -->
         <div class="relative ml-3">
             <div>
