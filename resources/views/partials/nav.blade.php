@@ -1,12 +1,66 @@
-<nav class="bg-white border-gray-200 z-50">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+<style>
+    .ham {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 400ms;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .hamRotate.active {
+        transform: rotate(45deg);
+    }
+
+    .hamRotate180.active {
+        transform: rotate(180deg);
+    }
+
+    .line {
+        fill: none;
+        transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+        stroke: #000;
+        stroke-width: 5.5;
+        stroke-linecap: round;
+    }
+
+    .ham4 .top {
+        stroke-dasharray: 40 121;
+    }
+
+    .ham4 .bottom {
+        stroke-dasharray: 40 121;
+    }
+
+    .ham4.active .top {
+        stroke-dashoffset: -68px;
+    }
+
+    .ham4.active .bottom {
+        stroke-dashoffset: -68px;
+    }
+
+</style>
+<nav class="bg-white border-gray-200 relative w-full h-auto z-50 shadow-md">
+    <div class="max-w-screen-xl relative flex flex-wrap items-center justify-between mx-auto p-4">
+        <!-- Hamburger Button -->
+        <svg id="hamburger-svg" class="ham hamRotate ham4 md:hidden" viewBox="0 0 100 100" width="50">
+            <path class="line top"
+                d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20" />
+            <path class="line middle" d="m 70,50 h -40" />
+            <path class="line bottom"
+                d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20" />
+        </svg>
+
         <!-- Logo Section -->
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <span class="self-center text-2xl font-semibold whitespace-nowrap text-gray-900">INFORMATICS CONNECT</span>
+            <span class="self-center text-wrap lg:text-2xl text-lg font-semibold whitespace-nowrap text-gray-900 lg:w-auto w-40 text-center">INFORMATICS CONNECT</span>
         </a>
 
+
         <!-- Navbar Links -->
-         <!-- Ganti route -->
+        <!-- Ganti route -->
         <div class="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
             <a href="{{route('home')}}" class="text-gray-900 hover:text-gray-700">Home</a>
             <a href="{{route('popular')}}" class="text-gray-900 hover:text-gray-700">Popular</a>
@@ -27,8 +81,8 @@
         @if (!session()->has('email'))
             <!-- Sign Up Button -->
             <a href="{{ route('loginOrRegist') }}"
-                class="text-white hover:text-[#485d93] hover:bg-[#a8bcf3] bg-[#7494ec] font-medium rounded-lg text-sm px-4 py-2">
-                Sign Up
+                class="text-white hover:text-[#485d93] hover:bg-[#a8bcf3] bg-[#7494ec] font-medium rounded-lg lg:text-sm lg:px-4 lg:py-2 text-xs px-2 py-2">
+                Regist / Login
             </a>
         @else
 
@@ -56,10 +110,39 @@
                 </div>
             </div>
         @endif
+        <!-- Mobile Links Ganti route -->
+        <div id="mobile-menu"
+            class="hidden flex-col space-y-4 my-4 md:hidden w-full bg-gray-100 rounded-lg p-4 border border-gray-200">
+            <a href="{{route('home')}}" class="block text-gray-900">Home</a>
+            <a href="{{route('popular')}}" class="block text-gray-900">Popular</a>
+            <a href="{{route('askPage')}}" class="block text-gray-900">Ask a Question</a>
+
+            <!-- Search Input -->
+            <div class="flex items-center space-x-2">
+                <input type="text" placeholder="Search..."
+                    class="w-full px-4 py-2 rounded-s-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#485d93]-500 text-sm">
+                <button type="submit"
+                    class="text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-e-lg focus:outline-none">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
     </div>
 </nav>
 
 <script>
+    const hamburgerSvg = document.getElementById('hamburger-svg');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // Toggle menu and icon animation
+    hamburgerSvg.addEventListener('click', () => {
+        hamburgerSvg.classList.toggle('active');
+        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('flex');
+    });
+
+
+
     const userMenuButton = document.getElementById('user-menu-button');
     const userMenu = document.getElementById('user-menu');
 
