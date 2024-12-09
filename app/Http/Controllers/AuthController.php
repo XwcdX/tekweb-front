@@ -71,6 +71,54 @@ class AuthController extends Controller
         }
     }
 
+    public function verifyEmail(Request $request)
+    {
+        // Extract id and hash from query parameters
+        $id = $request->query('id');
+        $hash = $request->query('hash');
+
+        if (!$id || !$hash) {
+            return redirect()->route('loginOrRegist')->with('Error', 'Invalid verification link!');
+        }
+
+        // Construct the API verification URL
+        $apiUrl = env('API_URL') . "/email/verify/{$id}/{$hash}";
+
+        // Make a GET request to the API's verification endpoint
+        $response = Http::get($apiUrl);
+
+        if ($response->successful()) {
+            return redirect()->route('profile')->with('Success', 'Your email has been verified!');
+        }
+
+        // Handle specific error messages
+        $status = $response->status();
+        $errorMessage = $response->json('message') ?? 'Email verification failed!';
+
+        if ($status === 403) {
+            // Link expired or invalid
+            return redirect()->route('loginOrRegist')->with('Error', 'Verification link has expired. Please request a new verification email.');
+        }
+
+        return redirect()->route('loginOrRegist')->with('Error', $errorMessage);
+    }
+
+    public function resendVerificationEmail(Request $request)
+    {
+        $response = Http::post(env('API_URL') . '/email/verification-notification');
+
+        if ($response->successful()) {
+            return redirect()->back()->with('Success', 'A new verification link has been sent to your email address.');
+        }
+
+        $errorMessage = $response->json('message') ?? 'Failed to resend verification email.';
+        return redirect()->back()->with('Error', $errorMessage);
+    }
+
+
+
+
+
     public function submitRegister(Request $request)
     {
         $apiUrl = env('API_URL') . '/register';
