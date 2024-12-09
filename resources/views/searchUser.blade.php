@@ -47,9 +47,12 @@ for(let i = 0; i < users.length; i++){ //Masukkan data ke Node"
 function searchInput(){
     const input = document.getElementById('searchInput').value.toLowerCase();
     const resultsDiv = document.getElementById('searchResult'); 
-    const results = trie.search(input);
-
-    resultsDiv.innerHTML = results.map(result => `<div class="result-item">${result}</div>`).join('');
+    if (input.length > 0){
+        const results = trie.search(input);        
+        resultsDiv.innerHTML = results.map(result => `<div class="result-item">${result}</div>`).join('');
+    }else{
+        resultsDiv.innerHTML = '';
+    }
 
 }
 </script>
