@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('otherProfiles', ['title' => 'coba']);
 });
+Route::get('/home', [UserController::class, 'home'])->name('home');
+Route::get('/popular', [UserController::class, 'popular'])->name('popular');
+Route::get('/ask', [UserController::class, 'askPage'])->name('askPage');
+Route::get('/questionUI', [UserController::class, 'testUI']);
 
 Route::get('/loginOrRegist', [AuthController::class, 'loginOrRegist'])->name('loginOrRegist');
 Route::post('/manualLogin', [AuthController::class, 'manualLogin'])->name('manualLogin');
