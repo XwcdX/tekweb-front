@@ -37,7 +37,7 @@
     <!-- Main Content -->
     <div class="w-full bg-white rounded-lg p-6 shadow-lg">
         @if (session()->has('email'))
-            <h3>Welcome! {{$user['username']}}</h3>
+            <h3>Welcome! {{$user->username}}</h3>
         @endif
 
         <h1 class="lg:text-5xl text-3xl mt-5 mb-10">Newest Questions</h1>
