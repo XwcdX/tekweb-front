@@ -69,4 +69,15 @@ class  UserController extends Controller
         $data['title'] = 'Popular';
         return view('question', $data);
     }
+
+    public function viewAllUsers(){
+        $data['title'] = 'View Users';
+        return view('viewAllUsers', $data);
+    }
+    // hrse terima param id question, nih aku cuman mau coba view
+    public function viewAnswers(){
+        $data['title'] = 'View Answers';
+        return view('viewAnswers', $data);
+    }
+
 }
