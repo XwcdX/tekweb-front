@@ -59,6 +59,41 @@
             --spotify-grad: linear-gradient(45deg, #1DB954, #191414);
             --tiktok-grad: linear-gradient(45deg, #ff0050, #191414 40%, #191414 60%, #00f2ea);
         }
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            min-width: 100vw;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #F4DEB5;
+            background-image:
+                radial-gradient(at 93% 100%, #7494ec 0px, transparent 50%),
+                radial-gradient(at 0% 0%, #633F92 0px, transparent 50%),
+                radial-gradient(at 38% 60%, white 0px, transparent 50%),
+                radial-gradient(at 100% 0%, #7494ec 0px, transparent 50%),
+                radial-gradient(at 80% 50%, #633F92 0px, transparent 50%),
+                radial-gradient(at 0% 100%, white 0px, transparent 50%);
+            background-size: 200% 200%;
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+            animation: gradient 30s ease infinite;
+        }
 
 
         @font-face {

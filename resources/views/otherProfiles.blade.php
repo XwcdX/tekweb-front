@@ -1,28 +1,5 @@
 @extends('layout')
 @section('content')
-<style>
-    body {
-        top: 0;
-        left: 0;
-        margin: 0;
-        padding: 0;
-        min-width: 100vw;
-        min-height: 100vh;
-        font-family: 'Montserrat', sans-serif;
-        background-color: #F4DEB5;
-        background-image:
-            radial-gradient(at 93% 100%, #7494ec 0px, transparent 50%),
-            radial-gradient(at 0% 0%, #633F92 0px, transparent 50%),
-            radial-gradient(at 38% 60%, #fffd44 0px, transparent 50%),
-            radial-gradient(at 100% 0%, #7494ec 0px, transparent 50%),
-            radial-gradient(at 80% 50%, #633F92 0px, transparent 50%),
-            radial-gradient(at 0% 100%, #fffd44 0px, transparent 50%);
-        background-size: 200% 200%;
-        background-repeat: no-repeat;
-        overflow-x: hidden;
-        animation: gradient 30s ease infinite;
-    }
-</style>
 <div class="text-gray-900 min-h-screen p-6">
     <!-- Main Content -->
     <div class="w-full bg-white rounded-lg p-6 shadow-lg">

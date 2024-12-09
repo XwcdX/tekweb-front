@@ -29,4 +29,7 @@ Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFol
 // Route::get('/{id}', [UserController::class, 'viewOther']);
 
 // view questions
-Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers');
+Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers'); //question and all its answers
+
+// view users
+Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');

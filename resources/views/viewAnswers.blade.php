@@ -13,10 +13,10 @@
             background-image:
                 radial-gradient(at 93% 100%, #7494ec 0px, transparent 50%),
                 radial-gradient(at 0% 0%, #633F92 0px, transparent 50%),
-                radial-gradient(at 38% 60%, #fffd44 0px, transparent 50%),
-                radial-gradient(at 100% 0%, #7494ec 0px, transparent 50%),
-                radial-gradient(at 80% 50%, #633F92 0px, transparent 50%),
-                radial-gradient(at 0% 100%, #fffd44 0px, transparent 50%);
+                radial-gradient(at 38% 60%, #7494ec 0px, transparent 50%),
+                radial-gradient(at 100% 0%, #633F92 0px, transparent 50%),
+                radial-gradient(at 80% 50%, #7494ec 0px, transparent 50%),
+                radial-gradient(at 0% 100%, #633F92 0px, transparent 50%);
             background-size: 200% 200%;
             background-repeat: no-repeat;
             overflow-x: hidden;
