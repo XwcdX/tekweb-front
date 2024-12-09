@@ -1,21 +1,21 @@
 <div>
     <input
         type="text"
-        id="search-input"
+        id="searchInput"
         placeholder="Search users..."
-        oninput="onSearchInput(event)" />
-    <div id="search-results"></div>
+        oninput="searchInput(event)" />
+    <div id="searchResult"></div>
 </div>
 
 <style>
-    #search-input {
+    #searchInput {
         width: 100%;
         padding: 10px;
         font-size: 16px;
         margin-bottom: 10px;
     }
 
-    #search-results {
+    #searchResult {
         border: 1px solid #ccc;
         max-height: 200px;
         overflow-y: auto;
@@ -32,18 +32,24 @@
     }
 </style>
 
-<script>
-    // AJAX search
-    function onSearchInput(event) {
-        const query = event.target.value.toLowerCase();
+@include('utils.trie')
 
-        //query to backend, results as JSON
-        fetch(`/search-user?query=${query}`)
-            .then(response => response.json())
-            .then(results => {
-                // Display results
-                const resultsDiv = document.getElementById('search-results');
-                resultsDiv.innerHTML = results.map(result => `<div class="result-item">${result}</div>`).join('');
-            });
-    }
+<script>
+
+let users = <?php echo json_encode($users)?>;
+
+const trie = new Trie();
+
+for(let i = 0; i < users.length; i++){ //Masukkan data ke Node"
+    trie.insert(users[i]['username'].toLowerCase())
+}
+
+function searchInput(){
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const resultsDiv = document.getElementById('searchResult'); 
+    const results = trie.search(input);
+
+    resultsDiv.innerHTML = results.map(result => `<div class="result-item">${result}</div>`).join('');
+
+}
 </script>
