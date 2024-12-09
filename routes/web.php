@@ -13,9 +13,12 @@ Route::post('/manualLogin', [AuthController::class, 'manualLogin'])->name('manua
 Route::post('/submitRegister', [AuthController::class,'submitRegister'])->name('submitRegister');
 Route::get('/auth', [AuthController::class, 'googleAuth'])->name('auth');
 Route::get('/process/login', [AuthController::class, 'processLogin'])->name('processLogin');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
 
 // Route::get('/search-user', [UserController::class, 'search']); 
-Route::get('/{id}', [UserController::class, 'viewOther']);
+
+Route::middleware(['isLogin'])->group(function () {
+    Route::get('/{id}', [UserController::class, 'viewOther']);
+    Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
+});

@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class  UserController extends Controller
 {
-    public function viewOther(string $id){ //Ganti Ke email
+    public function viewOther(string $id){
         $api_url = env('API_URL').'/users/'.$id;
-        $response = Http::get($api_url);
+        $response = Http::withToken(session('token'))->get($api_url);
+        $response = json_decode($response, true);
 
         $user = $response['data'] ?? ['username'=>'User Profile','followers'=>[]];
         
@@ -36,8 +35,8 @@ class  UserController extends Controller
 
     public function nembakFollow(Request $reqs)
     {
-        $api_url = env('API_URL') . '/users/' . $reqs->email . '/follow';
-        $response = Http::post($api_url,[
+        $api_url = env('API_URL') . '/users/' . $reqs->id . '/follow';
+        $response = Http::withToken(session('token'))->post($api_url,[
             'emailCurr' =>session('email')
         ]);
 

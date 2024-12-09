@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function processLogin()
     {
         try {
-            $user = Socialite::driver('google')->stateless()->user();
+            $user = Socialite::driver('google')->user();
 
             if (!$user) {
                 return redirect()->route('loginOrRegist')->with('Error', 'Please try to log in again!');
@@ -123,6 +123,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->session()->flush();
-        return redirect()->route('home');
+        return redirect()->route('loginOrRegist');
     }
 }
