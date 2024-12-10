@@ -5,7 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home', ['title' => 'coba']);
+    return view('profile', ['title' => 'coba']);
 });
 Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/popular', [UserController::class, 'popular'])->name('popular');
@@ -26,10 +26,18 @@ Route::get('/auth', [AuthController::class, 'googleAuth'])->name('auth');
 Route::get('/process/login', [AuthController::class, 'processLogin'])->name('processLogin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Route::get('/search-user', [UserController::class, 'search']); 
+Route::get('/seeOthers/{id}', [UserController::class, 'viewOther']);
 Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
 
-Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers');
-Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
+// view questions
+Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers'); //question and all its answers
+
+// view users
+Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfile');
+Route::get('/viewUsers/{id}', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
+
+// view tags
 Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllUsers');
 
 Route::middleware(['isLogin'])->group(function () {

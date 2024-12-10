@@ -47,7 +47,25 @@ class UserController extends Controller
             'data' => $response['data'] ?? ''
         ], $response->status());
     }
-    public function editProfile()
+    public function seeProfile()
+    {
+        $data['title'] = 'My Profile';
+
+        $api_url = env('API_URL') . '/users/' . session('user_id');
+        $response = Http::get($api_url);
+
+        $user = $response['data'] ?? ['username' => 'User Profile', 'followers' => []];
+
+        // $currUserId = session('email');
+
+        $followers = collect($user['followers']); 
+        $countFollowers = count($followers);
+
+        $title = 'PROFILE | ' . $user['username'];
+        return view('profile', compact('title', 'user', 'countFollowers'));
+    }
+
+        public function editProfile()
     {
         $data['title'] = 'Edit Profile';
         return view('editProfile', $data);
