@@ -21,12 +21,15 @@ Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail'])
 
 Route::get('/auth', [AuthController::class, 'googleAuth'])->name('auth');
 Route::get('/process/login', [AuthController::class, 'processLogin'])->name('processLogin');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
 
 // Route::get('/search-user', [UserController::class, 'search']); 
-Route::get('/seeOthers/{id}', [UserController::class, 'viewOther']);
+
+Route::middleware(['isLogin'])->group(function () {
+    // Route::get('/{id}', [UserController::class, 'viewOther']);
+    Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
+});
 Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
 
 // view questions
@@ -34,7 +37,15 @@ Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAn
 
 // view users
 Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfile');
-Route::get('/viewUsers/{id}', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
+Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
+
 
 // view tags
+
+Route::middleware(['isLogin'])->group(function () {
+    // Route::get('/{id}', [UserController::class, 'viewOther']);
+    Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
+});
+
+Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers');
 Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllUsers');

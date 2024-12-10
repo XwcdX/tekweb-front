@@ -160,26 +160,20 @@
                 if (isFollowing) {
                     document.getElementById('followBtn').textContent = 'Unfollow';
                 } else {
-                    document.getElementById('followBtn').textContent = 'Follow';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message || 'Failed.',
+                    });
                 }
-                document.getElementById('countFollowers').textContent = data.data.countFollowers;
-            } else {
-                // Swal.fire({
-                //     icon: 'error',
-                //     title: 'Error',
-                //     text: data.message || 'Failed.',
-                // });
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message || 'Something went wrong!',
+                });
             }
-
-        } catch (error) {
-            console.log('ERROR: ' + error);
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An unexpected error occurred.',
-            });
         }
     }
-</script>
+    </script>
 @endsection
