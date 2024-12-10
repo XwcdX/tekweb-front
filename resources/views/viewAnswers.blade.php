@@ -1,15 +1,17 @@
 @extends('layout')
 @section('content')
+@include('partials.nav')
+@include('utils.background4')
     <style>
         body {
-            top: 0;
+            /* top: 0;
             left: 0;
             margin: 0;
             padding: 0;
             min-width: 100vw;
             min-height: 100vh;
             font-family: 'Montserrat', sans-serif;
-            background-color: #F4DEB5;
+            background-color: #F4DEB5; */
             background-image:
                 radial-gradient(at 93% 100%, #7494ec 0px, transparent 50%),
                 radial-gradient(at 0% 0%, #633F92 0px, transparent 50%),
@@ -18,9 +20,10 @@
                 radial-gradient(at 80% 50%, #7494ec 0px, transparent 50%),
                 radial-gradient(at 0% 100%, #633F92 0px, transparent 50%);
             background-size: 200% 200%;
-            background-repeat: no-repeat;
+            /* background-repeat: no-repeat;
             overflow-x: hidden;
             animation: gradient 30s ease infinite;
+            z-index:1 ; */
         }
 
         .hover\:shadow-glow:hover {
@@ -67,7 +70,7 @@
         </div>
 
         {{-- Display the answers --}}
-        <div class="mb-4 answers bg-white bg-opacity-10 rounded-lg p-6 shadow-lg space-y-6">
+        <div class="mb-4 answers bg-[--purple] bg-opacity-10 rounded-lg p-6 shadow-lg space-y-6">
             {{-- @foreach ($answers as $answer) --}}
             <div class="answer flex flex-col p-4">
                 <p class="text-white ">
@@ -78,7 +81,7 @@
                     <!-- Comment button -->
                     <div>
                         <button
-                            class="comment-btn text-[#633F92] hover:text-yellow-100 flex items-center space-x-2 focus:outline-none">
+                            class="comment-btn text-white hover:text-yellow-100 flex items-center space-x-2 focus:outline-none">
                             <i class="fa-solid fa-reply text-lg"></i>
                             <span>Comment</span>
                         </button>
@@ -87,7 +90,7 @@
                             <textarea class="w-full bg-gray-100 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none" rows="2"
                                 placeholder="Write your comment here!"></textarea>
                             <button
-                                class="mt-4 px-4 py-2 bg-[#633F92] text-white rounded-lg transition-all duration-300 hover:font-semibold hover:shadow-glow">
+                                class="mt-4 px-4 py-2 bg-white text-[--purple] rounded-lg border-2 border-[--bblue] transition-all duration-300 font-semibold hover:shadow-glow">
                                 Submit Comment
                             </button>
                         </div>
@@ -114,52 +117,52 @@
         </div>
 
 
-        {{-- Display the answers --}}
-        <div class="mb-4 answers bg-white bg-opacity-10 rounded-lg p-6 shadow-lg space-y-6">
-            {{-- @foreach ($answers as $answer) --}}
-            <div class="answer flex flex-col p-4">
-                <p class="text-white ">
-                    This is where an answer will appear.
-                </p>
-                <!-- vote buttons -->
-                <div class="mt-2 flex items-center space-x-4">
-                    <!-- Comment button -->
-                    <div>
+       {{-- Display the answers --}}
+       <div class="mb-4 answers bg-[--purple] bg-opacity-10 rounded-lg p-6 shadow-lg space-y-6">
+        {{-- @foreach ($answers as $answer) --}}
+        <div class="answer flex flex-col p-4">
+            <p class="text-white ">
+                This is where an answer will appear.
+            </p>
+            <!-- vote buttons -->
+            <div class="mt-2 flex items-center space-x-4">
+                <!-- Comment button -->
+                <div>
+                    <button
+                        class="comment-btn text-white hover:text-yellow-100 flex items-center space-x-2 focus:outline-none">
+                        <i class="fa-solid fa-reply text-lg"></i>
+                        <span>Comment</span>
+                    </button>
+                    <!-- comment input box -->
+                    <div class="comment-box hidden mt-2">
+                        <textarea class="w-full bg-gray-100 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none" rows="2"
+                            placeholder="Write your comment here!"></textarea>
                         <button
-                            class="comment-btn text-[#633F92] hover:text-yellow-100 flex items-center space-x-2 focus:outline-none">
-                            <i class="fa-solid fa-reply text-lg"></i>
-                            <span>Comment</span>
+                            class="mt-4 px-4 py-2 bg-white text-[--purple] rounded-lg border-2 border-[--bblue] transition-all duration-300 font-semibold hover:shadow-glow">
+                            Submit Comment
                         </button>
-                        <!-- comment input box -->
-                        <div class="comment-box hidden mt-2">
-                            <textarea class="w-full bg-gray-100 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none" rows="2"
-                                placeholder="Write your comment here!"></textarea>
-                            <button
-                                class="mt-4 px-4 py-2 bg-[#633F92] text-white rounded-lg transition-all duration-300 hover:font-semibold hover:shadow-glow">
-                                Submit Comment
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Thumbs up -->
-                    <div class="flex items-center space-x-2">
-                        <button class="text-white hover:text-[#633F92] focus:outline-none thumbs-up">
-                            <i class="fas fa-thumbs-up text-lg"></i>
-                        </button>
-                        <span class="thumbs-up-count text-white  font-medium">0</span>
-                    </div>
-                    <!-- Thumbs down -->
-                    <div class="flex items-center space-x-2">
-                        <button class="text-white  hover:text-gray-700 focus:outline-none thumbs-down">
-                            <i class="fas fa-thumbs-down text-lg"></i>
-                        </button>
-                        <span class="thumbs-down-count text-white  font-medium">0</span>
                     </div>
                 </div>
-
+                <!-- Thumbs up -->
+                <div class="flex items-center space-x-2">
+                    <button class="text-white hover:text-[#633F92] focus:outline-none thumbs-up">
+                        <i class="fas fa-thumbs-up text-lg"></i>
+                    </button>
+                    <span class="thumbs-up-count text-white  font-medium">0</span>
+                </div>
+                <!-- Thumbs down -->
+                <div class="flex items-center space-x-2">
+                    <button class="text-white  hover:text-gray-700 focus:outline-none thumbs-down">
+                        <i class="fas fa-thumbs-down text-lg"></i>
+                    </button>
+                    <span class="thumbs-down-count text-white  font-medium">0</span>
+                </div>
             </div>
-            <hr class="border-t border-gray-300">
-            {{-- @endforeach --}}
+
         </div>
+        <hr class="border-t border-gray-300">
+        {{-- @endforeach --}}
+    </div>
 
     </div>
 

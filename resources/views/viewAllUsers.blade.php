@@ -164,9 +164,9 @@
         <!-- Our Top Users -->
         <div class="flex flex-col items-center justify-center w-full">
             <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Our Top Users</h1>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-10 md:gap-x-16 gap-y-8 mb-12">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-10 md:gap-x-12 gap-y-8 mb-12">
                 {{-- @foreach ($topUsers as $user) --}}
-                <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
+                <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-7 px-7 glowing">
                     <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
                     {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
