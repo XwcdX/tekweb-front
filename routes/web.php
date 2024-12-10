@@ -27,6 +27,7 @@ Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFol
 
 // Route::get('/search-user', [UserController::class, 'search']); 
 // Route::get('/{id}', [UserController::class, 'viewOther']);
+Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
 
 // view questions
 Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers'); //question and all its answers

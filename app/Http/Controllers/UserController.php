@@ -8,44 +8,50 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\PseudoTypes\True_;
 
-class  UserController extends Controller
+class UserController extends Controller
 {
-    public function viewOther(string $id){ //Ganti Ke email
-        $api_url = env('API_URL').'/users/'.$id;
+    public function viewOther(string $id)
+    { //Ganti Ke email
+        $api_url = env('API_URL') . '/users/' . $id;
         $response = Http::get($api_url);
 
-        $user = $response['data'] ?? ['username'=>'User Profile','followers'=>[]];
-        
+        $user = $response['data'] ?? ['username' => 'User Profile', 'followers' => []];
+
         $currUserId = session('email');
 
         $followers = collect($user['followers']); // Apakah currUser masuk/exist di user->followers
 
         $apakahFollow = false;
-    
-        foreach ($followers as $follower){
-            if($follower['email'] == $currUserId){
+
+        foreach ($followers as $follower) {
+            if ($follower['email'] == $currUserId) {
                 $apakahFollow = True;
                 break;
             }
         }
         $countFollowers = count($followers);
-        
-        $title = 'PROFILE | '.$user['username'];
-        return view('otherProfiles', compact('title','user','apakahFollow', 'countFollowers'));
+
+        $title = 'PROFILE | ' . $user['username'];
+        return view('otherProfiles', compact('title', 'user', 'apakahFollow', 'countFollowers'));
     }
 
     public function nembakFollow(Request $reqs)
     {
         $api_url = env('API_URL') . '/users/' . $reqs->email . '/follow';
-        $response = Http::post($api_url,[
-            'emailCurr' =>session('email')
+        $response = Http::post($api_url, [
+            'emailCurr' => session('email')
         ]);
 
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',
-            'data'=> $response['data'] ?? ''
+            'data' => $response['data'] ?? ''
         ], $response->status());
+    }
+        public function editProfile()
+    {
+        $data['title'] = 'Edit Profile';
+        return view('editProfile', $data);
     }
 
     public function home()
@@ -70,12 +76,14 @@ class  UserController extends Controller
         return view('question', $data);
     }
 
-    public function viewAllUsers(){
+    public function viewAllUsers()
+    {
         $data['title'] = 'View Users';
         return view('viewAllUsers', $data);
     }
     // hrse terima param id question, nih aku cuman mau coba view
-    public function viewAnswers(){
+    public function viewAnswers()
+    {
         $data['title'] = 'View Answers';
         return view('viewAnswers', $data);
     }
