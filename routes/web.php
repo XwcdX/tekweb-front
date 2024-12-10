@@ -5,7 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home', ['title' => 'coba']);
+    return view('profile', ['title' => 'coba']);
 });
 Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/popular', [UserController::class, 'popular'])->name('popular');
@@ -26,14 +26,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
 
 // Route::get('/search-user', [UserController::class, 'search']); 
-// Route::get('/{id}', [UserController::class, 'viewOther']);
+Route::get('/seeOthers/{id}', [UserController::class, 'viewOther']);
 Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
 
 // view questions
 Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers'); //question and all its answers
 
 // view users
-Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
+Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfile');
+Route::get('/viewUsers/{id}', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
 
 // view tags
 Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllUsers');
