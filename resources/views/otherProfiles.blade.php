@@ -24,7 +24,7 @@
             </div>
             <div class="text-center sm:text-right">
                 <button id="followBtn" onclick="follow()" class="px-4 py-2 bg-[#7494ec] text-white rounded-lg hover:bg-[#5f83c8] transition">
-                    @if ($apakahFollow)
+                    @if ($isFollowing)
                     Unfollow
                     @else
                     Follow

@@ -4,9 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('profile', ['title' => 'coba']);
-});
+// Route::get('/', function () {
+//     return view('home', ['title' => 'coba']);
+// });
 Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/popular', [UserController::class, 'popular'])->name('popular');
 
@@ -14,7 +14,7 @@ Route::get('/ask', [UserController::class, 'askPage'])->name('askPage');
 Route::post('/nembakAsk', [UserController::class, 'nembakAsk'])->name('nembakAsk');
 
 Route::get('/questionUI', [UserController::class, 'testUI']);
-Route::get('/viewUser/{id}', [UserController::class, 'otherProfiles'])->name('viewOthers');
+Route::get('/viewUser/{email}', [UserController::class, 'viewOther'])->name('viewOthers');
 
 Route::get('/loginOrRegist', [AuthController::class, 'loginOrRegist'])->name('loginOrRegist');
 Route::post('/manualLogin', [AuthController::class, 'manualLogin'])->name('manualLogin');

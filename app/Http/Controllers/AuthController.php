@@ -164,7 +164,7 @@ class AuthController extends Controller
             return redirect()->to($url);
         }
         Log::info(session()->all());
-        return redirect()->route('loginOrRegist');
+        return redirect()->route('home');
     }
 
 
