@@ -8,29 +8,37 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function viewOther(string $id){
-        $api_url = env('API_URL').'/users/'.$id;
+    public function getUserByEmail($email){
+        // $email = session('email');
+        $api_url = env('API_URL').'/users/get/'.$email;
         $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
+        // dd($response['data']);
+        return $response['data'];
+    }
+    
+    public function viewOther(string $email){
 
-        $user = $response['data'] ?? ['username' => 'User Profile', 'followers' => []];
-
+        $user = $this->getUserByEmail($email) ?? ['username' => 'User Profile', 'followers' => []];
         $currUserId = session('email');
 
         $followers = collect($user['followers']); // Apakah currUser masuk/exist di user->followers
 
-        $apakahFollow = false;
+        $isFollowing = false;
 
         foreach ($followers as $follower) {
             if ($follower['email'] == $currUserId) {
-                $apakahFollow = True;
+                $isFollowing = True;
                 break;
             }
         }
         $countFollowers = count($followers);
+        $data['title'] = 'PROFILE | ' . $user['username'];
+        $data['user'] = $user;
+        $data['isFollowing'] = $isFollowing;
+        $data['countFollowers']= $countFollowers;
 
-        $title = 'PROFILE | ' . $user['username'];
-        return view('otherProfiles', compact('title', 'user', 'apakahFollow', 'countFollowers'));
+        return view('otherProfiles', $data);
     }
 
     public function nembakFollow(Request $reqs)
@@ -49,30 +57,35 @@ class UserController extends Controller
     public function seeProfile()
     {
         $data['title'] = 'My Profile';
+        $email = session('email');
 
-        $api_url = env('API_URL') . '/users/' . session('user_id');
-        $response = Http::get($api_url);
-
-        $user = $response['data'] ?? ['username' => 'User Profile', 'followers' => []];
-
-        // $currUserId = session('email');
-
-        $followers = collect($user['followers']); 
+        $currUser = $this->getUserByEmail($email);
+        $data['currUser'] = $currUser;
+        $followers = collect($currUser['followers']); 
         $countFollowers = count($followers);
-
-        $title = 'PROFILE | ' . $user['username'];
-        return view('profile', compact('title', 'user', 'countFollowers'));
+        $data['countFollowers'] = $countFollowers;
+        return view('profile', $data);
     }
 
         public function editProfile()
     {
         $data['title'] = 'Edit Profile';
+        
+        $email = session('email');
+        $currUser = $this->getUserByEmail($email);
+        $data['user'] = $currUser;
         return view('editProfile', $data);
     }
 
     public function home()
     {
+        $email = session('email');
+        $user = $this->getUserByEmail($email);
+        // dd($user);
+        $data['username'] = $user['username'];
+        $data['image'] = $user['image'];
         $data['title'] = 'Home';
+        // dd($data);
         return view('home', $data);
     }
 
