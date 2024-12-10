@@ -43,7 +43,7 @@
                 <!-- Edit Profile Button -->
                 <div class="text-center sm:text-right">
                     <button class="px-4 py-2 bg-[#7494ec] text-white rounded-lg hover:bg-[#7494ec] transition">
-                        Edit Profile
+                       <a href="{{route('editProfile')}}"> Edit Profile</a>
                     </button>
                 </div>
             </div>

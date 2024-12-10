@@ -6,31 +6,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class  UserController extends Controller
+class UserController extends Controller
 {
     public function viewOther(string $id){
         $api_url = env('API_URL').'/users/'.$id;
         $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
 
-        $user = $response['data'] ?? ['username'=>'User Profile','followers'=>[]];
-        
+        $user = $response['data'] ?? ['username' => 'User Profile', 'followers' => []];
+
         $currUserId = session('email');
 
         $followers = collect($user['followers']); // Apakah currUser masuk/exist di user->followers
 
         $apakahFollow = false;
-    
-        foreach ($followers as $follower){
-            if($follower['email'] == $currUserId){
+
+        foreach ($followers as $follower) {
+            if ($follower['email'] == $currUserId) {
                 $apakahFollow = True;
                 break;
             }
         }
         $countFollowers = count($followers);
-        
-        $title = 'PROFILE | '.$user['username'];
-        return view('otherProfiles', compact('title','user','apakahFollow', 'countFollowers'));
+
+        $title = 'PROFILE | ' . $user['username'];
+        return view('otherProfiles', compact('title', 'user', 'apakahFollow', 'countFollowers'));
     }
 
     public function nembakFollow(Request $reqs)
@@ -43,7 +43,52 @@ class  UserController extends Controller
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',
-            'data'=> $response['data'] ?? ''
+            'data' => $response['data'] ?? ''
         ], $response->status());
     }
+        public function editProfile()
+    {
+        $data['title'] = 'Edit Profile';
+        return view('editProfile', $data);
+    }
+
+    public function home()
+    {
+        $data['title'] = 'Home';
+        return view('home', $data);
+    }
+
+    public function askPage()
+    {
+        $data['title'] = 'Ask a Question';
+        return view('ask', $data);
+    }
+    public function popular()
+    {
+        $data['title'] = 'Popular';
+        return view('popular', $data);
+    }
+    public function testUI()
+    {
+        $data['title'] = 'Popular';
+        return view('question', $data);
+    }
+
+    public function viewAllUsers()
+    {
+        $data['title'] = 'View Users';
+        return view('viewAllUsers', $data);
+    }
+    // hrse terima param id question, nih aku cuman mau coba view
+    public function viewAnswers()
+    {
+        $data['title'] = 'View Answers';
+        return view('viewAnswers', $data);
+    }
+
+    public function viewTags(){
+        $data['title'] = 'View Tags';
+        return view('viewTags', $data);
+    }
+
 }

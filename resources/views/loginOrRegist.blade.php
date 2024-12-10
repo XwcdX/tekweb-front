@@ -1,5 +1,6 @@
 @extends('layout')
 @section('content')
+    @include('utils.background')
     @if (session()->has('Error'))
         <Script>
             Swal.fire({
@@ -10,6 +11,10 @@
         </Script>
     @endif
     <style>
+        body {
+            overflow: hidden;
+        }
+
         .form-box {
             z-index: 1;
             transition: .6s ease-in-out 1.2s, visibility 0s 1s;
@@ -101,6 +106,7 @@
             }
 
             .toggle-box::before {
+               
                 left: 0;
                 width: 100%;
                 height: 300%;
@@ -273,14 +279,15 @@
                 <div class="toggle-box absolute w-full h-full">
                     <div
                         class="toggle-panel toggle-left left-0 absolute w-[50%] h-[100%] flex flex-col justify-center items-center text-white">
-                        <h1 class="text-2xl font-extrabold">Hello, Informates!</h1>
+
+                        <h1 class="text-2xl font-extrabold">Hello, Informates🤩</h1>
                         <p class="mb-[20px]">Don't have an account?</p>
                         <button
                             class="btn register-btn w-[160px] h-[46px] bg-transparent border-2 border-white rounded-lg">Register</button>
                     </div>
                     <div
                         class="toggle-panel toggle-right right-[-50%] absolute w-[50%] h-[100%] flex flex-col justify-center items-center text-white">
-                        <h1 class="text-2xl font-extrabold">Welcome Back, Informates!</h1>
+                        <h1 class="text-2xl font-extrabold">Welcome Back, Informates👋</h1>
                         <p class="mb-[20px]">Already have an account?</p>
                         <button
                             class="btn login-btn w-[160px] h-[46px] bg-transparent border-2 border-white rounded-lg">Login</button>
