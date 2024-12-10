@@ -37,17 +37,24 @@
     {{-- SwiperJS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />   
 
+    {{-- google icon --}}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    {{-- Alphine JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 
         * {
             font-family: 'Jost', sans-serif;
+            --bblue: #7494ec;
+            --purple: #633F92;
             --neutral: #292A67;
             --yellow: #F6CE3E;
             --red: #E62D63;
             --red-lg: #ff6e9a;
             --magenta: #902680;
-            --purple: #633F92;
             --purple-dark: #5500a4;
             --tosca: #4CB79C;
             --tosca-lg: rgb(74, 231, 192);
@@ -81,7 +88,7 @@
             min-width: 100vw;
             min-height: 100vh;
             font-family: 'Montserrat', sans-serif;
-            background-color: #F4DEB5;
+            /* background-color: #F4DEB5; */
             background-image:
                 radial-gradient(at 93% 100%, #7494ec 0px, transparent 50%),
                 radial-gradient(at 0% 0%, #633F92 0px, transparent 50%),
@@ -93,6 +100,8 @@
             background-repeat: no-repeat;
             overflow-x: hidden;
             animation: gradient 30s ease infinite;
+            /* opacity: 50%; */
+            z-index:1 ;
         }
 
 
@@ -115,7 +124,7 @@
     </style>
     @yield('style')
 </head>
-
+{{-- @include('partials.nav') --}}
 <body>
     @yield('content')
     {{-- Insert <script> CDN below --}}

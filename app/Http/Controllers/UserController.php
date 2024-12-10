@@ -80,4 +80,9 @@ class  UserController extends Controller
         return view('viewAnswers', $data);
     }
 
+    public function viewTags(){
+        $data['title'] = 'View Tags';
+        return view('viewTags', $data);
+    }
+
 }

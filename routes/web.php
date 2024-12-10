@@ -33,3 +33,6 @@ Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAn
 
 // view users
 Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
+
+// view tags
+Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllUsers');
