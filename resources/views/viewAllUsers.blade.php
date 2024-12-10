@@ -1,6 +1,39 @@
 @extends('layout')
 @section('content')
+@include('utils.background3')
     <style>
+        .titleTopUser{
+            background: linear-gradient(90deg, #633F92, #7494ec,#5500a4, white, #633F92);
+            -webkit-background: linear-gradient(90deg, #633F92, #7494ec, #5500a4, white, #633F92);
+            background-size: 400%;
+            font-weight: 900 !important;
+            /* letter-spacing: 5px; */
+            word-spacing: 5px;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-animation: animateText 30s linear infinite;
+
+        }
+        
+        @keyframes animateText {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 500%;
+            }
+        }
+
+        @-webkit-keyframes animateText {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 500%;
+            }
+        }
         .tab-active {
             background-color: #633F92;
             color: white;
@@ -64,8 +97,8 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 10px;
+            /* border: 1px solid #ccc;
+            border-radius: 10px; */
             background-color: #f9f9f9;
         }
 
@@ -130,7 +163,7 @@
        
         <!-- Our Top Users -->
         <div class="flex flex-col items-center justify-center w-full">
-            <h1 class="text-3xl font-semibold text-white underline mb-6">Our Top Users</h1>
+            <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Our Top Users</h1>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-10 md:gap-x-16 gap-y-8 mb-12">
                 {{-- @foreach ($topUsers as $user) --}}
                 <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
@@ -141,7 +174,7 @@
                         <a href="#" class="hover:underline">User 1</a>
                     </h3>
                     <p class="text-sm">Reputation: 560</p>
-                    <button class="text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button>
+                    {{-- <button class="text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button> --}}
                 </div>
                
 
@@ -219,7 +252,7 @@
         <div id="reputations" class="tab-content">
             <div class="user-grid">
                 {{-- @foreach ($reputations as $user) --}}
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold">
@@ -234,7 +267,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold"><a href="#" class="hover:underline">User 2</a></h3>
@@ -248,7 +281,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold"><a href="#" class="hover:underline">User 3</a></h3>
@@ -261,7 +294,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold"><a href="#" class="hover:underline">User 4</a></h3>
@@ -274,7 +307,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold"><a href="#" class="hover:underline">User 5</a></h3>
@@ -287,7 +320,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold"><a href="#" class="hover:underline">User 6</a></h3>
@@ -316,7 +349,7 @@
         <div id="voters" class="tab-content hidden">
             <div class="user-grid">
                 {{-- @foreach ($voters as $user) --}}
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold">User 3</h3>
@@ -329,7 +362,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="user-card">
+                <div class="user-card border-2 border-[--purple] rounded-lg">
                     <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                     <div class="user-info">
                         <h3 class="font-semibold">User 4</h3>

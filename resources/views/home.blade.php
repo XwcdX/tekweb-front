@@ -10,7 +10,7 @@
     </Script>
 @endif
 <style>
-    body {
+    /* body {
         top: 0;
         left: 0;
         margin: 0;
@@ -30,9 +30,10 @@
         background-repeat: no-repeat;
         overflow-x: hidden;
         animation: gradient 30s ease infinite;
-    }
+    } */
 </style>
 @include('partials.nav')
+@include('utils.background2')
 <div class="text-gray-900 min-h-screen p-6">
     <!-- Main Content -->
     <div class="w-full bg-white rounded-lg p-6 shadow-lg">
