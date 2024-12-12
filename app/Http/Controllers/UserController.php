@@ -122,4 +122,16 @@ class UserController extends Controller
         return view('viewTags', $data);
     }
 
+    
+    public function searchUser(){
+        $api_url = env('API_URL') . '/userWithRecommendation';
+        $response = Http::get($api_url, [
+            'email' => 'c14230088@john.petra.ac.id'
+        ]);
+        $response = json_decode($response, true);
+        $users = $response['data'];
+
+        $title = 'Search User | Search User';
+        return view('searchUser', compact('title','users'));
+    }
 }
