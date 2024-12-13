@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -23,6 +25,7 @@ Route::get('/auth', [AuthController::class, 'googleAuth'])->name('auth');
 Route::get('/process/login', [AuthController::class, 'processLogin'])->name('processLogin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Route::get('/home', [QuestionController::class, 'getAllQuestions'])->name('home');
 
 Route::get('/search-user', [UserController::class, 'searchUser'])->name('searchUser'); 
 
@@ -38,7 +41,8 @@ Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editPr
 Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
 Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers');
 Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllUsers');
-
+Route::post('/submitAnswer/{$questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
+Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
 
 // view tags
 

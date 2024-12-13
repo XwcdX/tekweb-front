@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    public function getAllUsers(){
+        $api_url = env('API_URL').'/users';
+        $response = Http::get($api_url);
+        $response = json_decode($response, true);
+        dd($response['data']);
+        return $response['data'];
+    }
+
     public function getUserByEmail($email){
         // $email = session('email');
         $api_url = env('API_URL').'/users/get/'.$email;
@@ -89,6 +97,7 @@ class UserController extends Controller
         return view('home', $data);
     }
 
+   
     public function askPage()
     {
         $data['title'] = 'Ask a Question';
