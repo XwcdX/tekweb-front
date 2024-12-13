@@ -11,7 +11,7 @@ Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/popular', [UserController::class, 'popular'])->name('popular');
 
 Route::get('/ask', [UserController::class, 'askPage'])->name('askPage');
-Route::post('/nembakAsk', [UserController::class, 'nembakAsk'])->name('ask');
+Route::post('/nembakAsk', [UserController::class, 'nembakAsk'])->name('nembakAsk');
 
 Route::get('/questionUI', [UserController::class, 'testUI']);
 Route::get('/viewUser/{id}', [UserController::class, 'otherProfiles'])->name('viewOthers');

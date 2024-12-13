@@ -101,13 +101,14 @@ class UserController extends Controller
 
     public function nembakAsk(Request $reqs)
     {
-        $api_url =env('API_URL') . '/questions';
+        $api_url = env('API_URL') . '/questions';
         $response = Http::withToken(session('token'))->post($api_url, [
             'vote' => 0,
             'image' => $reqs['image'],
             'question' => $reqs['question'],
         ]);
-        Log::info();
+        Log::info($api_url);
+        Log::info($response);
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',

@@ -186,25 +186,63 @@
 
     // Image upload
     document.getElementById("upload-image-btn").addEventListener("click", function() {
-        let fileInput = document.createElement("input");
-        fileInput.type = "file";
-        fileInput.accept = "image/*";
-        fileInput.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imageURL = e.target.result;
-                    const imageGroup = document.getElementById("image-group");
-                    const imageElement = document.createElement("div");
-                    imageElement.classList.add("w-full", "p-5", "border-2", "rounded", "border-gray-600", "text-white");
-                    imageElement.innerHTML = `<i class="fa-solid fa-image text-gray-500"></i> ${file.name}`;
-                    imageGroup.appendChild(imageElement);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        fileInput.click();
+    let fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageURL = e.target.result;
+                const imageGroup = document.getElementById("image-group");
+                const imageElement = document.createElement("div");
+                imageElement.classList.add("w-full", "p-5", "border-2", "rounded", "border-gray-600", "text-white");
+                imageElement.innerHTML = `<i class="fa-solid fa-image text-gray-500"></i> ${file.name}`;
+                imageGroup.appendChild(imageElement);
+            };
+            reader.readAsDataURL(file);
+        }
     });
+    fileInput.click();
+});
+
+document.querySelector('form').addEventListener('submit', function(event) {
+    const editor = document.getElementById('editor');
+    const titleInput = document.getElementById('title-input');
+    const tagsInput = document.getElementById('tags-input');
+    
+    const questionContent = editor.value;
+
+    const questionField = document.createElement('input');
+    questionField.type = 'hidden';
+    questionField.name = 'question';
+    questionField.value = questionContent;
+    this.appendChild(questionField);
+    
+    const titleField = document.createElement('input');
+    titleField.type = 'hidden';
+    titleField.name = 'title';
+    titleField.value = titleInput.value;
+    this.appendChild(titleField);
+    
+    const tagsField = document.createElement('input');
+    tagsField.type = 'hidden';
+    tagsField.name = 'tags';
+    tagsField.value = tagsInput.value;
+    this.appendChild(tagsField);
+
+    const imageGroup = document.getElementById("image-group");
+    const images = imageGroup.querySelectorAll('div');
+    images.forEach(function(image) {
+        const imageData = image.innerText;
+        const imageField = document.createElement('input');
+        imageField.type = 'hidden';
+        imageField.name = 'images[]';
+        imageField.value = imageData;
+        this.appendChild(imageField);
+    });
+});
+
 </script>
 @endsection
