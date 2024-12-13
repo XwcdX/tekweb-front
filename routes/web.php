@@ -24,7 +24,7 @@ Route::get('/process/login', [AuthController::class, 'processLogin'])->name('pro
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-// Route::get('/search-user', [UserController::class, 'search']); 
+Route::get('/search-user', [UserController::class, 'searchUser'])->name('searchUser'); 
 
 Route::middleware(['isLogin'])->group(function () {
     // Route::get('/{id}', [UserController::class, 'viewOther']);
