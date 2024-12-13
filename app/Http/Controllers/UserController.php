@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function viewOther(string $id){
-        $api_url = env('API_URL').'/users/'.$id;
+    public function viewOther(string $id)
+    {
+        $api_url = env('API_URL') . '/users/' . $id;
         $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
 
@@ -36,8 +37,8 @@ class UserController extends Controller
     public function nembakFollow(Request $reqs)
     {
         $api_url = env('API_URL') . '/users/' . $reqs->id . '/follow';
-        $response = Http::withToken(session('token'))->post($api_url,[
-            'emailCurr' =>session('email')
+        $response = Http::withToken(session('token'))->post($api_url, [
+            'emailCurr' => session('email')
         ]);
 
         return response()->json([
@@ -46,7 +47,7 @@ class UserController extends Controller
             'data' => $response['data'] ?? ''
         ], $response->status());
     }
-        public function editProfile()
+    public function editProfile()
     {
         $data['title'] = 'Edit Profile';
         return view('editProfile', $data);
@@ -76,8 +77,14 @@ class UserController extends Controller
 
     public function viewAllUsers()
     {
-        $data['title'] = 'View Users';
-        return view('viewAllUsers', $data);
+        $api_url = env('API_URL') . '/userWithRecommendation';
+        $response = Http::get($api_url, []);
+        $response = json_decode($response, true);
+        $users = $response['data'];
+        $users = collect($users)->sortByDesc('reputation');
+
+        $title = 'View Users';
+        return view('viewAllUsers', compact(['users', 'title']));
     }
     // hrse terima param id question, nih aku cuman mau coba view
     public function viewAnswers()
@@ -86,9 +93,25 @@ class UserController extends Controller
         return view('viewAnswers', $data);
     }
 
-    public function viewTags(){
+    public function viewTags()
+    {
         $data['title'] = 'View Tags';
         return view('viewTags', $data);
     }
 
+    public function nembakAsk(Request $reqs)
+    {
+        $api_url =env('API_URL') . '/questions';
+        $response = Http::withToken(session('token'))->post($api_url, [
+            'vote' => 0,
+            'image' => $reqs['image'],
+            'question' => $reqs['question'],
+        ]);
+        Log::info();
+        return response()->json([
+            'ok' => isset($response['success']) ? $response['success'] : false,
+            'message' => $response['message'] ?? 'An error occurred during execution.',
+            'data' => $response['data'] ?? ''
+        ], $response->status());
+    }
 }

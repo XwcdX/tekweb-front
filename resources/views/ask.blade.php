@@ -1,13 +1,14 @@
 @extends('layout')
 @section('content')
 @if (session()->has('Error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '{{ session('Error') }}'
-        });
-    </script>
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '{{ session('
+        Error ') }}'
+    });
+</script>
 @endif
 <style>
     body {
@@ -31,6 +32,7 @@
         overflow-x: hidden;
         animation: gradient 30s ease infinite;
     }
+
     /* text-area scrollbar */
     #editor {
         overflow-y: auto;
@@ -75,7 +77,8 @@
         <h1 class="text-xl text-center font-semibold">Having a difficult time? Ask for help! <i
                 class="fa-solid fa-graduation-cap"></i></h1>
         <h1 class="font-bold text-xl">Create a post</h1>
-        <form>
+        <form action="{{ route('nembakAsk') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="mt-5">
                 <label for="title-input" class="block mb-2 text-sm font-medium text-gray-900">Title</label>
                 <input type="text" id="title-input"
@@ -182,15 +185,15 @@
 
 
     // Image upload
-    document.getElementById("upload-image-btn").addEventListener("click", function () {
+    document.getElementById("upload-image-btn").addEventListener("click", function() {
         let fileInput = document.createElement("input");
         fileInput.type = "file";
         fileInput.accept = "image/*";
-        fileInput.addEventListener("change", function (event) {
+        fileInput.addEventListener("change", function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     const imageURL = e.target.result;
                     const imageGroup = document.getElementById("image-group");
                     const imageElement = document.createElement("div");
