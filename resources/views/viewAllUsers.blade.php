@@ -1,9 +1,9 @@
 @extends('layout')
 @section('content')
-@include('utils.background3')
+    @include('utils.background3')
     <style>
-        .titleTopUser{
-            background: linear-gradient(90deg, #633F92, #7494ec,#5500a4, white, #633F92);
+        .titleTopUser {
+            background: linear-gradient(90deg, #633F92, #7494ec, #5500a4, white, #633F92);
             -webkit-background: linear-gradient(90deg, #633F92, #7494ec, #5500a4, white, #633F92);
             background-size: 400%;
             font-weight: 900 !important;
@@ -14,7 +14,7 @@
             -webkit-animation: animateText 30s linear infinite;
 
         }
-        
+
         @keyframes animateText {
             0% {
                 background-position: 0%;
@@ -34,6 +34,7 @@
                 background-position: 500%;
             }
         }
+
         .tab-active {
             background-color: #633F92;
             color: white;
@@ -98,7 +99,7 @@
             gap: 1rem;
             padding: 1rem;
             /* border: 1px solid #ccc;
-            border-radius: 10px; */
+                        border-radius: 10px; */
             background-color: #f9f9f9;
         }
 
@@ -138,8 +139,8 @@
             }
         }
 
-        .glowing{
-          animation: glow 2s infinite;
+        .glowing {
+            animation: glow 2s infinite;
         }
 
         @media (max-width: 768px) {
@@ -160,7 +161,7 @@
     </style>
 
     <div class="max-w-4xl sm:max-w-6xl mx-auto px-4 py-8">
-       
+
         <!-- Our Top Users -->
         <div class="flex flex-col items-center justify-center w-full">
             <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Our Top Users</h1>
@@ -176,56 +177,56 @@
                     <p class="text-sm">Reputation: 560</p>
                     {{-- <button class="text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button> --}}
                 </div>
-               
+
 
 
                 <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-                  <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                  {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                  <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                  <h3 class="font-semibold">
-                      <a href="#" class="hover:underline">User 1</a>
-                  </h3>
-                  <p class="text-sm">Reputation: 560</p>
-              </div>
+                    <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
+                    {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
+                    <h3 class="font-semibold">
+                        <a href="#" class="hover:underline">User 1</a>
+                    </h3>
+                    <p class="text-sm">Reputation: 560</p>
+                </div>
 
 
 
-              <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-                <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                <h3 class="font-semibold">
-                    <a href="#" class="hover:underline">User 1</a>
-                </h3>
-                <p class="text-sm">Reputation: 560</p>
-            </div>
+                <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
+                    <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
+                    {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
+                    <h3 class="font-semibold">
+                        <a href="#" class="hover:underline">User 1</a>
+                    </h3>
+                    <p class="text-sm">Reputation: 560</p>
+                </div>
 
 
-            <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-              <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-              {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-              <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-              <h3 class="font-semibold">
-                  <a href="#" class="hover:underline">User 1</a>
-              </h3>
-              <p class="text-sm">Reputation: 560</p>
-          </div>
+                <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
+                    <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
+                    {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
+                    <h3 class="font-semibold">
+                        <a href="#" class="hover:underline">User 1</a>
+                    </h3>
+                    <p class="text-sm">Reputation: 560</p>
+                </div>
 
 
-          <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-            <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-            {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-            <h3 class="font-semibold">
-                <a href="#" class="hover:underline">User 1</a>
-            </h3>
-            <p class="text-sm">Reputation: 560</p>
-        </div>
+                <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
+                    <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
+                    {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
+                    <h3 class="font-semibold">
+                        <a href="#" class="hover:underline">User 1</a>
+                    </h3>
+                    <p class="text-sm">Reputation: 560</p>
+                </div>
                 {{-- @endforeach --}}
             </div>
 
-            
+
         </div>
 
 
@@ -251,131 +252,83 @@
         <!-- Reputations Tab -->
         <div id="reputations" class="tab-content">
             <div class="user-grid">
-                {{-- @foreach ($reputations as $user) --}}
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold">
-                            <a href="#" class="hover:underline">User 1</a><button href="" class="ml-[8px] text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button>
-                        </h3>
-                        <p class="text-sm">Reputation: 560</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">php</span>
-                            <span class="tag">java</span>
-                            {{-- @endforeach --}}
+                @foreach ($order_by_reputation as $user)
+                    <div class="user-card border-2 border-[--purple] rounded-lg">
+                        @if ($user['image'])
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @else
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @endif
+                        <div class="user-info">
+                            <h3 class="font-semibold">
+                                <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                    class="hover:underline">{{ $user['username'] }}</a>
+                            </h3>
+                            <p class="text-sm">Reputation: {{ $user['reputation'] }}</p>
+                            <div class="user-tags">
+                                {{-- @foreach ($user['tags'] as $tag) --}}
+                                <span class="tag">php</span>
+                                <span class="tag">java</span>
+                                {{-- @endforeach --}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold"><a href="#" class="hover:underline">User 2</a></h3>
-                        </h3>
-                        <p class="text-sm">Reputation: 300</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">laravel</span>
-                            <span class="tag">javascript</span>
-                            {{-- @endforeach --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold"><a href="#" class="hover:underline">User 3</a></h3>
-                        <p class="text-sm">Reputation: 560</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">php</span>
-                            <span class="tag">java</span>
-                            {{-- @endforeach --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold"><a href="#" class="hover:underline">User 4</a></h3>
-                        <p class="text-sm">Reputation: 560</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">php</span>
-                            <span class="tag">java</span>
-                            {{-- @endforeach --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold"><a href="#" class="hover:underline">User 5</a></h3>
-                        <p class="text-sm">Reputation: 560</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">php</span>
-                            <span class="tag">java</span>
-                            {{-- @endforeach --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold"><a href="#" class="hover:underline">User 6</a></h3>
-                        </h3>
-                        <p class="text-sm">Reputation: 560</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">php</span>
-                            <span class="tag">java</span>
-                            {{-- @endforeach --}}
-                        </div>
-                    </div>
-                </div>
-                {{-- @endforeach --}}
+                @endforeach
             </div>
         </div>
 
         <!-- New Users Tab -->
         <div id="new-users" class="tab-content hidden">
             <div class="user-grid">
-                <p>No new users to display.</p>
+                @foreach ($order_by_newest as $user)
+                    <div class="user-card border-2 border-[--purple] rounded-lg">
+                        @if ($user['image'])
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @else
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @endif
+                        <div class="user-info">
+                            <h3 class="font-semibold">
+                                <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                    class="hover:underline">{{ $user['username'] }}</a>
+                            </h3>
+                            <p class="text-sm text-blue-800 ">Since {{ $user['created_at'] }}</p>
+                            <div class="user-tags">
+                                {{-- @foreach ($user['tags'] as $tag) --}}
+                                <span class="tag">php</span>
+                                <span class="tag">java</span>
+                                {{-- @endforeach --}}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
 
         <!-- Voters Tab -->
         <div id="voters" class="tab-content hidden">
             <div class="user-grid">
-                {{-- @foreach ($voters as $user) --}}
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold">User 3</h3>
-                        <p class="text-sm">Voters: 200</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">react</span>
-                            <span class="tag">vue</span>
-                            {{-- @endforeach --}}
+                @foreach ($order_by_vote as $user)
+                    <div class="user-card border-2 border-[--purple] rounded-lg">
+                        @if ($user['image'])
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @else
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @endif
+                        <div class="user-info">
+                            <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                    class="hover:underline">{{ $user['username'] }}</a>
+                            </h3>
+                            <p class="text-sm">Voters: {{ $user['vote_count'] }}</p>
+                            <div class="user-tags">
+                                {{-- @foreach ($user['tags'] as $tag) --}}
+                                <span class="tag">react</span>
+                                <span class="tag">vue</span>
+                                {{-- @endforeach --}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="user-card border-2 border-[--purple] rounded-lg">
-                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                    <div class="user-info">
-                        <h3 class="font-semibold">User 4</h3>
-                        <p class="text-sm">Voters: 100</p>
-                        <div class="user-tags">
-                            {{-- @foreach ($user['tags'] as $tag) --}}
-                            <span class="tag">node.js</span>
-                            <span class="tag">angular</span>
-                            {{-- @endforeach --}}
-                        </div>
-                    </div>
-                </div>
-                {{-- @endforeach --}}
+                @endforeach
             </div>
         </div>
     </div>

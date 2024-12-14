@@ -31,4 +31,32 @@ class MainController extends Controller
         return view('home', $data);
 
     }
+    public function viewUser(string $email){
+        $data = $this->userController->getUserFollowers($email);
+        // dd($data);
+        $data['title'] = 'PROFILE | ' . $data['user']['username'];
+        return view('otherProfiles', $data);
+    }
+      // hrse terima param id question, nih aku cuman mau coba view
+      public function viewAnswers($questionId)
+      {
+        $data['question'] = $this->questionController->getQuestionDetails($questionId);
+        $data['title'] = 'View Answers';
+        // dd($data);
+        return view('viewAnswers', $data);
+      }
+
+      public function viewAllUsers()
+    {
+        $data['title'] = 'View Users';
+        $user = $this->userController->orderUserBy();
+        $data['order_by_reputation'] = $user['users_by_reputation'];
+        $data['order_by_vote'] = $user['users_by_vote'];
+        $data['order_by_newest'] = $user['users_by_newest'];
+
+        // dd($data);
+        return view('viewAllUsers', $data);
+    }
+
   }
+  
