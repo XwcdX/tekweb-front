@@ -148,7 +148,7 @@
 
 @section('script')
     <script>
-        let imageFiles = []; // Store image files for submission
+        let imageFile = null; // Store the single image file
 
         // Image upload and preview
         document.getElementById("upload-image-btn").addEventListener("click", function() {
@@ -160,31 +160,34 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
+                        // Remove any existing preview
+                        const imagePreviewContainer = document.getElementById("image-preview");
+                        imagePreviewContainer.innerHTML = ""; // Clear previous image
+
                         // Create a new image preview item
-                        const imagePreviewContainer = document.createElement("div");
-                        imagePreviewContainer.classList.add("image-preview-item");
+                        const imagePreviewContainerNew = document.createElement("div");
+                        imagePreviewContainerNew.classList.add("image-preview-item");
 
                         const image = document.createElement("img");
                         image.src = e.target.result;
-                        imagePreviewContainer.appendChild(image);
+                        imagePreviewContainerNew.appendChild(image);
 
                         // Create a delete button for this image
                         const deleteBtn = document.createElement("button");
                         deleteBtn.textContent = "X";
                         deleteBtn.classList.add("delete-btn");
                         deleteBtn.addEventListener("click", function() {
-                            imagePreviewContainer.remove();
-                            // Remove from imageFiles array
-                            imageFiles = imageFiles.filter(item => item !== file);
+                            imagePreviewContainerNew.remove();
+                            imageFile = null; // Reset the imageFile variable
                         });
 
-                        imagePreviewContainer.appendChild(deleteBtn);
+                        imagePreviewContainerNew.appendChild(deleteBtn);
 
                         // Append the preview item to the preview container
-                        document.getElementById("image-preview").appendChild(imagePreviewContainer);
+                        imagePreviewContainer.appendChild(imagePreviewContainerNew);
 
-                        // Add image file to imageFiles array
-                        imageFiles.push(file);
+                        // Store the file
+                        imageFile = file;
                     };
                     reader.readAsDataURL(file);
                 }
@@ -192,33 +195,25 @@
             fileInput.click(); // Trigger the file input click event
         });
 
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     document.getElementById("submit").addEventListener("click", function(e) {
-        //         e.preventDefault();
-        //         const title = document.getElementById("title").value;
-        //         const question = document.getElementById("question").value;
-        //     });
-        // });
-
         // Form submission
-        // <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Menambahkan event listener pada tombol submit
             document.getElementById("submit-btn").addEventListener("click", function(e) {
-                e.preventDefault(); // Mencegah form submit default
+                e.preventDefault(); 
 
-                // const title = document.getElementById("title").value;
                 const question = document.getElementById("question").value;
+                const title = document.getElementById("title").value;
 
-                // Validasi input
-                if (question === '') {
+                // Validate input
+                if (question === '' && title === '') {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: 'Question must be filled out!'
                     });
-                    return; 
+                    return;
                 }
+
+             
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -239,13 +234,12 @@
                         });
 
                         let formData = new FormData();
-                        // formData.append("title", title);
+                        formData.append("title", title);
                         formData.append("question", question);
-
-                        // Menambahkan gambar kalau ada
-                        imageFiles.forEach((file) => {
-                            formData.append("images[]", file);
-                        });
+                        
+                        if (imageFile){
+                            formData.append("image", imageFile);
+                        }
 
                         fetch("{{ route('addQuestion') }}", {
                                 method: "POST",
@@ -256,7 +250,7 @@
                             })
                             .then(response => response.json())
                             .then(res => {
-                                Swal.close(); 
+                                Swal.close();
 
                                 if (res.success) {
                                     Swal.fire({
@@ -264,8 +258,7 @@
                                         title: 'Success!',
                                         text: 'Your post has been successfully submitted!'
                                     }).then(() => {
-                                        window.location.href =
-                                            "{{ route('askPage') }}";
+                                        window.location.href = "{{ route('askPage') }}";
                                     });
                                 } else {
                                     Swal.fire({
