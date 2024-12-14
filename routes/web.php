@@ -17,7 +17,7 @@ Route::get('/ask', [UserController::class, 'askPage'])->name('askPage');
 Route::post('/nembakAsk', [UserController::class, 'nembakAsk'])->name('nembakAsk');
 
 Route::get('/questionUI', [UserController::class, 'testUI']);
-Route::get('/viewUser/{email}', [UserController::class, 'viewOther'])->name('viewOthers');
+Route::get('/viewUser/{email}', [MainController::class, 'viewOther'])->name('viewOthers');
 
 Route::get('/loginOrRegist', [AuthController::class, 'loginOrRegist'])->name('loginOrRegist');
 Route::post('/manualLogin', [AuthController::class, 'manualLogin'])->name('manualLogin');
@@ -42,11 +42,13 @@ Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfil
 Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
 
 // view questions
-Route::get('/viewUsers', [UserController::class, 'viewAllUsers'])->name('viewAllUsers');
-Route::get('/viewAnswers', [UserController::class, 'viewAnswers'])->name('viewAnswers');
-Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllUsers');
+Route::get('/viewUsers', [MainController::class, 'viewAllUsers'])->name('viewAllUsers');
+Route::get('/viewAnswers/{questionId}', [MainController::class, 'viewAnswers'])->name('user.viewQuestions');
+Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllTags');
+Route::get('/viewUser/{email}', [MainController::class, 'viewUser'])->name('viewUser');
 Route::post('/submitAnswer/{$questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
 Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
+Route::post('/submit/question/comment/{$questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
 
 // view tags
 

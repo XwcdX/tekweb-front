@@ -29,7 +29,7 @@
                     <div class="me-5 mx-1">
                         <!-- Question Title -->
                         <h2 class="text-2xl text-[#7494ec] cursor-pointer hover:text-[#485d93]">
-                            <a href="#">{{ $question['title'] }}</a>
+                            <a href="{{ route('user.viewQuestions', ['questionId' => $question['id']]) }}">{{ $question['title'] }}</a>
                             {{-- <small class="text-sm text-gray-400">- asked by {{ $question->user->name }}</small> --}}
                         </h2>
 
@@ -47,10 +47,10 @@
                         <i class="text-sm mx-1 fa-regular fa-hand bg-transparent text-gray-500 hover:text-blue-500 focus-visible:text-blue-500"></i>
                         <span class="text-gray-900 text-xs">{{ $question->views_count }}</span>
                     </div> --}}
-                            {{-- <div class="p-0 font-semibold inline-flex items-center cursor-auto">
+                            <div class="p-0 font-semibold inline-flex items-center cursor-auto">
                         <i class="text-sm mx-1 fa-regular fa-comment bg-transparent text-gray-500 hover:text-blue-500 focus-visible:text-blue-500"></i>
-                        <span class="text-gray-900 text-xs">{{ $question->comments_count }}</span>
-                    </div> --}}
+                        <span class="text-gray-900 text-xs">{{ $question['comments_count'] }}</span>
+                    </div>
                         </div>
 
                         <!-- Tags -->
@@ -62,10 +62,10 @@
                     </div>
 
                     <!-- Image or Thumbnail -->
-                    @if ($question['image'])
+                    {{-- @if ($question['image'])
                         <img class="relative lg:w-52 md:w-52 sm:w-48 w-32 object-contain mt-4 lg:mt-0 lg:ml-4"
                             src="{{ asset('storage/' . $question['image']) }}" alt="Question Image">
-                    @endif
+                    @endif --}}
 
 
 

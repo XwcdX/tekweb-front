@@ -13,9 +13,39 @@ class QuestionController extends Controller
         $api_url = env('API_URL') . '/questions';
         $response = Http::get($api_url);
         $response = json_decode($response, true);
-        // dd($response['data']);
-        return $response['data'];
+        
+        // Get the data (questions)
+        $data = $response['data'];
+        
+        // Loop through each question and count comments
+        foreach ($data as &$question) {
+            // If comments is null or not an array, set it to an empty array, otherwise count the array length
+            $question['comments_count'] = (is_array($question['comment']) && $question['comment'] !== null) 
+                ? count($question['comment']) 
+                : 0;
+        }
+    
+       
+        // dd($data);
+        // Return the updated data
+        return $data;
     }
+
+
+    public function getQuestionDetails($id){
+        $data['email'] = session('email');
+        $api_url = env('API_URL') . '/questions/' .$id. '/view';
+        $response = Http::post($api_url, $data);
+        $response = json_decode($response, true);
+        $questionData = $response['data'];
+       
+        $comments = collect($questionData['comment']); // Apakah currUser masuk/exist di user->comments
+        $countcomments = count($comments);
+        $questionData['comment_count'] = $countcomments;  
+        return $questionData;
+    }
+
+    
     public function addQuestion(Request $request)
     {
         // Validate the incoming request
@@ -71,4 +101,22 @@ class QuestionController extends Controller
         }
     }
     
+    public function submitQuestionComment(Request $request, $questionId)
+    {
+        Log::info("Data to be sent: hellowwowow");
+        $request->validate([
+            'comment' => 'required|string|max:255',
+        ]);
+        $data['email'] = session('email');
+        $data['question_id'] = $questionId;
+        $data['comment'] = $request->comment;
+        Log::info("Data to be sent: ", $data);
+
+        $api_url = env('API_URL') . '/comments';
+        $response = Http::post($api_url, $data);
+        dd($response);
+        return $response['message'];
+
+        // return response()->json(['success' => true, 'comment' => $comment]);
+    }
 }
