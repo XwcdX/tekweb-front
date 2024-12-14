@@ -12,7 +12,7 @@ class UserController extends Controller
         $api_url = env('API_URL').'/users';
         $response = Http::get($api_url);
         $response = json_decode($response, true);
-        dd($response['data']);
+        // dd($response['data']);
         return $response['data'];
     }
 
@@ -85,17 +85,17 @@ class UserController extends Controller
         return view('editProfile', $data);
     }
 
-    public function home()
-    {
-        $email = session('email');
-        $user = $this->getUserByEmail($email);
-        // dd($user);
-        $data['username'] = $user['username'];
-        $data['image'] = $user['image'];
-        $data['title'] = 'Home';
-        // dd($data);
-        return view('home', $data);
-    }
+    // public function home()
+    // {
+    //     $email = session('email');
+    //     $user = $this->getUserByEmail($email);
+    //     // dd($user);
+    //     $data['username'] = $user['username'];
+    //     $data['image'] = $user['image'];
+    //     $data['title'] = 'Home';
+    //     // dd($data);
+    //     return view('home', $data);
+    // }
 
    
     public function askPage()
