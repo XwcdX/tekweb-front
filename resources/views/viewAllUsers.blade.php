@@ -22,17 +22,9 @@
 
         100% {
             background-position: 500%;
-        }
-    }
-        100% {
-            background-position: 500%;
-        }
+        } 
     }
 
-    @-webkit-keyframes animateText {
-        0% {
-            background-position: 0%;
-        }
     @-webkit-keyframes animateText {
         0% {
             background-position: 0%;
@@ -57,21 +49,7 @@
         border: 1px solid #633F92;
         padding: 10px 20px;
     }
-    .tab-inactive {
-        background-color: white;
-        color: #633F92;
-        border-radius: 5px;
-        border: 1px solid #633F92;
-        padding: 10px 20px;
-    }
 
-    .flex-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
     .flex-container {
         display: flex;
         justify-content: space-between;
@@ -90,22 +68,7 @@
         flex: 1;
         max-width: 600px;
     }
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        border-radius: 5px;
-        padding: 10px 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        flex: 1;
-        max-width: 600px;
-    }
 
-    .search-bar input {
-        border: none;
-        outline: none;
-        width: 100%;
-    }
     .search-bar input {
         border: none;
         outline: none;
@@ -117,28 +80,13 @@
         flex-wrap: wrap;
         gap: 10px;
     }
-    .tabs-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
 
     .topUser-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1rem;
     }
-    .topUser-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-    }
 
-    .user-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-    }
     .user-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -161,26 +109,12 @@
         border-radius: 50%;
         object-fit: cover;
     }
-    .user-image {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
 
     .user-info {
         display: flex;
         flex-direction: column;
     }
-    .user-info {
-        display: flex;
-        flex-direction: column;
-    }
 
-    .user-tags {
-        font-size: 0.9rem;
-        color: #666;
-    }
     .user-tags {
         font-size: 0.9rem;
         color: #666;
@@ -192,29 +126,14 @@
         font-size: 14px;
         border-radius: 5px;
     }
-    .tab-active,
-    .tab-inactive {
-        padding: 10px 20px;
-        font-size: 14px;
-        border-radius: 5px;
-    }
 
-    @keyframes glow {
     @keyframes glow {
 
         0%,
         100% {
             box-shadow: 0 0 5px #fffd44, 0 0 10px #fffd44, 0 0 15px #fffd44, 0 0 20px #fffd44;
         }
-        0%,
-        100% {
-            box-shadow: 0 0 5px #fffd44, 0 0 10px #fffd44, 0 0 15px #fffd44, 0 0 20px #fffd44;
-        }
 
-        50% {
-            box-shadow: 0 0 8px #fffd44, 0 0 15px #fffd44, 0 0 20px #fffd44, 0 0 25px #fffd44;
-        }
-    }
         50% {
             box-shadow: 0 0 8px #fffd44, 0 0 15px #fffd44, 0 0 20px #fffd44, 0 0 25px #fffd44;
         }
@@ -223,12 +142,6 @@
     .glowing {
         animation: glow 2s infinite;
     }
-
-    @media (max-width: 768px) {
-        .flex-container {
-            flex-direction: column;
-            align-items: stretch;
-        }
     @media (max-width: 768px) {
         .flex-container {
             flex-direction: column;
@@ -238,16 +151,7 @@
         .search-bar {
             width: 100%;
         }
-        .search-bar {
-            width: 100%;
-        }
 
-        .tabs-container {
-            width: 100%;
-            justify-content: flex-start;
-        }
-    }
-</style>
         .tabs-container {
             width: 100%;
             justify-content: flex-start;
@@ -336,13 +240,6 @@
             </button>
         </div>
 
-        <!-- Tabs -->
-        <div class="tabs-container flex space-x-4">
-            <button onclick="showTab('reputations')" id="tab-reputations" class="tab-active">Reputations</button>
-            <button onclick="showTab('new-users')" id="tab-new-users" class="tab-inactive">New Users</button>
-            <button onclick="showTab('voters')" id="tab-voters" class="tab-inactive">Voters</button>
-        </div>
-    </div>
         <!-- Tabs -->
         <div class="tabs-container flex space-x-4">
             <button onclick="showTab('reputations')" id="tab-reputations" class="tab-active">Reputations</button>
