@@ -59,11 +59,6 @@ class UserController extends Controller
         return view('home', $data);
     }
 
-    public function askPage()
-    {
-        $data['title'] = 'Ask a Question';
-        return view('ask', $data);
-    }
     public function popular()
     {
         $data['title'] = 'Popular';
@@ -97,6 +92,16 @@ class UserController extends Controller
     {
         $data['title'] = 'View Tags';
         return view('viewTags', $data);
+    }
+    
+    public function askPage()
+    {
+        $api_url = env('API_URL');
+        $response = Http::withToken(session('token'))->get($api_url);
+        $subjects = json_encode($response, true);
+        
+        $title = 'Ask a Question';
+        return view('ask', compact('title', 'subjects'));
     }
 
     public function nembakAsk(Request $reqs)
