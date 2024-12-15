@@ -13,7 +13,7 @@ class UserController extends Controller
     public function getAllUsers()
     {
         $api_url = env('API_URL') . '/users';
-        $response = Http::get($api_url);
+        $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
         return $responseData['data'];
     }
@@ -21,7 +21,6 @@ class UserController extends Controller
     public function countUserVote()
     {
         $users = $this->getAllUsers();
-        
         foreach ($users as &$user) {
             $countvotes = collect($user['question'])->sum(function ($question) {
                 return $question['vote'] ?? 0;  // Default to 0 if no votes
@@ -108,13 +107,13 @@ class UserController extends Controller
 
     public function nembakFollow(Request $reqs)
     {
-        $api_url = env('API_URL') . '/users/' . $reqs->id . '/follow';
+        $api_url = env('API_URL') . '/users/' . $reqs->email . '/follow';
         $response = Http::withToken(session('token'))->post($api_url, [
             'emailCurr' => session('email')
         $response = Http::withToken(session('token'))->post($api_url, [
             'emailCurr' => session('email')
         ]);
-
+        Log::info($response); 
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',

@@ -12,7 +12,7 @@
                 <h2 class="text-[#7494ec] text-2xl font-bold text-center sm:text-left">{{ $user['username'] }}</h2>
             </div>
         </div>
-        
+
         <!-- Edit Profile and Followers -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mt-6">
             <!-- Followers Count -->
@@ -145,7 +145,6 @@
                 })
             });
             const data = await response.json();
-            console.log(data);
 
             Swal.close();
             if (data.ok) {
@@ -160,19 +159,17 @@
                 if (isFollowing) {
                     document.getElementById('followBtn').textContent = 'Unfollow';
                 } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: data.message || 'Failed.',
-                    });
+                    document.getElementById('followBtn').textContent = 'Follow';
                 }
-            } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.message || 'Something went wrong!',
-                });
+                document.getElementById('countFollowers').textContent = data.data.countFollowers;
             }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Something went wrong!',
+            });
         }
-    </script>
+    }
+</script>
 @endsection
