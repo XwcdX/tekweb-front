@@ -158,12 +158,7 @@ class UserController extends Controller
         $data['title'] = 'Popular';
         return view('question', $data);
     }
-
-
-
-
-    public function viewTags()
-    {
+    
     public function viewTags()
     {
         $data['title'] = 'View Tags';
