@@ -58,8 +58,7 @@
                     <img class="relative lg:w-52 md:w-52 sm:w-48 w-32 object-contain"
                         src="https://dummyimage.com/600x400/000/fff" alt="">
                 </div>
-
-                <div id="tags" class="mt-10 flex flex-wrap space-x-3 text-white">
+<div id="tags" class="mt-10 flex flex-wrap space-x-3 text-white">
                     <span
                         class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a
                             href="#route tags"></a>angular</span>
@@ -73,6 +72,7 @@
                         class="px-3 py-1 bg-[#7494ec] text-sm rounded hover:text-[#485d93] hover:bg-[#a8bcf3] cursor-pointer"><a
                             href="#route tags"></a>javascript</span>
                 </div>
+                
                 <div id="etc" class="mt-3 flex flex-wrap space-x-3">
                     <span class="p-0 text-xs font-semibold inline-flex items-center cursor-auto">
                         <!-- Upvote Button -->

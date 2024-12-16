@@ -53,7 +53,7 @@
                 <div class="relative bg-inherit">
                     <input type="text" id="username" name="username"
                         class="peer bg-transparent h-10 w-full rounded-lg text-gray-800 focus:ring-indigo-900 focus:outline-none focus:border-indigo-600"
-                        placeholder="" value="old username" />
+                        placeholder="" value="{{ $user['username'] }}" />
                 </div>
             </div>
         </div>
