@@ -19,17 +19,29 @@ class MainController extends Controller
     $this->answerController = $answerController;
     $this->questionController = $questionController;
   }
-  public function home()
+  public function home(Request $request)
   {
     $email = session('email');
     $user = $this->userController->getUserByEmail($email);
     $data['username'] = $user['username'];
     $data['image'] = $user['image'];
     $data['title'] = 'Home';
-    $questions = $this->questionController->getAllQuestions();
+    $questions = $this->questionController->getAllQuestions($request);
     $data['questions'] = $questions;
     // dd($data);
     return view('home', $data);
+  }
+  public function popular(Request $request)
+  {
+    $email = session('email');
+    $user = $this->userController->getUserByEmail($email);
+    $data['username'] = $user['username'];
+    $data['image'] = $user['image'];
+    $data['title'] = 'Home';
+    $questions = $this->questionController->getAllQuestionsByPopularity($request);
+    $data['questions'] = $questions;
+    // dd($data);
+    return view('popular', $data);
   }
   public function viewUser(string $email)
   {

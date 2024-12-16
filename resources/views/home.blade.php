@@ -71,6 +71,7 @@
 
                 </div>
             @endforeach
+            {{$questions->links()}}
         </div>
     </div>
 @endsection

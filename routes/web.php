@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('home', ['title' => 'coba']);
 // });
 // Route::get('/home', [UserController::class, 'home'])->name('home');
-Route::get('/popular', [UserController::class, 'popular'])->name('popular');
+Route::get('/popular', [MainController::class, 'popular'])->name('popular');
 Route::get('/ask', [UserController::class, 'askPage'])->name('askPage');
-Route::get('/questionUI', [UserController::class, 'testUI']);
 Route::get('/viewUser/{email}', [MainController::class, 'viewOther'])->name('viewOthers');
 
 Route::get('/loginOrRegist', [AuthController::class, 'loginOrRegist'])->name('loginOrRegist');

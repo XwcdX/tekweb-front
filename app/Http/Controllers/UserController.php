@@ -9,7 +9,70 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
-    public function viewOther(string $id)
+
+    public function getAllUsers()
+    {
+        $api_url = env('API_URL') . '/users';
+        $response = Http::get($api_url);
+        $responseData = json_decode($response, true);
+        return $responseData['data'];
+    }
+
+    public function countUserVote()
+    {
+        $users = $this->getAllUsers();
+        
+        foreach ($users as &$user) {
+            $countvotes = collect($user['question'])->sum(function ($question) {
+                return $question['vote'] ?? 0;  // Default to 0 if no votes
+            });
+            
+            $user['vote_count'] = $countvotes;
+            $user['created_at'] = Carbon::parse($user['created_at'])->diffForHumans();
+        }
+        
+        return $users;
+    }
+    
+
+    public function orderUserBy()
+    {
+        // Get all users
+        $users = $this->countUserVote();
+
+        // Sort users by reputation (descending)
+        $usersByReputation = $users;
+        usort($usersByReputation, function ($a, $b) {
+            return $b['reputation'] - $a['reputation']; // descending order
+        });
+
+        // Sort users by vote (descending)
+        $usersByVote = $users;
+        usort($usersByVote, function ($a, $b) {
+            return $b['vote_count'] - $a['vote_count']; // descending order
+        });
+
+        $usersByNewest = $users;
+        usort($usersByNewest, function ($a, $b) {
+            // Format the 'created_at' timestamps into human-readable format
+            return strcmp($b['created_at'], $a['created_at']); // descending order
+        });
+
+
+        // Log the results for debugging
+        Log::info("Users ordered by reputation: " . print_r($usersByReputation, true));
+        Log::info("Users ordered by vote: " . print_r($usersByVote, true));
+        Log::info("Users ordered by new user: " . print_r($usersByNewest, true));
+        // dd($usersByNewest);
+        return [
+            'users_by_reputation' => $usersByReputation,
+            'users_by_vote' => $usersByVote,
+            'users_by_newest' => $usersByNewest,
+        ];
+    }
+
+
+    public function getUserByEmail($email)
     {
         // $email = session('email');
         $api_url = env('API_URL') . '/users/get/' . $email;
@@ -45,11 +108,11 @@ class UserController extends Controller
 
     public function nembakFollow(Request $reqs)
     {
-        $api_url = env('API_URL') . '/users/' . $reqs->email . '/follow';
+        $api_url = env('API_URL') . '/users/' . $reqs->id . '/follow';
         $response = Http::withToken(session('token'))->post($api_url, [
             'emailCurr' => session('email')
         ]);
-        Log::info($response); 
+
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',
@@ -91,29 +154,9 @@ class UserController extends Controller
         $data['title'] = 'Popular';
         return view('popular', $data);
     }
-    public function testUI()
-    {
-        $data['title'] = 'Popular';
-        return view('question', $data);
-    }
 
-    public function viewAllUsers()
-    {
-        $api_url = env('API_URL') . '/userWithRecommendation';
-        $response = Http::get($api_url, []);
-        $response = json_decode($response, true);
-        $users = $response['data'];
-        $users = collect($users)->sortByDesc('reputation');
 
-        $title = 'View Users';
-        return view('viewAllUsers', compact(['users', 'title']));
-    }
-    // hrse terima param id question, nih aku cuman mau coba view
-    public function viewAnswers()
-    {
-        $data['title'] = 'View Answers';
-        return view('viewAnswers', $data);
-    }
+
 
     public function viewTags()
     {

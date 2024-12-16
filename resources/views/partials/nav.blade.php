@@ -102,8 +102,8 @@
                     id="user-menu" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
                     <div class="py-1" role="none">
                         <!-- Ganti route -->
-                        <a href="#profile" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem">Profile</a>
-                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem">Settings</a>
+                        <a href="{{route('seeProfile')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem">Profile</a>
+                        <a href="{{route('editProfile')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem">Settings</a>
                         <a href="{{route('logout')}}" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem">Sign
                             out</a>
                     </div>

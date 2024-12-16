@@ -64,7 +64,7 @@
                 <div class="relative bg-inherit w-96">
                     <textarea id="biodata" name="biodata"
                         class="peer bg-transparent h-48 resize-none w-full rounded-lg text-gray-800 focus:ring-indigo-900 focus:outline-none focus:border-indigo-600"
-                        placeholder="">Old Biodata</textarea>
+                        placeholder="" value="{{ $user['biodata'] }}"></textarea>
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
             </button>
             <button type="cancel"
                 class="relative px-4 py-2 bg-[#7494ec] hover:bg-[#485d93] rounded text-white w-full sm:w-auto">
-                <a href="#route viewprofile">
+                <a href="{{route('seeProfile')}}">
                 Cancel</a>
             </button>
         </div>
