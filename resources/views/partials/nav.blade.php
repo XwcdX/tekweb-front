@@ -64,6 +64,8 @@
         <div class="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
             <a href="{{route('home')}}" class="text-gray-900 hover:text-gray-700">Home</a>
             <a href="{{route('popular')}}" class="text-gray-900 hover:text-gray-700">Popular</a>
+            <a href="{{route('viewAllUsers')}}" class="text-gray-900 hover:text-gray-700">Users</a>
+            <a href="{{route('viewAllTags')}}" class="text-gray-900 hover:text-gray-700">Tags</a>
             <a href="{{route('askPage')}}" class="text-gray-900 hover:text-gray-700">Ask a Question</a>
         </div>
 
@@ -115,6 +117,8 @@
             class="hidden flex-col space-y-4 my-4 md:hidden w-full bg-gray-100 rounded-lg p-4 border border-gray-200">
             <a href="{{route('home')}}" class="block text-gray-900">Home</a>
             <a href="{{route('popular')}}" class="block text-gray-900">Popular</a>
+            <a href="{{route('viewAllUsers')}}" class="block text-gray-900">Users</a>
+            <a href="{{route('viewAllTags')}}" class="block text-gray-900">Tags</a>
             <a href="{{route('askPage')}}" class="block text-gray-900">Ask a Question</a>
 
             <!-- Search Input -->
