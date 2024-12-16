@@ -60,12 +60,13 @@ class QuestionController extends Controller
         $question = $request->input('question');
         $image = $request->file('image');  // Expecting a single image file
     
-        $api_url = env('API_URL') . '/submit/questions/' . session('email');
+        $api_url = env('API_URL') . '/questions/';
         Log::info("API URL: " . $api_url);  // Log API URL for debugging
     
         $data = [
             'title' => $title,
             'question' => $question,
+            'email' => session('email'),
         ];
     
         // If an image is uploaded, process it
@@ -84,7 +85,7 @@ class QuestionController extends Controller
         Log::info("Data to be sent: ", $data);
     
         try {
-            $response = Http::post($api_url, $data);
+            $response = Http::withToken(session('token'))->post($api_url, $data);
     
             Log::info("API Response Status: " . $response->status());
             Log::info("API Response Body: " . $response->body());
