@@ -145,6 +145,11 @@ class UserController extends Controller
 
     public function askPage()
     {
+        $api_url = env('API_URL') . '/tags';
+        $response = Http::withToken(session('token'))->get($api_url);
+        $response = json_decode($response, true);
+
+        $data['data'] = $response['data'];
         $data['title'] = 'Ask a Question';
         return view('ask', $data);
     }
@@ -163,19 +168,5 @@ class UserController extends Controller
     {
         $data['title'] = 'View Tags';
         return view('viewTags', $data);
-    }
-
-
-    public function searchUser()
-    {
-        $api_url = env('API_URL') . '/userWithRecommendation';
-        $response = Http::get($api_url, [
-            'email' => 'c14230088@john.petra.ac.id'
-        ]);
-        $response = json_decode($response, true);
-        $users = $response['data'];
-
-        $title = 'Search User | Search User';
-        return view('searchUser', compact('title', 'users'));
     }
 }

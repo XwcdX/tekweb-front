@@ -60,13 +60,13 @@ class QuestionController extends Controller
         $question = $request->input('question');
         $image = $request->file('image');  // Expecting a single image file
     
-        $api_url = env('API_URL') . '/questions/';
-        Log::info("API URL: " . $api_url);  // Log API URL for debugging
+        $api_url = env('API_URL') . '/questions';
     
         $data = [
             'title' => $title,
             'question' => $question,
             'email' => session('email'),
+            'subject_id' => $request->subject_id
         ];
     
         // If an image is uploaded, process it

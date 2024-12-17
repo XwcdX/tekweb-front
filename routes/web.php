@@ -31,8 +31,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/home', [MainController::class, 'home'])->name('home');
 
-Route::get('/search-user', [UserController::class, 'searchUser'])->name('searchUser'); 
-
 Route::middleware(['isLogin'])->group(function () {
     // Route::get('/{id}', [UserController::class, 'viewOther']);
     Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
@@ -46,9 +44,9 @@ Route::get('/viewUsers', [MainController::class, 'viewAllUsers'])->name('viewAll
 Route::get('/viewAnswers/{questionId}', [MainController::class, 'viewAnswers'])->name('user.viewQuestions');
 Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllTags');
 Route::get('/viewUser/{email}', [MainController::class, 'viewUser'])->name('viewUser');
-Route::post('/submitAnswer/{$questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
+Route::post('/submitAnswer/{questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
 Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
-Route::post('/submit/question/comment/{$questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
+Route::post('/submit/question/comment/{questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
 
 // view tags
 
