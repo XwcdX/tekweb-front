@@ -543,10 +543,6 @@
         document.querySelectorAll('.tab-active').forEach(tab => {
             tab.className = 'tab-inactive px-4 py-2';
         });
-        // Update tab styles
-        document.querySelectorAll('.tab-active').forEach(tab => {
-            tab.className = 'tab-inactive px-4 py-2';
-        });
 
         document.getElementById('tab-' + tab).className = 'tab-active px-4 py-2';
         searchInput();

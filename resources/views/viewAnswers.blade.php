@@ -320,13 +320,13 @@
                     }
                     const questionId = @json($question['id']);
                     // Send form data
+                    
                     fetch(`/submitAnswer/${questionId}`, {
                             method: 'POST',
-                            body: formData,
                             headers: {
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                                'Content-Type': 'application/json',
                             },
+                            body: formData,
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -349,7 +349,7 @@
                                 icon: 'error',
                                 title: 'Error',
                                 text: 'There was a network error. Please try again.',
-                            });
+                            });                            
                         });
                 }
             });

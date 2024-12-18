@@ -92,6 +92,25 @@
         .image-upload-button:hover {
             background-color: #45a049;
         }
+
+        .tab-active {
+            background-color: #633F92;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .tab-inactive {
+            background-color: white;
+            color: #633F92;
+            border-radius: 5px;
+            border: 1px solid #633F92;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
     </style>
 
     @include('partials.nav')
@@ -137,6 +156,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="w-full">
+                    <h1 class="block mb-2 text-sm font-medium text-gray-900">Tags</h1>
+                    <div class="w-full flex gap-2 flex-wrap">
+                        @foreach ($data as $dat)
+                            <a id="{{ $dat['name'] }}" class="tab-inactive">{{ $dat['name'] }}</a>
+                        @endforeach
+                    </div>
+                </div>
                 <button type="submit" id="submit-btn"
                     class="mt-10 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                     Publish
@@ -148,6 +175,23 @@
 
 @section('script')
     <script>
+        let selectedTags = [];
+
+        document.querySelectorAll('.tab-inactive').forEach((button) => {
+            button.addEventListener('click', function() {
+                const tagName = this.id;
+
+                if (selectedTags.includes(tagName)) { // ga jadi pick tag
+                    selectedTags = selectedTags.filter(tag => tag !== tagName);
+                    this.className = 'tab-inactive px-4 py-2';
+
+                } else { // pick tag
+                    selectedTags.push(tagName);
+                    this.className = 'tab-active px-4 py-2';
+                }
+            });
+        });
+
         let imageFile = null; // Store the single image file
 
         // Image upload and preview
@@ -198,7 +242,7 @@
         // Form submission
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("submit-btn").addEventListener("click", function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
                 const question = document.getElementById("question").value;
                 const title = document.getElementById("title").value;
@@ -213,7 +257,14 @@
                     return;
                 }
 
-             
+                //CEK APA SAJA TAGS yang ada
+                let tags = <?php echo json_encode($data); ?>;
+
+                selectedTags = selectedTags.map(tagName => {
+                    const matchingTag = tags.find(tag => tag.name === tagName);
+                    return matchingTag ? matchingTag.id :
+                        tagName;
+                });
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -236,11 +287,14 @@
                         let formData = new FormData();
                         formData.append("title", title);
                         formData.append("question", question);
-                        
-                        if (imageFile){
+
+                        selectedTags.forEach(tagId => {
+                            formData.append("subject_id[]", tagId);
+                        });
+
+                        if (imageFile) {
                             formData.append("image", imageFile);
                         }
-
                         fetch("{{ route('addQuestion') }}", {
                                 method: "POST",
                                 headers: {
@@ -282,4 +336,3 @@
         });
     </script>
 @endsection
-

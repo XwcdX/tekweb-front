@@ -117,6 +117,7 @@ class QuestionController extends Controller
             'title' => $title,
             'question' => $question,
             'email' => session('email'),
+            'subject_id' => $request->subject_id
         ];
 
         // If an image is uploaded, process it

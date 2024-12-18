@@ -29,19 +29,21 @@ class AnswerController extends Controller
         $validatedData = $request->validate([
             'answer' => 'required|string',
             'images' => 'nullable|array', 
-            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',  
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5042',  
         ]);
-    
+        
         $data = [];
         $answer = $request->input('answer');
         $data["answer"] = $answer;
-    
+        
         $images = $request->file('images');  
     
         $imagePaths = [];
         if ($images) {
             $timestamp = now()->format('Y-m-d_H-i-s');  
     
+            // Image masih belum bisa masuk ke storage maupun DB || NOTE
+
             foreach ($images as $index => $image) {
                 $extension = $image->getClientOriginalExtension();
                 $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "_" . ($index + 1) . "." . $extension;
@@ -52,11 +54,13 @@ class AnswerController extends Controller
     
             $data['image_paths'] = json_encode($imagePaths);
         }
+        $data['email'] = session('email');
+        $data['question_id'] = $questionId;
+    
+        $api_url = env('API_URL') . '/answers';
+        $response = Http::withToken(session('token'))->post($api_url, $data);
 
-    
-        $api_url = env('API_URL') . '/submit/answers/' . $questionId . session('email');
-        $response = Http::post($api_url, $data);
-    
+
         if ($response->successful()) {
             return response()->json(['success' => true, 'message' => 'Answer submitted successfully!']);
         } else {

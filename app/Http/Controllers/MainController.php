@@ -55,7 +55,7 @@ class MainController extends Controller
   {
     $data['question'] = $this->questionController->getQuestionDetails($questionId);
     $data['title'] = 'View Answers';
-    dd($data);
+    // dd($data);
     return view('viewAnswers', $data);
   }
 
