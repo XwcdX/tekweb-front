@@ -13,8 +13,9 @@ class UserController extends Controller
     public function getAllUsers()
     {
         $api_url = env('API_URL') . '/users';
-        $response = Http::get($api_url);
+        $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
+        // dd($api_url);
         return $responseData['data'];
     }
 
@@ -55,7 +56,7 @@ class UserController extends Controller
         $usersByNewest = $users;
         usort($usersByNewest, function ($a, $b) {
             // Format the 'created_at' timestamps into human-readable format
-            return strcmp($b['created_at'], $a['created_at']); // descending order
+            return strcmp($a['created_at'], $b['created_at']); // descending order
         });
 
 
