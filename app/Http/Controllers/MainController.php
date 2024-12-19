@@ -106,4 +106,11 @@ class MainController extends Controller
     $data['title'] = 'View Tags';
     return view('viewTags', $data);
   }
+
+  public function leaderboard()
+  {
+    $data['title'] = 'Leaderboard';
+    // $data['users'] = $this->userController->getLeaderboard();
+    return view('leaderboard', $data);
+  }
 }

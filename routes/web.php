@@ -57,4 +57,6 @@ Route::post('/answer/vote', [AnswerController::class, 'vote'])->name('answer.vot
     Route::post('/submitAnswer/{questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
     Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
     Route::post('/submit/question/comment/{questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
+    Route::get('/leaderboard', [MainController::class, 'leaderboard'])->name('leaderboard');
+
 });

@@ -2,38 +2,7 @@
 @section('content')
 @include('utils.background3')
 <style>
-    .titleTopUser {
-        background: linear-gradient(90deg, #633F92, #7494ec, #5500a4, white, #633F92);
-        -webkit-background: linear-gradient(90deg, #633F92, #7494ec, #5500a4, white, #633F92);
-        background-size: 400%;
-        font-weight: 900 !important;
-        /* letter-spacing: 5px; */
-        word-spacing: 5px;
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        -webkit-animation: animateText 30s linear infinite;
-
-    }
-
-    @keyframes animateText {
-        0% {
-            background-position: 0%;
-        }
-
-        100% {
-            background-position: 500%;
-        } 
-    }
-
-    @-webkit-keyframes animateText {
-        0% {
-            background-position: 0%;
-        }
-
-        100% {
-            background-position: 500%;
-        }
-    }
+   
 
     .tab-active {
         background-color: #633F92;
@@ -161,72 +130,7 @@
 
 <div class="max-w-4xl sm:max-w-6xl mx-auto px-4 py-8">
 
-    <!-- Our Top Users -->
-    <div class="flex flex-col items-center justify-center w-full">
-        <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Our Top Users</h1>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-10 md:gap-x-12 gap-y-8 mb-12">
-            {{-- @foreach ($topUsers as $user) --}}
-            <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-7 px-7 glowing">
-                <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                <h3 class="font-semibold">
-                    <a href="#" class="hover:underline">User 1</a>
-                </h3>
-                <p class="text-sm">Reputation: 560</p>
-                {{-- <button class="text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button> --}}
-            </div>
-
-
-
-            <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-                <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                <h3 class="font-semibold">
-                    <a href="#" class="hover:underline">User 1</a>
-                </h3>
-                <p class="text-sm">Reputation: 560</p>
-            </div>
-
-
-
-            <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-                <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                <h3 class="font-semibold">
-                    <a href="#" class="hover:underline">User 1</a>
-                </h3>
-                <p class="text-sm">Reputation: 560</p>
-            </div>
-
-
-            <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-                <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                <h3 class="font-semibold">
-                    <a href="#" class="hover:underline">User 1</a>
-                </h3>
-                <p class="text-sm">Reputation: 560</p>
-            </div>
-
-
-            <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-4 px-4 glowing">
-                <i class="fa-solid fa-crown text-4xl text-yellow-500"></i>
-                {{-- <img src="path/to/crown-icon.png" alt="Crown Icon" class="crown-icon"> --}}
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image mx-auto mb-2">
-                <h3 class="font-semibold">
-                    <a href="#" class="hover:underline">User 1</a>
-                </h3>
-                <p class="text-sm">Reputation: 560</p>
-            </div>
-            {{-- @endforeach --}}
-        </div>
-
-
-    </div>
+    
 
 
     <!-- Search and Tabs -->
