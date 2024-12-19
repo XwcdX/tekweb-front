@@ -33,8 +33,21 @@ Route::middleware(['isLogin'])->group(function () {
     Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
     Route::get('/', [MainController::class, 'home'])->name('home');
 
-    Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfile');
-    Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
+Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfile');
+Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
+
+// view questions
+Route::get('/viewUsers', [MainController::class, 'viewAllUsers'])->name('viewAllUsers');
+Route::get('/viewAnswers/{questionId}', [MainController::class, 'viewAnswers'])->name('user.viewQuestions');
+Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllTags');
+Route::get('/viewUser/{email}', [MainController::class, 'viewUser'])->name('viewUser');
+Route::post('/submitAnswer/{questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
+Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
+Route::post('/submit/question/comment/{questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
+
+Route::post('/question/vote', [QuestionController::class, 'vote'])->name('question.vote');
+Route::post('/answer/vote', [AnswerController::class, 'vote'])->name('answer.vote');
+// view tags
 
     // view questions
     Route::get('/viewUsers', [MainController::class, 'viewAllUsers'])->name('viewAllUsers');

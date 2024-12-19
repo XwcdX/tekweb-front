@@ -24,42 +24,56 @@ class AnswerController extends Controller
     }
 
     public function submitAnswer(Request $request, $questionId)
-{
-    // Validate the incoming data
-    $validatedData = $request->validate([
-        'title' => 'required|string',
-        'question' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5042', // Single image
-    ]);
-    
-    $data = [];
-    $answer = $request->input('answer');
-    $data["answer"] = $answer;
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'answer' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5042',  // 5042 KB = 5 MB
+        ]);
 
-    // Process the image upload
-    if ($request->hasFile('image')) {
-        $image = $request->file('image'); // Single image
-        $timestamp = now()->format('Y-m-d_H-i-s');
-        $extension = $image->getClientOriginalExtension();
-        $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "." . $extension;
+        $image = $request->file('image');
+        $answer = $request->input('answer');
+        $data["answer"] = $answer;
+        if ($image) {
+            $timestamp = now()->format('Y-m-d_H-i-s');
+            $extension = $image->getClientOriginalExtension();
+            $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "_" . "." . $extension;
+            $path = $image->storePubliclyAs("uploads/answers/" . $questionId, $customFileName, 'public');
+            $data['image'] = $path;
+        }
 
-        // Save the image to storage
-        $path = $image->storePubliclyAs("uploads/answers/" . $questionId, $customFileName, 'public');
-        $data['image_path'] = $path; // Store as a single string, not an array
+        $data['email'] = session('email');
+        $data['question_id'] = $questionId;
+        Log::info('Submitting answer data: ', $data);
+
+        $api_url = env('API_URL') . '/answers';
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+
+        Log::info('API response: ', $response->json());
+
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Answer submitted successfully!']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to submit answer.']);
+        }
     }
 
-    $data['email'] = session('email');
-    $data['question_id'] = $questionId;
-
-    // Send the data to the API
-    $api_url = env('API_URL') . '/answers';
-    $response = Http::withToken(session('token'))->post($api_url, $data);
-
-    if ($response->successful()) {
-        return response()->json(['success' => true, 'message' => 'Answer submitted successfully!']);
-    } else {
-        return response()->json(['success' => false, 'message' => 'Failed to submit answer.']);
+    public function vote(Request $request)
+    {
+        // kirim email
+        $data['email'] = session('email');
+        if ($request->vote === true) {
+            $api_url = env('API_URL') . '/answers/' . $request->answer_id . '/upvote';
+        } else {
+            $api_url = env('API_URL') . '/answers/' . $request->answer_id . '/downvote';
+        }
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+        Log::info($response);
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Your Vote has been recorded']);
+        } else {
+            $errorMessage = $response->json()['message'] ?? 'Failed to comment.';
+            return response()->json(['success' => false, 'message' => $errorMessage]);
+        }
     }
 }
-
-}    

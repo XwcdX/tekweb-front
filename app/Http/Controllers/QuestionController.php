@@ -12,7 +12,7 @@ class QuestionController extends Controller
     public function getAllQuestions(Request $request)
     {
         $api_url = env('API_URL') . '/questions';
-        $response = Http::get($api_url);
+        $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
 
         // Get the data (questions)
@@ -38,6 +38,7 @@ class QuestionController extends Controller
             ['path' => $request->url(), 'query' => $request->query()] 
         );
         
+
 
         // dd($data);
         // Return the updated data
@@ -110,8 +111,7 @@ class QuestionController extends Controller
         $question = $request->input('question');
         $image = $request->file('image');  // Expecting a single image file
 
-        $api_url = env('API_URL') . '/questions/';
-        Log::info("API URL: " . $api_url);  // Log API URL for debugging
+        $api_url = env('API_URL') . '/questions';
 
         $data = [
             'title' => $title,
@@ -155,20 +155,48 @@ class QuestionController extends Controller
 
     public function submitQuestionComment(Request $request, $questionId)
     {
-        Log::info("Data to be sent: hellowwowow");
         $request->validate([
             'comment' => 'required|string|max:255',
         ]);
+
+        if (!isset($request->answer_id)) {
+            $data['question_id'] = $questionId;
+        } else {
+            $data['answer_id'] = $questionId;
+        }
+
         $data['email'] = session('email');
-        $data['question_id'] = $questionId;
         $data['comment'] = $request->comment;
         Log::info("Data to be sent: ", $data);
 
         $api_url = env('API_URL') . '/comments';
-        $response = Http::post($api_url, $data);
-        dd($response);
-        return $response['message'];
+        $response = Http::withToken(session('token'))->post($api_url, $data);
 
-        // return response()->json(['success' => true, 'comment' => $comment]);
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Comment on this Question is submitted successfully!']);
+        } else {
+            $errorMessage = $response->json()['message'] ?? 'Failed to comment.';
+            return response()->json(['success' => false, 'message' => $errorMessage]);
+        }
+    }
+
+    public function vote(Request $request) 
+    {
+        // kirim email
+        $data['email'] = session('email');
+        if($request->vote === true){
+            $api_url = env('API_URL') . '/questions/' . $request->question_id . '/upvote';
+        }
+        else{
+            $api_url = env('API_URL') . '/questions/' . $request->question_id . '/downvote';
+        }
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Your Vote has been recorded']);
+        } else {
+            $errorMessage = $response->json()['message'] ?? 'Failed to comment.';
+            return response()->json(['success' => false, 'message' => $errorMessage]);
+        }
     }
 }
