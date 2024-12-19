@@ -106,7 +106,7 @@
             }
 
             .toggle-box::before {
-               
+
                 left: 0;
                 width: 100%;
                 height: 300%;
@@ -328,10 +328,14 @@
                     if (password !== confirmPassword) {
                         Swal.close();
                         Swal.fire({
-                            icon: 'error',
                             title: 'Error',
-                            text: 'Passwords do not match!',
-                        });
+                            text: "Password do not match!",
+                            icon: 'error',
+                            confirmButtonText: 'OK!',
+                            didOpen: () => {
+                                Swal.hideLoading();
+                            }
+                        })
                         return;
                     }
 

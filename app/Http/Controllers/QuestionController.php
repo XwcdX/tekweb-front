@@ -67,7 +67,7 @@ class QuestionController extends Controller
             'title' => $title,
             'question' => $question,
             'email' => session('email'),
-            'subject_id' => $request->subject_id
+            'tag_id' => $request->subject_id
         ];
 
         // If an image is uploaded, process it
@@ -106,7 +106,7 @@ class QuestionController extends Controller
     public function submitQuestionComment(Request $request, $questionId)
     {
         $request->validate([
-            'comment' => 'required|string|max:255',
+            'comment' => 'required',
         ]);
 
         if (!isset($request->answer_id)) {
@@ -115,13 +115,17 @@ class QuestionController extends Controller
             $data['answer_id'] = $questionId;
         }
 
+        if(session('reputation') < 11){
+            return response()->json(['success' => false, 'message' => 'Your Reputation is Insufficient']);
+        }
+
         $data['email'] = session('email');
         $data['comment'] = $request->comment;
         Log::info("Data to be sent: ", $data);
 
         $api_url = env('API_URL') . '/comments';
         $response = Http::withToken(session('token'))->post($api_url, $data);
-
+        Log::info($response);
         if ($response->successful()) {
             return response()->json(['success' => true, 'message' => 'Comment on this Question is submitted successfully!']);
         } else {

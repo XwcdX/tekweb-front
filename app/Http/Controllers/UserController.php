@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        $api_url = env('API_URL') . '/users';
+        $api_url = env('API_URL') . '/userWithRecommendation';
         $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
         return $responseData['data'];
@@ -148,6 +148,7 @@ class UserController extends Controller
         $api_url = env('API_URL') . '/tags';
         $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
+        Log::info($response);
 
         $data['data'] = $response['data'];
         $data['title'] = 'Ask a Question';

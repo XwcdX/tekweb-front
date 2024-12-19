@@ -149,14 +149,14 @@ class AuthController extends Controller
 
         $responseData = $response->json();
         $storedUser = $responseData['data'];
-        if (!isset($storedUser['email'], $storedUser['name'], $storedUser['token'])) {
+        if (!isset($storedUser['email'], $storedUser['name'], $storedUser['token'], $storedUser['reputation'])) {
             return redirect()->route('loginOrRegist')->with('Error', 'Invalid response structure from the API.');
         }
-
         session([
             'email' => $storedUser['email'],
             'name' => $storedUser['name'],
-            'token' => $storedUser['token']
+            'token' => $storedUser['token'],
+            'reputation' => $storedUser['reputation']
         ]);
         $url = session('url');
         if ($url) {
