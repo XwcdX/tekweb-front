@@ -596,8 +596,7 @@
         window.history.pushState({}, '', url);
 
         // Reload the page content based on the new page number
-        // (This can be handled by a backend request or updating the content dynamically)
-        location.reload(); // This reloads the page to apply the new pagination
+        location.reload();
     }
     window.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
