@@ -48,5 +48,7 @@ Route::post('/submitAnswer/{questionId}', [AnswerController::class, 'submitAnswe
 Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
 Route::post('/submit/question/comment/{questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
 
+Route::post('/question/vote', [QuestionController::class, 'vote'])->name('question.vote');
+Route::post('/answer/vote', [AnswerController::class, 'vote'])->name('answer.vote');
 // view tags
 

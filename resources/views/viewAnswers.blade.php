@@ -8,13 +8,13 @@
     <style>
         body {
             /* top: 0;
-                                                                    left: 0;
-                                                                    margin: 0;
-                                                                    padding: 0;
-                                                                    min-width: 100vw;
-                                                                    min-height: 100vh;
-                                                                    font-family: 'Montserrat', sans-serif;
-                                                                    background-color: #F4DEB5; */
+                                                                                        left: 0;
+                                                                                        margin: 0;
+                                                                                        padding: 0;
+                                                                                        min-width: 100vw;
+                                                                                        min-height: 100vh;
+                                                                                        font-family: 'Montserrat', sans-serif;
+                                                                                        background-color: #F4DEB5; */
             background-image:
                 radial-gradient(at 93% 100%, #7494ec 0px, transparent 50%),
                 radial-gradient(at 0% 0%, #633F92 0px, transparent 50%),
@@ -24,9 +24,9 @@
                 radial-gradient(at 0% 100%, #633F92 0px, transparent 50%);
             background-size: 200% 200%;
             /* background-repeat: no-repeat;
-                                                                    overflow-x: hidden;
-                                                                    animation: gradient 30s ease infinite;
-                                                                    z-index:1 ; */
+                                                                                        overflow-x: hidden;
+                                                                                        animation: gradient 30s ease infinite;
+                                                                                        z-index:1 ; */
         }
 
         .hover\:shadow-glow:hover {
@@ -49,10 +49,12 @@
                     <div class="text-sm flex items-center space-x-4">
                         <small class="text-gray-200">{{ $question['view'] }} views</small>
                         <div class="flex items-center">
-                            <button class="text-white hover:text-[#633F92] focus:outline-none thumbs-up">
+                            <button id="upVoteQuestion"
+                                class="text-white hover:text-[#633F92] focus:outline-none thumbs-up">
                                 <i class="fas fa-thumbs-up"></i>
                             </button>
-                            <button class="ml-2 text-white hover:text-gray-700 focus:outline-none thumbs-down">
+                            <button id="downVoteQuestion"
+                                class="ml-2 text-white hover:text-gray-700 focus:outline-none thumbs-down">
                                 <i class="fas fa-thumbs-down"></i>
                             </button>
                             <small class="text-gray-200 ml-2">{{ $question['vote'] }} votes</small>
@@ -129,7 +131,7 @@
 
                 @foreach ($question['comment'] as $comm)
                     <div class="comment bg-gray-700 p-4 mb-2 rounded-lg">
-                        <p class="text-white"><strong>{{ $comm['user']['username'] }}</strong>: {{ $comm['comment'] }}</p>
+                        <p class="text-white"><strong>{{ $comm['username'] }}</strong>: {{ $comm['comment'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -181,9 +183,10 @@
                                 </button>
                                 <!-- comment input box -->
                                 <div class="comment-box hidden mt-2">
-                                    <textarea class="w-full bg-gray-100 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none" rows="2"
+                                    <textarea id="answer-comment-{{ $ans['id'] }}"
+                                        class="w-full bg-gray-100 rounded-lg p-3 text-gray-800 placeholder-gray-400 focus:outline-none" rows="2"
                                         placeholder="Write your comment here!"></textarea>
-                                    <button id="answer-comment"
+                                    <button id="submit-comment-{{ $ans['id'] }}" data-answer-id="{{ $ans['id'] }}"
                                         class="mt-4 px-4 py-2 bg-white text-[--purple] rounded-lg border-2 border-[--bblue] transition-all duration-300 font-semibold hover:shadow-glow">
                                         Submit Comment
                                     </button>
@@ -191,18 +194,21 @@
                             </div>
                             <!-- Thumbs up -->
                             <div class="flex items-center space-x-2">
-                                <button class="text-white hover:text-[#633F92] focus:outline-none thumbs-up">
+                                <button class="upVoteAnswer text-white hover:text-[#633F92] focus:outline-none thumbs-up" data-answer-id="{{ $ans['id'] }}"
+                                    class="text-white hover:text-[#633F92] focus:outline-none thumbs-up">
                                     <i class="fas fa-thumbs-up text-lg"></i>
                                 </button>
-                                <span class="thumbs-up-count text-white  font-medium">0</span>
+                                <span class="thumbs-up-count text-white font-medium">0</span>
                             </div>
                             <!-- Thumbs down -->
                             <div class="flex items-center space-x-2">
-                                <button class="text-white  hover:text-gray-700 focus:outline-none thumbs-down">
+                                <button class="downVoteAnswer text-white  hover:text-gray-700 focus:outline-none thumbs-down" data-answer-id="{{ $ans['id'] }}"
+                                    class="text-white hover:text-gray-700 focus:outline-none thumbs-down">
                                     <i class="fas fa-thumbs-down text-lg"></i>
                                 </button>
-                                <span class="thumbs-down-count text-white  font-medium">0</span>
+                                <span class="thumbs-down-count text-white font-medium">0</span>
                             </div>
+
                         </div>
 
                     </div>
@@ -320,7 +326,7 @@
                     }
                     const questionId = @json($question['id']);
                     // Send form data
-                    
+
                     fetch(`/submitAnswer/${questionId}`, {
                             method: 'POST',
                             headers: {
@@ -340,7 +346,7 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'There was an error submitting your answer.',
+                                    text: data.message,
                                 });
                             }
                         })
@@ -349,7 +355,7 @@
                                 icon: 'error',
                                 title: 'Error',
                                 text: 'There was a network error. Please try again.',
-                            });                            
+                            });
                         });
                 }
             });
@@ -383,11 +389,11 @@
                     // Send comment data to the server
                     fetch(`/submit/question/comment/${questionId}`, {
                             method: 'POST',
-                            body: formData,
                             headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                    .content,
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}",
                             },
+                            body: formData,
+
                         })
                         .then(response => response.json()) // Handle the response
                         .then(data => {
@@ -403,7 +409,7 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error',
-                                    text: 'There was an error submitting your comment.',
+                                    text: data.message,
                                 });
                             }
                         })
@@ -413,8 +419,192 @@
                                 title: 'Error',
                                 text: 'An unexpected error occurred.',
                             });
+                            console.log(error);
+
                         });
                 }
+            });
+        });
+
+        // COMMENT DI ANSWERRRR
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const submitCommentButtons = document.querySelectorAll('[id^="submit-comment-"]');
+
+            submitCommentButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+
+                    const answerId = button.getAttribute('data-answer-id');
+
+                    const commentTextArea = document.getElementById(`answer-comment-${answerId}`);
+                    const commentText = commentTextArea.value.trim();
+
+                    if (commentText === '') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please write a comment!',
+                        });
+                    } else {
+                        const formData = new FormData();
+                        formData.append('comment', commentText);
+                        formData.append('answer_id', answerId);
+
+                        fetch(`/submit/question/comment/${answerId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                },
+                                body: formData,
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Comment Submitted!',
+                                        text: 'Your comment has been successfully posted.',
+                                    });
+
+                                    commentTextArea.value = '';
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: data.message,
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'An unexpected error occurred.',
+                                });
+                                console.log(error);
+                            });
+                    }
+                });
+            });
+        });
+
+        // Vote Question
+        document.addEventListener('DOMContentLoaded', () => {
+            const questionId = @json($question['id']);
+
+            const upVoteButton = document.getElementById('upVoteQuestion');
+            const downVoteButton = document.getElementById('downVoteQuestion');
+
+            const handleVote = (voteType) => {
+                const formData = new FormData();
+                formData.append('vote', voteType);
+                formData.append('question_id', questionId);
+
+                fetch(`/question/vote`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        },
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+
+                            const voteCountElement = document.querySelector('.text-gray-200.ml-2');
+                            voteCountElement.textContent = `${data.newVoteCount} votes`;
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Vote Submitted!',
+                                text: 'Your vote has been successfully recorded.',
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message,
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Unexpected Error',
+                            text: 'An unexpected error occurred.',
+                        });
+                    });
+            };
+
+            upVoteButton.addEventListener('click', () => handleVote(true));
+            downVoteButton.addEventListener('click', () => handleVote(false));
+        });
+
+        // Vote Answer
+        document.addEventListener('DOMContentLoaded', () => {
+            const upVoteButtons = document.querySelectorAll('.upVoteAnswer');
+            const downVoteButtons = document.querySelectorAll('.downVoteAnswer');
+
+            const handleVote = (voteType, id) => {
+                
+                const formData = new FormData();
+                formData.append('vote', voteType);
+                formData.append('answer_id', id);
+
+                fetch(`/answer/vote`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        },
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update the vote count
+                            const voteCountElement = document.querySelector(`[data-answer-id="${id}"]`)
+                                .nextElementSibling;
+                            if (voteCountElement) {
+                                voteCountElement.textContent = `${data.newVoteCount} votes`;
+                            }
+
+                            // Display success message
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Vote Submitted!',
+                                text: 'Your vote has been successfully recorded.',
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message,
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Unexpected Error',
+                            text: 'An unexpected error occurred.',
+                        });
+                    });
+            };
+
+            upVoteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerId = button.getAttribute('data-answer-id');
+                    handleVote(true, answerId);
+                });
+            });
+
+            downVoteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerId = button.getAttribute('data-answer-id');
+                    handleVote(false, answerId);
+                });
             });
         });
     </script>

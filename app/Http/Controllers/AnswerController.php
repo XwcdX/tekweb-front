@@ -67,4 +67,24 @@ class AnswerController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to submit answer.']);
         }
     }
+
+    public function vote(Request $request) 
+    {
+        // kirim email
+        $data['email'] = session('email');
+        if($request->vote === true){
+            $api_url = env('API_URL') . '/answers/' . $request->answer_id . '/upvote';
+        }
+        else{
+            $api_url = env('API_URL') . '/answers/' . $request->answer_id . '/downvote';
+        }
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+        Log::info($response);
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Your Vote has been recorded']);
+        } else {
+            $errorMessage = $response->json()['message'] ?? 'Failed to comment.';
+            return response()->json(['success' => false, 'message' => $errorMessage]);
+        }
+    }
 }    
