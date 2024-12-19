@@ -16,6 +16,7 @@ class UserController extends Controller
         $api_url = env('API_URL') . '/users';
         $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
+        // dd($api_url);
         return $responseData['data'];
     }
 

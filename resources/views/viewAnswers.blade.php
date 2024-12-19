@@ -129,7 +129,7 @@
 
                 @foreach ($question['comment'] as $comm)
                     <div class="comment bg-gray-700 p-4 mb-2 rounded-lg">
-                        <p class="text-white"><strong>{{ $comm['user']['username'] }}</strong>: {{ $comm['comment'] }}</p>
+                        <p class="text-white"><strong>{{ $comm['username'] }}</strong>: {{ $comm['comment'] }}</p>
                     </div>
                 @endforeach
             </div>
