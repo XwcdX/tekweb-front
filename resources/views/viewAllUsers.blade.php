@@ -22,7 +22,7 @@
 
         100% {
             background-position: 500%;
-        } 
+        }
     }
 
     @-webkit-keyframes animateText {
@@ -142,6 +142,7 @@
     .glowing {
         animation: glow 2s infinite;
     }
+
     @media (max-width: 768px) {
         .flex-container {
             flex-direction: column;
@@ -174,7 +175,8 @@
                     <a href="#" class="hover:underline">User 1</a>
                 </h3>
                 <p class="text-sm">Reputation: 560</p>
-                {{-- <button class="text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button> --}}
+                {{-- <button
+                    class="text-sm font-normal text-blue-500 hover:text-blue-800 transition-all">follow</button> --}}
             </div>
 
 
@@ -234,7 +236,8 @@
     <div class="flex-container flex justify-between items-center mb-6">
         <!-- Search Bar -->
         <div class="search-bar">
-            <input id="searchInput" type="text" placeholder="Search users..." class="text-gray-800 placeholder-gray-400" oninput="searchInput()">
+            <input id="searchInput" type="text" placeholder="Search users..." class="text-gray-800 placeholder-gray-400"
+                oninput="searchInput()">
             <button class="text-[#007bff] ml-2">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
@@ -252,83 +255,86 @@
     <div id="reputations" class="tab-content">
         <div class="user-grid" id="reputationResult">
             @foreach ($order_by_reputation as $user)
-            <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
-                <div class="user-info">
-                    <h3 class="font-semibold">
-                        <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
-                            class="hover:underline">{{ $user['username'] }}</a>
-                    </h3>
-                    <p class="text-sm">Reputation: {{ $user['reputation'] }}</p>
-                    <div class="user-tags">
-                        {{-- @foreach ($user['tags'] as $tag) --}}
-                        <span class="tag">php</span>
-                        <span class="tag">java</span>
-                        {{-- @endforeach --}}
+                <div class="user-card border-2 border-[--purple] rounded-lg">
+                    @if ($user['image'])
+                        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    @else
+                        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    @endif
+                    <div class="user-info">
+                        <h3 class="font-semibold">
+                            <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                class="hover:underline">{{ $user['username'] }}</a>
+                        </h3>
+                        <p class="text-sm">Reputation: {{ $user['reputation'] }}</p>
+                        <div class="user-tags">
+                            {{-- @foreach ($user['tags'] as $tag) --}}
+                            <span class="tag">php</span>
+                            <span class="tag">java</span>
+                            {{-- @endforeach --}}
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
+        {{$order_by_reputation->appends(['tab' => 'reputations'])->links()}}
     </div>
 
     <!-- New Users Tab -->
     <div id="new-users" class="tab-content hidden">
         <div class="user-grid" id="newestResult">
             @foreach ($order_by_newest as $user)
-            <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
-                <div class="user-info">
-                    <h3 class="font-semibold">
-                        <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
-                            class="hover:underline">{{ $user['username'] }}</a>
-                    </h3>
-                    <p class="text-sm text-blue-800 ">Since {{ $user['created_at'] }}</p>
-                    <div class="user-tags">
-                        {{-- @foreach ($user['tags'] as $tag) --}}
-                        <span class="tag">php</span>
-                        <span class="tag">java</span>
-                        {{-- @endforeach --}}
+                <div class="user-card border-2 border-[--purple] rounded-lg">
+                    @if ($user['image'])
+                        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    @else
+                        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    @endif
+                    <div class="user-info">
+                        <h3 class="font-semibold">
+                            <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                class="hover:underline">{{ $user['username'] }}</a>
+                        </h3>
+                        <p class="text-sm text-blue-800 ">Since {{ $user['created_at'] }}</p>
+                        <div class="user-tags">
+                            {{-- @foreach ($user['tags'] as $tag) --}}
+                            <span class="tag">php</span>
+                            <span class="tag">java</span>
+                            {{-- @endforeach --}}
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
+        {{$order_by_newest->appends(['tab' => 'new-users'])->links()}}
     </div>
 
     <!-- Voters Tab -->
     <div id="voters" class="tab-content hidden">
         <div class="user-grid" id="voterResult">
             @foreach ($order_by_vote as $user)
-            <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
-                <div class="user-info">
-                    <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
-                            class="hover:underline">{{ $user['username'] }}</a>
-                    </h3>
-                    <p class="text-sm">Voters: {{ $user['vote_count'] }}</p>
-                    <div class="user-tags">
-                        {{-- @foreach ($user['tags'] as $tag) --}}
-                        <span class="tag">react</span>
-                        <span class="tag">vue</span>
-                        {{-- @endforeach --}}
+                <div class="user-card border-2 border-[--purple] rounded-lg">
+                    @if ($user['image'])
+                        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    @else
+                        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    @endif
+                    <div class="user-info">
+                        <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                class="hover:underline">{{ $user['username'] }}</a>
+                        </h3>
+                        <p class="text-sm">Voters: {{ $user['vote_count'] }}</p>
+                        <div class="user-tags">
+                            {{-- @foreach ($user['tags'] as $tag) --}}
+                            <span class="tag">react</span>
+                            <span class="tag">vue</span>
+                            {{-- @endforeach --}}
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
+        {{$order_by_vote->appends(['tab' => 'voters'])->links()}}
     </div>
 </div>
 
@@ -337,9 +343,9 @@
 <script>
     let searchSwitch = 1; //switch cari berdasarkan tabs yang dipilih
 
-    let byReputation = <?php echo json_encode($order_by_reputation) ?>;
-    let byNewest = <?php echo json_encode($order_by_newest) ?>;
-    let byVote = <?php echo json_encode($order_by_vote) ?>;
+    let byReputation = <?php echo json_encode($user_by_reputation) ?>;
+    let byNewest = <?php echo json_encode($user_by_newest) ?>;
+    let byVote = <?php echo json_encode($user_by_vote) ?>;
 
     const reputationTrie = new Trie(); //untuk Reputations tabs
 
@@ -363,6 +369,15 @@
         const input = document.getElementById('searchInput').value.toLowerCase();
         const baseUrl = "{{ route('viewUser', ['email' => ':email']) }}";
 
+        let userList = [];
+        if (searchSwitch === 1) {
+            userList = byReputation;
+        } else if (searchSwitch === 2) {
+            userList = byNewest;
+        } else if (searchSwitch === 3) {
+            userList = byVote;
+        }
+
         if (input.length > 0) {
             if (searchSwitch === 1) {
                 const resultsDiv = document.getElementById('reputationResult');
@@ -373,9 +388,9 @@
                 resultsDiv.innerHTML = matchingUsers.map(user => `
             <div class="user-card border-2 border-[--purple] rounded-lg">
                 @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                 @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                 @endif
                 <div class="user-info">
                     <h3 class="font-semibold">
@@ -397,9 +412,9 @@
                             <div class="user-card border-2 border-[--purple] rounded-lg">
                @if ($user['image'])
                 <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
+            @else
                 <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+            @endif
                 <div class="user-info">
                     <h3 class="font-semibold">
                 <a href="${baseUrl.replace(':email', user.email)}" class="hover:underline">${user.username}</a>
@@ -422,9 +437,9 @@
                 resultsDiv.innerHTML = matchingUsers.map(user => `
                             <div class="user-card border-2 border-[--purple] rounded-lg">
                 @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                 @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                    <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
                 @endif
                 <div class="user-info">
                     <h3 class="font-semibold"> 
@@ -446,83 +461,86 @@
             if (searchSwitch === 1) {
                 document.getElementById('reputationResult').innerHTML = `
                 @foreach ($order_by_reputation as $user)
-            <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
-                <div class="user-info">
-                    <h3 class="font-semibold">
-                        <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
-                            class="hover:underline">{{ $user['username'] }}</a>
-                    </h3>
-                    <p class="text-sm">Reputation: {{ $user['reputation'] }}</p>
-                    <div class="user-tags">
-                        {{-- @foreach ($user['tags'] as $tag) --}}
-                        <span class="tag">php</span>
-                        <span class="tag">java</span>
-                        {{-- @endforeach --}}
+                    <div class="user-card border-2 border-[--purple] rounded-lg">
+                        @if ($user['image'])
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @else
+                            <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                        @endif
+                        <div class="user-info">
+                            <h3 class="font-semibold">
+                                <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                    class="hover:underline">{{ $user['username'] }}</a>
+                            </h3>
+                            <p class="text-sm">Reputation: {{ $user['reputation'] }}</p>
+                            <div class="user-tags">
+                                {{-- @foreach ($user['tags'] as $tag) --}}
+                                <span class="tag">php</span>
+                                <span class="tag">java</span>
+                                {{-- @endforeach --}}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            @endforeach
+                @endforeach
                 `;
             } else if (searchSwitch === 2) {
                 document.getElementById('newestResult').innerHTML = `
                     @foreach ($order_by_newest as $user)
-            <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
-                <div class="user-info">
-                    <h3 class="font-semibold">
-                        <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
-                            class="hover:underline">{{ $user['username'] }}</a>
-                    </h3>
-                    <p class="text-sm text-blue-800 ">Since {{ $user['created_at'] }}</p>
-                    <div class="user-tags">
-                        {{-- @foreach ($user['tags'] as $tag) --}}
-                        <span class="tag">php</span>
-                        <span class="tag">java</span>
-                        {{-- @endforeach --}}
-                    </div>
-                </div>
-            </div>
-            @endforeach
+                        <div class="user-card border-2 border-[--purple] rounded-lg">
+                            @if ($user['image'])
+                                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                            @else
+                                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                            @endif
+                            <div class="user-info">
+                                <h3 class="font-semibold">
+                                    <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                        class="hover:underline">{{ $user['username'] }}</a>
+                                </h3>
+                                <p class="text-sm text-blue-800 ">Since {{ $user['created_at'] }}</p>
+                                <div class="user-tags">
+                                    {{-- @foreach ($user['tags'] as $tag) --}}
+                                    <span class="tag">php</span>
+                                    <span class="tag">java</span>
+                                    {{-- @endforeach --}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                     `;
 
             } else if (searchSwitch === 3) {
                 document.getElementById('voterResult').innerHTML = `
                     @foreach ($order_by_vote as $user)
-            <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
-                <div class="user-info">
-                    <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
-                            class="hover:underline">{{ $user['username'] }}</a>
-                    </h3>
-                    <p class="text-sm">Voters: {{ $user['vote_count'] }}</p>
-                    <div class="user-tags">
-                        {{-- @foreach ($user['tags'] as $tag) --}}
-                        <span class="tag">react</span>
-                        <span class="tag">vue</span>
-                        {{-- @endforeach --}}
-                    </div>
-                </div>
-            </div>
-            @endforeach
+                        <div class="user-card border-2 border-[--purple] rounded-lg">
+                            @if ($user['image'])
+                                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                            @else
+                                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
+                            @endif
+                            <div class="user-info">
+                                <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
+                                        class="hover:underline">{{ $user['username'] }}</a>
+                                </h3>
+                                <p class="text-sm">Voters: {{ $user['vote_count'] }}</p>
+                                <div class="user-tags">
+                                    {{-- @foreach ($user['tags'] as $tag) --}}
+                                    <span class="tag">react</span>
+                                    <span class="tag">vue</span>
+                                    {{-- @endforeach --}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                     `;
             }
         }
     }
 
+
     function showTab(tab) {
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentPage = urlParams.get('page') || 1;
         // Hide all tabs
         document.querySelectorAll('.tab-content').forEach(content => {
             content.classList.add('hidden');
@@ -533,6 +551,7 @@
 
         if (tab.includes('reputations')) {
             searchSwitch = 1;
+
         } else if (tab.includes('new-users')) {
             searchSwitch = 2;
         } else {
@@ -545,8 +564,54 @@
         });
 
         document.getElementById('tab-' + tab).className = 'tab-active px-4 py-2';
+
+
         searchInput();
-        
+        const url = new URL(window.location);
+        if (urlParams.get('tab') !== tab) {
+             // Reset page to 1 when switching tabs
+            url.searchParams.set('tab', tab);
+            url.searchParams.set('page', 1);
+            window.history.pushState({}, '', url);
+            location.reload();
+        }
+        url.searchParams.set('tab', tab);
+        window.history.pushState({}, '', url);
+
+
     }
+    function changePage(page) {
+        // Get the current tab from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentTab = urlParams.get('tab') || 'reputations'; // Default tab if not set
+
+        // Update the URL with the current tab and the new page
+        const url = new URL(window.location);
+        url.searchParams.set('tab', currentTab);
+        if (urlParams.get('tab') !== tab) {
+            url.searchParams.set('page', 1); // Reset page to 1 when switching tabs
+        } else {
+            url.searchParams.set('page', page);
+        }
+        window.history.pushState({}, '', url);
+
+        // Reload the page content based on the new page number
+        // (This can be handled by a backend request or updating the content dynamically)
+        location.reload(); // This reloads the page to apply the new pagination
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get('tab') || 'reputations'; // Default to 'reputations' tab
+        showTab(activeTab);
+
+        // Set up pagination change handler
+        document.querySelectorAll('#tabs-container button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const newPage = e.target.getAttribute('data-page');
+                changePage(newPage);
+            });
+        });
+
+    });
 </script>
 @endsection
