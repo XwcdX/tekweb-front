@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use DateTime;
 
 class UserController extends Controller
 {
@@ -13,7 +14,7 @@ class UserController extends Controller
     public function getAllUsers()
     {
         $api_url = env('API_URL') . '/users';
-        $response = Http::get($api_url);
+        $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
         return $responseData['data'];
     }
@@ -21,19 +22,19 @@ class UserController extends Controller
     public function countUserVote()
     {
         $users = $this->getAllUsers();
-        
+
         foreach ($users as &$user) {
             $countvotes = collect($user['question'])->sum(function ($question) {
                 return $question['vote'] ?? 0;  // Default to 0 if no votes
             });
-            
+
             $user['vote_count'] = $countvotes;
             $user['created_at'] = Carbon::parse($user['created_at'])->diffForHumans();
         }
-        
+
         return $users;
     }
-    
+
 
     public function orderUserBy()
     {
@@ -52,24 +53,27 @@ class UserController extends Controller
             return $b['vote_count'] - $a['vote_count']; // descending order
         });
 
+        // Sort users by newest (created_at descending)
         $usersByNewest = $users;
         usort($usersByNewest, function ($a, $b) {
-            // Format the 'created_at' timestamps into human-readable format
-            return strcmp($b['created_at'], $a['created_at']); // descending order
+            // Ensure created_at is parsed as a DateTime object for proper comparison
+            $dateA = new DateTime($a['created_at']);
+            $dateB = new DateTime($b['created_at']);
+            return $dateB <=> $dateA; // descending order
         });
-
 
         // Log the results for debugging
         Log::info("Users ordered by reputation: " . print_r($usersByReputation, true));
         Log::info("Users ordered by vote: " . print_r($usersByVote, true));
         Log::info("Users ordered by new user: " . print_r($usersByNewest, true));
-        // dd($usersByNewest);
+
         return [
             'users_by_reputation' => $usersByReputation,
             'users_by_vote' => $usersByVote,
             'users_by_newest' => $usersByNewest,
         ];
     }
+
 
 
     public function getUserByEmail($email)
