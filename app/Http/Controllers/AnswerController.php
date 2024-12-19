@@ -24,47 +24,42 @@ class AnswerController extends Controller
     }
 
     public function submitAnswer(Request $request, $questionId)
-    {
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'answer' => 'required|string',
-            'images' => 'nullable|array', 
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5042',  
-        ]);
-        
-        $data = [];
-        $answer = $request->input('answer');
-        $data["answer"] = $answer;
-        
-        $images = $request->file('images');  
+{
+    // Validate the incoming data
+    $validatedData = $request->validate([
+        'title' => 'required|string',
+        'question' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5042', // Single image
+    ]);
     
-        $imagePaths = [];
-        if ($images) {
-            $timestamp = now()->format('Y-m-d_H-i-s');  
-    
-            // Image masih belum bisa masuk ke storage maupun DB || NOTE
+    $data = [];
+    $answer = $request->input('answer');
+    $data["answer"] = $answer;
 
-            foreach ($images as $index => $image) {
-                $extension = $image->getClientOriginalExtension();
-                $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "_" . ($index + 1) . "." . $extension;
-    
-                $path = $image->storePubliclyAs("uploads/answers/" . $questionId, $customFileName, 'public');
-                $imagePaths[] = $path;  
-            }
-    
-            $data['image_paths'] = json_encode($imagePaths);
-        }
-        $data['email'] = session('email');
-        $data['question_id'] = $questionId;
-    
-        $api_url = env('API_URL') . '/answers';
-        $response = Http::withToken(session('token'))->post($api_url, $data);
+    // Process the image upload
+    if ($request->hasFile('image')) {
+        $image = $request->file('image'); // Single image
+        $timestamp = now()->format('Y-m-d_H-i-s');
+        $extension = $image->getClientOriginalExtension();
+        $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "." . $extension;
 
-
-        if ($response->successful()) {
-            return response()->json(['success' => true, 'message' => 'Answer submitted successfully!']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Failed to submit answer.']);
-        }
+        // Save the image to storage
+        $path = $image->storePubliclyAs("uploads/answers/" . $questionId, $customFileName, 'public');
+        $data['image_path'] = $path; // Store as a single string, not an array
     }
+
+    $data['email'] = session('email');
+    $data['question_id'] = $questionId;
+
+    // Send the data to the API
+    $api_url = env('API_URL') . '/answers';
+    $response = Http::withToken(session('token'))->post($api_url, $data);
+
+    if ($response->successful()) {
+        return response()->json(['success' => true, 'message' => 'Answer submitted successfully!']);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Failed to submit answer.']);
+    }
+}
+
 }    

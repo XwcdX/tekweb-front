@@ -39,7 +39,7 @@ Route::middleware(['isLogin'])->group(function () {
     // view questions
     Route::get('/viewUsers', [MainController::class, 'viewAllUsers'])->name('viewAllUsers');
     Route::get('/viewAnswers/{questionId}', [MainController::class, 'viewAnswers'])->name('user.viewQuestions');
-    Route::get('/viewTags', [UserController::class, 'viewTags'])->name('viewAllTags');
+    Route::get('/viewTags', [MainController::class, 'viewTags'])->name('viewAllTags');
     Route::get('/viewUser/{email}', [MainController::class, 'viewUser'])->name('viewUser');
     Route::post('/submitAnswer/{questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
     Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');

@@ -6,18 +6,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\QuestionController;
-
+use Illuminate\Container\Attributes\Tag;
 
 class MainController extends Controller
 {
   public $userController;
   public $answerController;
   public $questionController;
-  public function __construct(UserController $userController, AnswerController $answerController, QuestionController $questionController)
+  public $tagController;
+  public function __construct(UserController $userController, AnswerController $answerController, QuestionController $questionController, TagController $tagController)
   {
     $this->userController = $userController;
     $this->answerController = $answerController;
     $this->questionController = $questionController;
+    $this->tagController = $tagController;
   }
   public function home(Request $request)
   {
@@ -60,7 +62,7 @@ class MainController extends Controller
   }
 
   public function viewAllUsers()
-{
+  {
     $data['title'] = 'View Users';
     $user = $this->userController->orderUserBy();
 
@@ -70,24 +72,24 @@ class MainController extends Controller
 
     // hapus user yang login dari view All User
     if (session()->has('email')) {
-        $loggedInUserEmail = session('email');
+      $loggedInUserEmail = session('email');
 
-        $usersByReputation = array_filter($usersByReputation, function ($user) use ($loggedInUserEmail) {
-            return $user['email'] !== $loggedInUserEmail;
-        });
+      $usersByReputation = array_filter($usersByReputation, function ($user) use ($loggedInUserEmail) {
+        return $user['email'] !== $loggedInUserEmail;
+      });
 
-        $usersByVote = array_filter($usersByVote, function ($user) use ($loggedInUserEmail) {
-            return $user['email'] !== $loggedInUserEmail;
-        });
+      $usersByVote = array_filter($usersByVote, function ($user) use ($loggedInUserEmail) {
+        return $user['email'] !== $loggedInUserEmail;
+      });
 
-        $usersByNewest = array_filter($usersByNewest, function ($user) use ($loggedInUserEmail) {
-            return $user['email'] !== $loggedInUserEmail;
-        });
+      $usersByNewest = array_filter($usersByNewest, function ($user) use ($loggedInUserEmail) {
+        return $user['email'] !== $loggedInUserEmail;
+      });
 
-        // Re-index array
-        $usersByReputation = array_values($usersByReputation);
-        $usersByVote = array_values($usersByVote);
-        $usersByNewest = array_values($usersByNewest);
+      // Re-index array
+      $usersByReputation = array_values($usersByReputation);
+      $usersByVote = array_values($usersByVote);
+      $usersByNewest = array_values($usersByNewest);
     }
 
     $data['order_by_reputation'] = $usersByReputation;
@@ -95,6 +97,13 @@ class MainController extends Controller
     $data['order_by_newest'] = $usersByNewest;
 
     return view('viewAllUsers', $data);
-}
+  }
 
+  public function viewTags()
+  {
+    $tags = $this->tagController->getAllTags();
+    $data['tags'] = $tags;
+    $data['title'] = 'View Tags';
+    return view('viewTags', $data);
+  }
 }

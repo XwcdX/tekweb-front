@@ -168,9 +168,4 @@ class UserController extends Controller
 
 
 
-    public function viewTags()
-    {
-        $data['title'] = 'View Tags';
-        return view('viewTags', $data);
-    }
 }
