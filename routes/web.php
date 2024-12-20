@@ -36,6 +36,7 @@ Route::middleware(['isLogin'])->group(function () {
 
 Route::get('/myProfile', [MainController::class, 'seeProfile'])->name('seeProfile');
 Route::get('/editProfile', [MainController::class, 'editProfile'])->name('editProfile');
+Route::post('/editProfile', [UserController::class, 'editProfilePost'])->name('editProfile.post');
 Route::get('/user/recommendation', [UserController::class, 'recommendation'])->name('recommendation');
 
 // view questions
