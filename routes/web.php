@@ -27,7 +27,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['isLogin'])->group(function () {
     Route::get('/popular', [MainController::class, 'popular'])->name('popular');
     Route::get('/ask', [UserController::class, 'askPage'])->name('askPage');
-    Route::get('/viewUser/{email}', [MainController::class, 'viewOther'])->name('viewOthers');
 
     // Route::get('/{id}', [UserController::class, 'viewOther']);
     Route::post('/follow', [UserController::class, 'nembakFollow'])->name('nembakFollow');
