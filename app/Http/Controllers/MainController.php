@@ -31,7 +31,43 @@ class MainController extends Controller
     $questions = $this->questionController->getAllQuestions($request);
     $data['questions'] = $questions;
     // dd($data);
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
     return view('home', $data);
+  }
+  public function askPage()
+  {
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
+    $tags = $this->tagController->getAllTags();
+    $data['data'] = $tags;
+    $data['title'] = 'Ask a Question';
+    return view('ask', $data);
+  }
+  public function seeProfile()
+  {
+    $data['title'] = 'My Profile';
+    $email = session('email');
+
+    $currUser = $this->userController->getUserByEmail($email);
+    $data['currUser'] = $currUser;
+    $followers = collect($currUser['followers']);
+    $countFollowers = count($followers);
+    $data['countFollowers'] = $countFollowers;
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
+    return view('profile', $data);
+  }
+  public function editProfile()
+  {
+    $data['title'] = 'Edit Profile';
+
+    $email = session('email');
+    $currUser = $this->userController->getUserByEmail($email);
+    $data['user'] = $currUser;
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
+    return view('editProfile', $data);
   }
   public function popular(Request $request)
   {
@@ -42,6 +78,8 @@ class MainController extends Controller
     $data['title'] = 'Home';
     $questions = $this->questionController->getAllQuestionsByPopularity($request);
     $data['questions'] = $questions;
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
     // dd($data);
     return view('popular', $data);
   }
@@ -50,6 +88,8 @@ class MainController extends Controller
     $data = $this->userController->getUserFollowers($email);
     // dd($data);
     $data['title'] = 'PROFILE | ' . $data['user']['username'];
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
     return view('otherProfiles', $data);
   }
   // hrse terima param id question, nih aku cuman mau coba view
@@ -57,6 +97,8 @@ class MainController extends Controller
   {
     $data['question'] = $this->questionController->getQuestionDetails($questionId);
     $data['title'] = 'View Answers';
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
     // dd($data);
     return view('viewAnswers', $data);
   }
@@ -95,6 +137,8 @@ class MainController extends Controller
     $data['order_by_reputation'] = $usersByReputation;
     $data['order_by_vote'] = $usersByVote;
     $data['order_by_newest'] = $usersByNewest;
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
 
     return view('viewAllUsers', $data);
   }
@@ -104,12 +148,23 @@ class MainController extends Controller
     $tags = $this->tagController->getAllTags();
     $data['tags'] = $tags;
     $data['title'] = 'View Tags';
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
+
     return view('viewTags', $data);
   }
 
   public function leaderboard()
   {
     $data['title'] = 'Leaderboard';
+    $data['tags'] = $this->tagController->getTagOnly();
+    $users = $this->userController->recommendation();
+    $data['users'] = $users;
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
+
+    // dd($data);
+    // $data['leaderboard'] = $this->tagController->getTagLeaderboard();
     // $data['users'] = $this->userController->getLeaderboard();
     return view('leaderboard', $data);
   }

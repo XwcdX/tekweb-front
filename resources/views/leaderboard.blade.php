@@ -118,12 +118,25 @@
             cursor: pointer;
         }
 
+        .card1 {
+            position: relative;
+            width: 274px;
+            height: 431px;
+            transition: transform 0.6s ease-in-out;
+        }
+
         .card .front,
-        .card .back {
+        .card .back,
+        .card1 .reveal {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
+        }
+
+        .card1 .reveal {
+            background-image: url("{{ asset('assets/reveal_card.png') }}");
+            background-size: cover;
         }
 
         .card .front {
@@ -140,62 +153,68 @@
         .card.flipped {
             transform: rotateY(180deg);
         }
+
+        /* select {
+                    margin-bottom: 1em;
+                    padding: .25em;
+                    border: 0;
+                    border-bottom: 2px solid currentcolor;
+                    font-weight: bold;
+                    letter-spacing: .15em;
+                    border-radius: 0;
+
+                    &:focus,
+                    &:active {
+                        outline: 0;
+                        border-bottom-color: red;
+                    }
+                } */
     </style>
     <div class="max-w-7xl min-h-screen mx-auto">
         <h1 class="text-center text-white font-bold text-2xl md:text-4xl p-4 md:p-8 uppercase">Leaderboard</h1>
 
         <!-- Top Users Section -->
         <div class="flex flex-col items-center justify-center mb-6">
-            <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Top 5 Users</h1>
+            <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Top 5 Users You Might Be Interested
+            </h1>
 
             <div class="topUser-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                <!-- Card 1 -->
-                <div class="user-card">
-                    <i class="fa-solid fa-crown"></i>
-                    <img src="https://via.placeholder.com/80" alt="User 1" class="user-image">
-                    <h3><a href="#" class="hover:underline">User 1</a></h3>
-                    <p>Reputation: 560</p>
-                </div>
+                @if ($users)
+                    @foreach ($users as $user)
+                        <div class="user-card">
+                            <i class="fa-solid fa-crown"></i>
+                            <img src="{{ asset('storage/' . $user['image']) }}" alt="{{ $user['name'] }}" class="user-image">
+                            <h3><a href="{{ route('viewOthers', ['email' => $user['email']]) }}"
+                                    class="hover:underline">{{ $user['name'] }}</a></h3>
+                            <p>Reputation: {{ $user['reputation'] }}</p>
+                        </div>
+                    @endforeach
+                @endif
 
-                <!-- Card 2 -->
-                <div class="user-card">
-                    <i class="fa-solid fa-crown"></i>
-                    <img src="https://via.placeholder.com/80" alt="User 2" class="user-image">
-                    <h3><a href="#" class="hover:underline">User 2</a></h3>
-                    <p>Reputation: 520</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="user-card">
-                    <i class="fa-solid fa-crown"></i>
-                    <img src="https://via.placeholder.com/80" alt="User 3" class="user-image">
-                    <h3><a href="#" class="hover:underline">User 3</a></h3>
-                    <p>Reputation: 500</p>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="user-card">
-                    <i class="fa-solid fa-crown"></i>
-                    <img src="https://via.placeholder.com/80" alt="User 4" class="user-image">
-                    <h3><a href="#" class="hover:underline">User 4</a></h3>
-                    <p>Reputation: 480</p>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="user-card">
-                    <i class="fa-solid fa-crown"></i>
-                    <img src="https://via.placeholder.com/80" alt="User 5" class="user-image">
-                    <h3><a href="#" class="hover:underline">User 5</a></h3>
-                    <p>Reputation: 450</p>
-                </div>
             </div>
         </div>
 
         {{-- each tags best user --}}
         <div class="flex flex-col items-center justify-center">
             <h1 class="text-2xl text-white font-semibold">BEST USER IN EACH TAGS</h1>
+            <select name="tags" id="tags"
+                class="my-4 appearance-none border-0 border-b-2 border-current font-bold tracking-widest bg-white !focus:outline-none text-[--purple] rounded-lg">
+                <option value="" disabled selected class="text-gray-500">Choose one tag you want</option>
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag['id'] }}" class="text-gray-500">{{ $tag['name'] }}</option>
+                @endforeach
+            </select>
+            <div class="card1 mt-4">
+                <div class="reveal flex flex-col items-center justify-center">
+                    <img src="https://via.placeholder.com/80" class="mb-2 w-40 h-40 object-cover rounded-full"
+                        id="best-user-image" alt="Best User Image">
+                    <h1 class="text-2xl font-semibold text-white" id="best-user-name"></h1>
+
+                </div>
+            </div>
         </div>
-        <div class="flex flex-col items-center justify-center">
+
+        <div class="mt-8 flex flex-col items-center justify-center">
             <h1 class="text-2xl font-semibold text-[--blue] mb-4">YOUR SPECIAL PERSON</h1>
             <div class="card-container">
                 <div class="card">
@@ -203,7 +222,6 @@
                         <img src="{{ asset('background/texture_1.jpg') }}" alt="front"
                             class="mb-2 w-40 h-40 object-cover rounded-full">
                         <h1 class="text-2xl font-semibold text-white">John Doe</h1>
-                        {{-- <p class="text-sm text-[--white]">Best User</p> --}}
 
                     </div>
                     <div class="back relative flex flex-col items-center justify-center">
@@ -220,6 +238,38 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('tags');
+            const bestUserImage = document.getElementById('best-user-image');
+            const bestUserName = document.getElementById('best-user-name');
+
+            selectElement.addEventListener('change', function() {
+                const tagId = this.value;
+                console.log(tagId);
+                if (tagId) {
+                    fetch(`/getTagLeaderboard/${tagId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.user) {
+                                bestUserImage.src = data.user.profile_picture ||
+                                    'https://via.placeholder.com/80';
+                                bestUserName.textContent = data.user.name || 'Best User';
+                            } else {
+                                bestUserImage.src = 'https://via.placeholder.com/80';
+                                bestUserName.textContent = 'No User Found';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching leaderboard:', error);
+                            bestUserImage.src = 'https://via.placeholder.com/80';
+                            bestUserName.textContent = 'Error Loading User';
+                        });
+                } else {
+                    bestUserImage.src = 'https://via.placeholder.com/80';
+                    bestUserName.textContent = '';
+                }
+            });
+
+
             const card = document.querySelector('.card');
 
             card.addEventListener('click', function() {

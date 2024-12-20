@@ -124,46 +124,35 @@ class UserController extends Controller
             'data' => $response['data'] ?? ''
         ], $response->status());
     }
-    public function seeProfile()
-    {
-        $data['title'] = 'My Profile';
-        $email = session('email');
+    public function recommendation(){
+        $api_url = env('API_URL') . '/userWithRecommendation';
+        // $data['email']  = session('email');
+        $data['email']  = 'user1@example.com';
 
-        $currUser = $this->getUserByEmail($email);
-        $data['currUser'] = $currUser;
-        $followers = collect($currUser['followers']);
-        $countFollowers = count($followers);
-        $data['countFollowers'] = $countFollowers;
-        return view('profile', $data);
+        
+        $response = Http::withToken(session('token'))->get($api_url, $data);
+        $responseData = json_decode($response, true);
+        // dd($responseData['data']);
+
+        // Filter users where is_recommended is true
+        $recommendedUsers = array_filter($responseData['data'], function($user) {
+            return $user['is_recommended'] === true;
+        });
+
+        $recommendedUsers = array_slice($recommendedUsers, 0, 5);
+        // dd($recommendedUsers);
+        return $recommendedUsers;
     }
 
-    public function editProfile()
-    {
-        $data['title'] = 'Edit Profile';
+    
+    
 
-        $email = session('email');
-        $currUser = $this->getUserByEmail($email);
-        $data['user'] = $currUser;
-        return view('editProfile', $data);
-    }
+   
 
 
 
-    public function askPage()
-    {
-        $api_url = env('API_URL') . '/tags';
-        $response = Http::withToken(session('token'))->get($api_url);
-        $response = json_decode($response, true);
-
-        $data['data'] = $response['data'];
-        $data['title'] = 'Ask a Question';
-        return view('ask', $data);
-    }
-    public function popular()
-    {
-        $data['title'] = 'Popular';
-        return view('popular', $data);
-    }
+    
+   
 
 
 
