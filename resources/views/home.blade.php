@@ -18,6 +18,11 @@
         <!-- Main Content -->
         <div class="w-full bg-white rounded-lg p-6 shadow-lg max-w-7xl mx-auto">
             
+        <div class=" w-11/12 md:w-3/4 bg-white rounded-lg p-6 shadow-lg mx-auto">
+            @if (session()->has('email'))
+                <h3>Welcome! {{ $username }}</h3>
+                
+            @endif
 
             <h1 class="lg:text-5xl text-3xl mt-5 mb-10">Newest Questions</h1>
 

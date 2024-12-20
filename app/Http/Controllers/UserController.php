@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        $api_url = env('API_URL') . '/users';
+        $api_url = env('API_URL') . '/userWithRecommendation';
         $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
         // dd($api_url);
@@ -118,6 +118,7 @@ class UserController extends Controller
             'emailCurr' => session('email')
         ]);
 
+        Log::info($response);
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',
@@ -143,18 +144,4 @@ class UserController extends Controller
         // dd($recommendedUsers);
         return $recommendedUsers;
     }
-
-    
-    
-
-   
-
-
-
-    
-   
-
-
-
-
 }
