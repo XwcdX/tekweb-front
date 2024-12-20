@@ -38,6 +38,7 @@ Route::middleware(['isLogin'])->group(function () {
 
 Route::get('/myProfile', [UserController::class, 'seeProfile'])->name('seeProfile');
 Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
+Route::post('/editProfile', [UserController::class, 'editProfilePost'])->name('editProfile.post');
 
 // view questions
 Route::get('/viewUsers', [MainController::class, 'viewAllUsers'])->name('viewAllUsers');

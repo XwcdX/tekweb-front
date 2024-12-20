@@ -25,14 +25,14 @@ class UserController extends Controller
             $countvotes = collect($user['question'])->sum(function ($question) {
                 return $question['vote'] ?? 0;  // Default to 0 if no votes
             });
-            
+
             $user['vote_count'] = $countvotes;
             $user['created_at'] = Carbon::parse($user['created_at'])->diffForHumans();
         }
-        
+
         return $users;
     }
-    
+
 
     public function orderUserBy()
     {
@@ -111,7 +111,7 @@ class UserController extends Controller
         $response = Http::withToken(session('token'))->post($api_url, [
             'emailCurr' => session('email')
         ]);
-        Log::info($response); 
+        Log::info($response);
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',
@@ -141,6 +141,39 @@ class UserController extends Controller
         return view('editProfile', $data);
     }
 
+    public function editProfilePost(Request $request)
+    {
+        $email = session('email');
+        $image = $request->file('image');
+        $user = $this->getUserByEmail($email);
+        $data = [
+            'user_id' => $user['id'],
+            'username' => $request->username,
+            'biodata' => $request->biodata
+        ];
+
+        if ($image) {
+            $timestamp = date('Y-m-d_H-i-s');
+            $extension = $image->getClientOriginalExtension();
+            $customFileName = "pp_" . session('email') . "_" . $timestamp . "." . $extension;
+
+            $path = $image->storeAs("uploads/users/", $customFileName, 'public');
+            $data['image'] = $path;
+        }
+
+        Log::info($data);
+        
+        $api_url = env('API_URL') . '/users/editProfileDULU';
+        
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+        Log::info($response);
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Profile has been Updated!']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to Update User Profile.']);
+        }
+    }
+
 
 
     public function askPage()
@@ -152,6 +185,8 @@ class UserController extends Controller
 
         $data['data'] = $response['data'];
         $data['title'] = 'Ask a Question';
+        $user = $this->getUserByEmail(session('email'));
+        $data['image'] = $user['image'];
         return view('ask', $data);
     }
     public function popular()
@@ -164,7 +199,7 @@ class UserController extends Controller
         $data['title'] = 'Popular';
         return view('question', $data);
     }
-    
+
     public function viewTags()
     {
         $data['title'] = 'View Tags';
