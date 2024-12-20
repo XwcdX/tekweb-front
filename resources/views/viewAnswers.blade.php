@@ -208,7 +208,6 @@
                                 </button>
                                 <span class="thumbs-down-count text-white font-medium">0</span>
                             </div>
-
                         </div>
 
                     </div>

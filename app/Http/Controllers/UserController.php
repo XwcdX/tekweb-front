@@ -128,6 +128,8 @@ class UserController extends Controller
         $followers = collect($currUser['followers']);
         $countFollowers = count($followers);
         $data['countFollowers'] = $countFollowers;
+        $data['image'] = $currUser['image'];
+
         return view('profile', $data);
     }
 

@@ -7,7 +7,7 @@
     <div class="w-full bg-white rounded-lg p-6 shadow-lg">
         <!-- Profile Header -->
         <div class="flex flex-col sm:flex-row items-center sm:space-x-4">
-            <img src="https://via.placeholder.com/100" alt="Profile Picture" class="w-20 h-20 rounded-full mb-4 sm:mb-0">
+            <img src="{{ $image ? asset('storage/' . $image) : 'https://via.placeholder.com/100' }}" alt="Profile Picture" class="w-20 h-20 rounded-full mb-4 sm:mb-0">
             <div>
                 <h2 class="text-[#7494ec] text-2xl font-bold text-center sm:text-left">{{ $currUser['username'] }}</h2>
             </div>
