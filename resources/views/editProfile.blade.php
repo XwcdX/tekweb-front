@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="my-5 sm:mt-0 flex flex-wrap gap-4 items-center">
             <h2 class="text-[#7494ec] text-2xl font-bold text-center sm:text-left lg:me-10">Username</h2>
             <div class="bg-white p-4 rounded-lg w-full sm:w-72">
@@ -60,11 +60,11 @@
 
         <div class="my-5 sm:mt-0 flex flex-wrap gap-4 items-center">
             <h2 class="text-[#7494ec] text-2xl font-bold text-center sm:text-left lg:me-10">Biodata</h2>
-            <div class="bg-white p-10 rounded-lg w-full sm:w-72">
-                <div class="relative bg-inherit w-96">
-                    <textarea id="biodata" name="biodata"
-                        class="peer bg-transparent h-48 resize-none w-full rounded-lg text-gray-800 focus:ring-indigo-900 focus:outline-none focus:border-indigo-600"
-                        placeholder="" value="{{ $user['biodata'] }}"></textarea>
+            <div class="bg-white lg:p-10 md:p-10 sm:p-4 p-4 rounded-lg w-full sm:w-72">
+                <div class="relative bg-inherit">
+                    <textarea type="text" id="biodata" name="biodata"
+                        class="peer bg-transparent h-48 resize-none lg:w-96 w-full rounded-lg text-gray-800 focus:ring-indigo-900 focus:outline-none focus:border-indigo-600"
+                        placeholder="" value="{{ $user['username'] }}"></textarea>
                 </div>
             </div>
         </div>
@@ -73,12 +73,12 @@
             <button type="submit"
                 class="relative px-4 py-2 bg-[#7494ec] hover:bg-[#485d93] rounded text-white w-full sm:w-auto">
                 <a href="#route save profile">
-                Save</a>
+                    Save</a>
             </button>
             <button type="cancel"
                 class="relative px-4 py-2 bg-[#7494ec] hover:bg-[#485d93] rounded text-white w-full sm:w-auto">
                 <a href="{{route('seeProfile')}}">
-                Cancel</a>
+                    Cancel</a>
             </button>
         </div>
 
