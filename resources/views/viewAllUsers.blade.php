@@ -253,11 +253,7 @@
         <div class="user-grid" id="reputationResult">
             @foreach ($order_by_reputation as $user)
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold">
                         <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
@@ -281,11 +277,7 @@
         <div class="user-grid" id="newestResult">
             @foreach ($order_by_newest as $user)
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold">
                         <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
@@ -309,11 +301,7 @@
         <div class="user-grid" id="voterResult">
             @foreach ($order_by_vote as $user)
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
                             class="hover:underline">{{ $user['username'] }}</a>
@@ -372,11 +360,7 @@
 
                 resultsDiv.innerHTML = matchingUsers.map(user => `
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold">
                 <a href="${baseUrl.replace(':email', user.email)}" class="hover:underline">${user.username}</a>
@@ -395,11 +379,7 @@
 
                 resultsDiv.innerHTML = matchingUsers.map(user => `
                             <div class="user-card border-2 border-[--purple] rounded-lg">
-               @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold">
                 <a href="${baseUrl.replace(':email', user.email)}" class="hover:underline">${user.username}</a>
@@ -421,11 +401,7 @@
 
                 resultsDiv.innerHTML = matchingUsers.map(user => `
                             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold"> 
                 <a href="${baseUrl.replace(':email', user.email)}" class="hover:underline">${user.username}</a>
@@ -447,11 +423,7 @@
                 document.getElementById('reputationResult').innerHTML = `
                 @foreach ($order_by_reputation as $user)
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold">
                         <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
@@ -472,11 +444,7 @@
                 document.getElementById('newestResult').innerHTML = `
                     @foreach ($order_by_newest as $user)
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}" alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold">
                         <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
@@ -498,11 +466,7 @@
                 document.getElementById('voterResult').innerHTML = `
                     @foreach ($order_by_vote as $user)
             <div class="user-card border-2 border-[--purple] rounded-lg">
-                @if ($user['image'])
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @else
-                <img src="https://via.placeholder.com/50" alt="Profile Picture" class="user-image">
-                @endif
+                <img src="{{ $user['image'] ? asset('storage/' . $user['image']) : 'https://via.placeholder.com/50' }}"alt="Profile Picture" class="user-image">
                 <div class="user-info">
                     <h3 class="font-semibold"> <a href="{{ route('viewUser', ['email' => $user['email']]) }}"
                             class="hover:underline">{{ $user['username'] }}</a>

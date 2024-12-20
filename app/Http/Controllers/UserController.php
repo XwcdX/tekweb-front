@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        $api_url = env('API_URL') . '/users';
+        $api_url = env('API_URL') . '/userWithRecommendation';
         $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
         // dd($api_url);
@@ -134,6 +134,8 @@ class UserController extends Controller
         $followers = collect($currUser['followers']);
         $countFollowers = count($followers);
         $data['countFollowers'] = $countFollowers;
+        $data['image'] = $currUser['image'];
+
         return view('profile', $data);
     }
 
@@ -147,6 +149,39 @@ class UserController extends Controller
         return view('editProfile', $data);
     }
 
+    public function editProfilePost(Request $request)
+    {
+        $email = session('email');
+        $image = $request->file('image');
+        $user = $this->getUserByEmail($email);
+        $data = [
+            'user_id' => $user['id'],
+            'username' => $request->username,
+            'biodata' => $request->biodata
+        ];
+
+        if ($image) {
+            $timestamp = date('Y-m-d_H-i-s');
+            $extension = $image->getClientOriginalExtension();
+            $customFileName = "pp_" . session('email') . "_" . $timestamp . "." . $extension;
+
+            $path = $image->storeAs("uploads/users/", $customFileName, 'public');
+            $data['image'] = $path;
+        }
+
+        Log::info($data);
+        
+        $api_url = env('API_URL') . '/users/editProfileDULU';
+        
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+        Log::info($response);
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Profile has been Updated!']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to Update User Profile.']);
+        }
+    }
+
 
 
     public function askPage()
@@ -154,9 +189,12 @@ class UserController extends Controller
         $api_url = env('API_URL') . '/tags';
         $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
+        Log::info($response);
 
         $data['data'] = $response['data'];
         $data['title'] = 'Ask a Question';
+        $user = $this->getUserByEmail(session('email'));
+        $data['image'] = $user['image'];
         return view('ask', $data);
     }
     public function popular()
@@ -164,8 +202,15 @@ class UserController extends Controller
         $data['title'] = 'Popular';
         return view('popular', $data);
     }
+    public function testUI()
+    {
+        $data['title'] = 'Popular';
+        return view('question', $data);
+    }
 
-
-
-
+    public function viewTags()
+    {
+        $data['title'] = 'View Tags';
+        return view('viewTags', $data);
+    }
 }

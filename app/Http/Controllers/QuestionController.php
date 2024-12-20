@@ -12,7 +12,7 @@ class QuestionController extends Controller
     public function getAllQuestions(Request $request)
     {
         $api_url = env('API_URL') . '/questions';
-        $response = Http::get($api_url);
+        $response = Http::withToken(session('token'))->get($api_url);
         $response = json_decode($response, true);
 
         // Get the data (questions)
@@ -20,24 +20,23 @@ class QuestionController extends Controller
 
         // Loop through each question and count comments
         foreach ($data as &$question) {
-            // If comments is null or not an array, set it to an empty array, otherwise count the array length
             $question['comments_count'] = (is_array($question['comment']) && $question['comment'] !== null)
                 ? count($question['comment'])
                 : 0;
         }
-        
-        $page = $request->input('page', 1); 
+
+        $page = $request->input('page', 1);
         $per_page = 10;
-        $offset = ($page - 1) * $per_page; 
+        $offset = ($page - 1) * $per_page;
         $paginated_data = array_slice($data, $offset, $per_page);
         $paginator = new LengthAwarePaginator(
             $paginated_data,
-            count($data), 
-            $per_page, 
+            count($data),
+            $per_page,
             $page,
-            ['path' => $request->url(), 'query' => $request->query()] 
+            ['path' => $request->url(), 'query' => $request->query()]
         );
-        
+
 
         // dd($data);
         // Return the updated data
@@ -60,20 +59,21 @@ class QuestionController extends Controller
                 ? count($question['comment'])
                 : 0;
         }
-        usort($data, function($a, $b) { return $b['vote'] <=> $a['vote'];});
+        usort($data, function ($a, $b) {
+            return $b['vote'] <=> $a['vote']; });
 
-        $page = $request->input('page', 1); 
+        $page = $request->input('page', 1);
         $per_page = 10;
-        $offset = ($page - 1) * $per_page; 
+        $offset = ($page - 1) * $per_page;
         $paginated_data = array_slice($data, $offset, $per_page);
         $paginator = new LengthAwarePaginator(
             $paginated_data,
-            count($data), 
-            $per_page, 
+            count($data),
+            $per_page,
             $page,
-            ['path' => $request->url(), 'query' => $request->query()] 
+            ['path' => $request->url(), 'query' => $request->query()]
         );
-        
+
 
         // dd($data);
         // Return the updated data
@@ -110,14 +110,13 @@ class QuestionController extends Controller
         $question = $request->input('question');
         $image = $request->file('image');  // Expecting a single image file
 
-        $api_url = env('API_URL') . '/questions/';
-        Log::info("API URL: " . $api_url);  // Log API URL for debugging
+        $api_url = env('API_URL') . '/questions';
 
         $data = [
             'title' => $title,
             'question' => $question,
             'email' => session('email'),
-            'subject_id' => $request->subject_id
+            'tag_id' => $request->subject_id
         ];
 
         // If an image is uploaded, process it
@@ -155,20 +154,50 @@ class QuestionController extends Controller
 
     public function submitQuestionComment(Request $request, $questionId)
     {
-        Log::info("Data to be sent: hellowwowow");
         $request->validate([
-            'comment' => 'required|string|max:255',
+            'comment' => 'required',
         ]);
+
+        if (!isset($request->answer_id)) {
+            $data['question_id'] = $questionId;
+        } else {
+            $data['answer_id'] = $questionId;
+        }
+
+        if (session('reputation') < 11) {
+            return response()->json(['success' => false, 'message' => 'Your Reputation is Insufficient']);
+        }
+
         $data['email'] = session('email');
-        $data['question_id'] = $questionId;
         $data['comment'] = $request->comment;
         Log::info("Data to be sent: ", $data);
 
         $api_url = env('API_URL') . '/comments';
-        $response = Http::post($api_url, $data);
-        dd($response);
-        return $response['message'];
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+        Log::info($response);
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Comment on this Question is submitted successfully!']);
+        } else {
+            $errorMessage = $response->json()['message'] ?? 'Failed to comment.';
+            return response()->json(['success' => false, 'message' => $errorMessage]);
+        }
+    }
 
-        // return response()->json(['success' => true, 'comment' => $comment]);
+    public function vote(Request $request)
+    {
+        $data['email'] = session('email');
+        if ($request->vote === true) {
+            $api_url = env('API_URL') . '/questions/' . $request->question_id . '/upvote';
+        } else {
+            $api_url = env('API_URL') . '/questions/' . $request->question_id . '/downvote';
+        }
+        $response = Http::withToken(session('token'))->post($api_url, $data);
+
+        if ($response->successful()) {
+            return response()->json(['success' => true, 'message' => 'Your Vote has been recorded']);
+        } else {
+            $errorMessage = $response->json()['message'] ?? 'Failed to comment.';
+            return response()->json(['success' => false, 'message' => $errorMessage]);
+        }
     }
 }

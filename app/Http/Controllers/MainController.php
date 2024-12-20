@@ -48,7 +48,8 @@ class MainController extends Controller
   public function viewUser(string $email)
   {
     $data = $this->userController->getUserFollowers($email);
-    // dd($data);
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
     $data['title'] = 'PROFILE | ' . $data['user']['username'];
     return view('otherProfiles', $data);
   }
@@ -56,6 +57,8 @@ class MainController extends Controller
   public function viewAnswers($questionId)
   {
     $data['question'] = $this->questionController->getQuestionDetails($questionId);
+    $currUser = $this->userController->getUserByEmail(session('email'));
+    $data['image'] = $currUser['image'];
     $data['title'] = 'View Answers';
     // dd($data);
     return view('viewAnswers', $data);
