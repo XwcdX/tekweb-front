@@ -118,6 +118,8 @@ class UserController extends Controller
             'emailCurr' => session('email')
         ]);
 
+        Log::info($api_url);
+
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
             'message' => $response['message'] ?? 'An error occurred during execution.',

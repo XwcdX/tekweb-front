@@ -16,6 +16,7 @@ class isLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
+        Log::info(session()->all());
         if(!session('email')){
             session()->put('url', url()->current());
             Log::info(session('url'));
