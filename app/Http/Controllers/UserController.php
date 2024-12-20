@@ -13,7 +13,8 @@ class UserController extends Controller
     public function getAllUsers()
     {
         $api_url = env('API_URL') . '/userWithRecommendation';
-        $response = Http::withToken(session('token'))->get($api_url);
+        $data['email'] = session('email');
+        $response = Http::withToken(session('token'))->get($api_url, $data);
         $responseData = json_decode($response, true);
         return $responseData['data'];
     }
@@ -44,29 +45,38 @@ class UserController extends Controller
         usort($usersByReputation, function ($a, $b) {
             return $b['reputation'] - $a['reputation']; // descending order
         });
-
+        
         // Sort users by vote (descending)
         $usersByVote = $users;
         usort($usersByVote, function ($a, $b) {
             return $b['vote_count'] - $a['vote_count']; // descending order
         });
-
+        
         $usersByNewest = $users;
         usort($usersByNewest, function ($a, $b) {
             // Format the 'created_at' timestamps into human-readable format
             return strcmp($b['created_at'], $a['created_at']); // descending order
         });
-
-
+        
+        // Search for recommended users (assuming 'is_recommended' is a boolean or 1/0)
+        $recUser = array_filter($users, function ($user) {
+            return isset($user['is_recommended']) && $user['is_recommended'] == true;
+        });
+        
+        // Convert the result to an array (since array_filter returns an array of matches)
+        $recUser = array_values($recUser);
+        
         // Log the results for debugging
         Log::info("Users ordered by reputation: " . print_r($usersByReputation, true));
         Log::info("Users ordered by vote: " . print_r($usersByVote, true));
         Log::info("Users ordered by new user: " . print_r($usersByNewest, true));
         // dd($usersByNewest);
+
         return [
             'users_by_reputation' => $usersByReputation,
             'users_by_vote' => $usersByVote,
             'users_by_newest' => $usersByNewest,
+            'recommended' => $recUser
         ];
     }
 
@@ -164,9 +174,9 @@ class UserController extends Controller
         }
 
         Log::info($data);
-        
+
         $api_url = env('API_URL') . '/users/editProfileDULU';
-        
+
         $response = Http::withToken(session('token'))->post($api_url, $data);
         Log::info($response);
         if ($response->successful()) {

@@ -84,7 +84,7 @@ class MainController extends Controller
     $data['order_by_reputation'] = $usersByReputation;
     $data['order_by_vote'] = $usersByVote;
     $data['order_by_newest'] = $usersByNewest;
-
+    $data['recommended'] = $user['recommended'];
     return view('viewAllUsers', $data);
 }
 
