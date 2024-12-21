@@ -137,7 +137,6 @@
         async function follow() {
             try {
                 const email = user['email'];
-                
                 const response = await fetch("{{ route('nembakFollow') }}", {
                     method: 'POST',
                     headers: {
@@ -145,7 +144,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        'email' => email
+                        email
                     })
                 });
                 const data = await response.json();
@@ -166,6 +165,12 @@
                         document.getElementById('followBtn').textContent = 'Follow';
                     }
                     document.getElementById('countFollowers').textContent = data.data.countFollowers;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: data.message
+                    });
                 }
             } catch (error) {
                 Swal.fire({
