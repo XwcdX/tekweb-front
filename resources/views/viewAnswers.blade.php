@@ -131,7 +131,7 @@
 
                 @foreach ($question['comment'] as $comm)
                     <div class="comment bg-gray-700 p-4 mb-2 rounded-lg">
-                        <a href="{{ route('viewUser', ['email' => $comm['user']['email']]) }}"><h2 class="text-white font-semibold hover:underline">{{ $comm['username'] }}</h2></a>
+                        {{-- <a href="{{ route('viewUser', ['email' => $comm['user']['email']]) }}"><h2 class="text-white font-semibold hover:underline">{{ $comm['username'] }}</h2></a> --}}
                         <p class="text-white"> {{ $comm['comment'] }}</p>
                     </div>
                 @endforeach

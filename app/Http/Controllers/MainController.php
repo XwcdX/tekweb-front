@@ -39,7 +39,7 @@ class MainController extends Controller
   {
     $currUser = $this->userController->getUserByEmail(session('email'));
     $data['image'] = $currUser['image'];
-    $tags = $this->tagController->getAllTags();
+    $tags = $this->tagController->getTagOnly();
     $data['data'] = $tags;
     $data['title'] = 'Ask a Question';
     return view('ask', $data);
@@ -161,14 +161,9 @@ class MainController extends Controller
   {
     $data['title'] = 'Leaderboard';
     $data['tags'] = $this->tagController->getTagOnly();
-    $users = $this->userController->recommendation();
-    $data['users'] = $users;
+    $data['mostViewed'] = $this->userController->getMostViewedUser();
     $currUser = $this->userController->getUserByEmail(session('email'));
     $data['image'] = $currUser['image'];
-
-    // dd($data);
-    // $data['leaderboard'] = $this->tagController->getTagLeaderboard();
-    // $data['users'] = $this->userController->getLeaderboard();
     return view('leaderboard', $data);
   }
 }

@@ -25,7 +25,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::middleware(['isLogin'])->group(function () {
+// Route::middleware(['isLogin'])->group(function () {
     Route::get('/popular', [MainController::class, 'popular'])->name('popular');
     Route::get('/ask', [MainController::class, 'askPage'])->name('askPage');
     Route::get('/viewUser/{email}', [MainController::class, 'viewOther'])->name('viewOthers');
@@ -59,6 +59,7 @@ Route::post('/answer/vote', [AnswerController::class, 'vote'])->name('answer.vot
     Route::post('/submitAnswer/{questionId}', [AnswerController::class, 'submitAnswer'])->name('submitAnswer');
     Route::post('/addQuestion', [QuestionController::class, 'addQuestion'])->name('addQuestion');
     Route::post('/submit/question/comment/{questionId}', [QuestionController::class, 'submitQuestionComment'])->name('question.comment.submit');
-    Route::get('/leaderboard', [MainController::class, 'leaderboard'])->name('leaderboard');
+    Route::get('/leaderboard', [MainController::class, 'leaderboard'])->name('user.leaderboard');
     Route::get('/getTagLeaderboard/{id}', [TagController::class, 'getTagLeaderboard'])->name('tag.leaderboard');
-});
+    Route::get('/getMostViewed', [UserController::class, 'getMostViewed'])->name('user.mostViewed');
+// });

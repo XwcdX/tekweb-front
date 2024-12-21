@@ -125,23 +125,29 @@ class UserController extends Controller
             'data' => $response['data'] ?? ''
         ], $response->status());
     }
-    public function recommendation(){
-        $api_url = env('API_URL') . '/userWithRecommendation';
-        // $data['email']  = session('email');
-        $data['email']  = 'user1@example.com';
-
+    public function getRecommendation(){
+        $users = $this->getAllUsers();
+        // Search for recommended users (assuming 'is_recommended' is a boolean or 1/0)
+        $recUser = array_filter($users, function ($user) {
+            return isset($user['is_recommended']) && $user['is_recommended'] == true;
+        });
         
-        $response = Http::withToken(session('token'))->get($api_url, $data);
+        // Convert the result to an array (since array_filter returns an array of matches)
+        $recUser = array_values($recUser);
+        return $recUser;
+    }
+
+    public function getMostViewedUser(){
+        $api_url = env('API_URL') . '/getMostViewed/'.session('email');
+        $response = Http::withToken(session('token'))->get($api_url);
         $responseData = json_decode($response, true);
         // dd($responseData['data']);
-
-        // Filter users where is_recommended is true
-        $recommendedUsers = array_filter($responseData['data'], function($user) {
-            return $user['is_recommended'] === true;
-        });
-
-        $recommendedUsers = array_slice($recommendedUsers, 0, 5);
-        // dd($recommendedUsers);
-        return $recommendedUsers;
+        // $users = $responseData['data'];
+        // $mostViewedUser = collect($users)->max('view_count');
+        // $mostViewedUser = collect($users)->where('view_count', $mostViewedUser)->first();
+        // dd($mostViewedUser);
+        return $responseData['data'];
     }
-}
+    }
+
+

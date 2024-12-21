@@ -1,6 +1,8 @@
 @extends('layout')
 
 @section('content')
+@include('partials.nav')
+@include('utils.background-overlay')
     <style>
         /* Title Styling */
         .titleTopUser {
@@ -98,6 +100,24 @@
                 width: 200px;
             }
         }
+
+        /* Glowing Text Effect */
+        .glowing-text {
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #633F92, 0 0 20px #633F92, 0 0 25px #633F92, 0 0 30px #633F92, 0 0 35px #633F92;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #633F92, 0 0 20px #633F92, 0 0 25px #633F92, 0 0 30px #633F92, 0 0 35px #633F92;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #633F92, 0 0 30px #633F92, 0 0 40px #633F92, 0 0 50px #633F92, 0 0 60px #633F92, 0 0 70px #633F92;
+            }
+        }
+
     </style>
 
     <style>
@@ -111,7 +131,7 @@
 
         .card {
             position: relative;
-            width: 258px;
+            width: 262px;
             height: 431px;
             transform-style: preserve-3d;
             transition: transform 0.6s ease-in-out;
@@ -140,12 +160,12 @@
         }
 
         .card .front {
-            background-image: url("{{ asset('assets/front_card.png') }}");
+            background-image: url("{{ asset('assets/back_card.png') }}");
             background-size: cover;
         }
 
         .card .back {
-            background-image: url("{{ asset('assets/back_card.png') }}");
+            background-image: url("{{ asset('assets/front_card.png') }}");
             background-size: cover;
             transform: rotateY(180deg);
         }
@@ -155,45 +175,23 @@
         }
 
         /* select {
-                    margin-bottom: 1em;
-                    padding: .25em;
-                    border: 0;
-                    border-bottom: 2px solid currentcolor;
-                    font-weight: bold;
-                    letter-spacing: .15em;
-                    border-radius: 0;
+                                            margin-bottom: 1em;
+                                            padding: .25em;
+                                            border: 0;
+                                            border-bottom: 2px solid currentcolor;
+                                            font-weight: bold;
+                                            letter-spacing: .15em;
+                                            border-radius: 0;
 
-                    &:focus,
-                    &:active {
-                        outline: 0;
-                        border-bottom-color: red;
-                    }
-                } */
+                                            &:focus,
+                                            &:active {
+                                                outline: 0;
+                                                border-bottom-color: red;
+                                            }
+                                        } */
     </style>
-    <div class="max-w-7xl min-h-screen mx-auto">
+    <div class="max-w-7xl min-h-screen mx-auto z-50 p-8">
         <h1 class="text-center text-white font-bold text-2xl md:text-4xl p-4 md:p-8 uppercase">Leaderboard</h1>
-
-        <!-- Top Users Section -->
-        <div class="flex flex-col items-center justify-center mb-6">
-            <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Top 5 Users You Might Be Interested
-            </h1>
-
-            <div class="topUser-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                @if ($users)
-                    @foreach ($users as $user)
-                        <div class="user-card">
-                            <i class="fa-solid fa-crown"></i>
-                            <img src="{{ asset('storage/' . $user['image']) }}" alt="{{ $user['name'] }}" class="user-image">
-                            <h3><a href="{{ route('viewOthers', ['email' => $user['email']]) }}"
-                                    class="hover:underline">{{ $user['name'] }}</a></h3>
-                            <p>Reputation: {{ $user['reputation'] }}</p>
-                        </div>
-                    @endforeach
-                @endif
-
-            </div>
-        </div>
-
         {{-- each tags best user --}}
         <div class="flex flex-col items-center justify-center">
             <h1 class="text-2xl text-white font-semibold">BEST USER IN EACH TAGS</h1>
@@ -205,27 +203,36 @@
                 @endforeach
             </select>
             <div class="card1 mt-4">
-                <div class="reveal flex flex-col items-center justify-center">
-                    <img src="https://via.placeholder.com/80" class="mb-2 w-40 h-40 object-cover rounded-full"
-                        id="best-user-image" alt="Best User Image">
-                    <h1 class="text-2xl font-semibold text-white" id="best-user-name"></h1>
+                <div class="reveal flex flex-col items-center justify-center p-8" id="reveal-card">
+                    <img src="" class="mb-2 w-40 h-40 object-cover rounded-full"
+                        id="best-user-image">
+                    <h1 class="text-2xl font-semibold text-white text-center" id="best-user-name"></h1>
 
                 </div>
             </div>
         </div>
 
         <div class="mt-8 flex flex-col items-center justify-center">
-            <h1 class="text-2xl font-semibold text-[--blue] mb-4">YOUR SPECIAL PERSON</h1>
+            <h1 class="text-2xl font-semibold text-[--purple] mb-4 glowing-text">YOUR SPECIAL PERSON</h1>
             <div class="card-container">
                 <div class="card">
                     <div class="front flex flex-col items-center justify-center">
-                        <img src="{{ asset('background/texture_1.jpg') }}" alt="front"
-                            class="mb-2 w-40 h-40 object-cover rounded-full">
-                        <h1 class="text-2xl font-semibold text-white">John Doe</h1>
+                        <small class="absolute bottom-[10%] text-white">click to open</small>
 
                     </div>
                     <div class="back relative flex flex-col items-center justify-center">
-                        <small class="absolute bottom-[10%] text-white">click to open</small>
+                        @if ($mostViewed)
+                            @if ($mostViewed['image'])
+                                <img src="{{ asset('storage/' . $mostViewed['image']) }}" alt="front"
+                                    class="mb-2 w-40 h-40 object-cover rounded-full">
+                            @else
+                                <img src="{{ asset('assets/empty.jpg') }}" alt="front"
+                                    class="mb-2 w-40 h-40 object-cover rounded-full">
+                            @endif
+                            <h1 class="text-2xl font-semibold text-white">{{ $mostViewed['username'] }}</h1>
+                        @else
+                            <h1 class="text-2xl font-semibold text-white">Your special person awaits!</h1>
+                        @endif
 
                     </div>
                 </div>
@@ -241,34 +248,54 @@
             const selectElement = document.getElementById('tags');
             const bestUserImage = document.getElementById('best-user-image');
             const bestUserName = document.getElementById('best-user-name');
+            const revealCard = document.getElementById('reveal-card');
 
             selectElement.addEventListener('change', function() {
                 const tagId = this.value;
-                console.log(tagId);
+
                 if (tagId) {
+                    bestUserName.textContent = 'Loading...';
+                    revealCard.style.backgroundImage = 'url("{{ asset('assets/loading.png') }}")';
+
                     fetch(`/getTagLeaderboard/${tagId}`)
-                        .then(response => response.json())
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
                         .then(data => {
-                            if (data && data.user) {
-                                bestUserImage.src = data.user.profile_picture ||
-                                    'https://via.placeholder.com/80';
-                                bestUserName.textContent = data.user.name || 'Best User';
+                            if (Array.isArray(data) && data.length > 0) {
+                                const topUser = data[0];
+                                if(topUser.profile_picture){
+                                    bestUserImage.src = topUser.profile_picture;
+                                } else {
+                                    bestUserImage.src = "{{ asset('assets/empty.jpg') }}";
+                                }
+                                bestUserName.textContent = topUser.username || 'Best User';
+                                revealCard.style.backgroundImage =
+                                    `url({{ asset('assets/purple_card.png') }})`;
                             } else {
-                                bestUserImage.src = 'https://via.placeholder.com/80';
-                                bestUserName.textContent = 'No User Found';
+                                bestUserImage.src = "{{ asset('assets/empty.jpg') }}";
+                                bestUserName.textContent = 'There is no best user for this tag yet!';
+                                revealCard.style.backgroundImage =
+                                    `url({{ asset('assets/blue_card.png') }})`;
                             }
                         })
                         .catch(error => {
                             console.error('Error fetching leaderboard:', error);
-                            bestUserImage.src = 'https://via.placeholder.com/80';
+                            bestUserImage.src = "{{ asset('assets/empty.jpg') }}";
                             bestUserName.textContent = 'Error Loading User';
+                            revealCard.style.backgroundImage =
+                                'url("{{ asset('assets/reveal_card.png') }}")';
                         });
                 } else {
-                    bestUserImage.src = 'https://via.placeholder.com/80';
+                    // Reset to default state if no tag is selected
+                    bestUserImage.src = "{{ asset('assets/empty.jpg') }}";
                     bestUserName.textContent = '';
+                    revealCard.style.backgroundImage = 'url("{{ asset('assets/reveal_card.png') }}")';
                 }
             });
-
 
             const card = document.querySelector('.card');
 
