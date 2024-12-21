@@ -99,7 +99,7 @@
             gap: 1rem;
             padding: 1rem;
             /* border: 1px solid #ccc;
-                            border-radius: 10px; */
+                                border-radius: 10px; */
             background-color: #f9f9f9;
         }
 
@@ -164,7 +164,9 @@
 
         <!-- Our Top Users -->
         <div class="flex flex-col items-center justify-center w-full">
-            <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Recommended For You</h1>
+            @if ($recommended)
+                <h1 class="titleTopUser text-4xl font-semibold text-white underline mb-6">Recommended For You</h1>
+            @endif
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-10 md:gap-x-12 gap-y-8 mb-12">
                 @foreach ($recommended as $user)
                     <div class="bg-[white] flex flex-col items-center justify-center rounded-lg py-7 px-7 glowing">

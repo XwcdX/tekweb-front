@@ -131,7 +131,8 @@
 
                 @foreach ($question['comment'] as $comm)
                     <div class="comment bg-gray-700 p-4 mb-2 rounded-lg">
-                        <p class="text-white"><strong>{{ $comm['username'] }}</strong>: {{ $comm['comment'] }}</p>
+                        {{-- <a href="{{ route('viewUser', ['email' => $comm['user']['email']]) }}"><h2 class="text-white font-semibold hover:underline">{{ $comm['username'] }}</h2></a> --}}
+                        <p class="text-white"> {{ $comm['comment'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -234,25 +235,7 @@
                 });
             });
 
-            // Update thumbs up/down counts
-            // const thumbsUpButtons = document.querySelectorAll('.thumbs-up');
-            // const thumbsDownButtons = document.querySelectorAll('.thumbs-down');
-
-            // thumbsUpButtons.forEach((button, index) => {
-            //     button.addEventListener('click', () => {
-            //         const countSpan = button.nextElementSibling;
-            //         const count = parseInt(countSpan.textContent, 10);
-            //         countSpan.textContent = count + 1;
-            //     });
-            // });
-
-            // thumbsDownButtons.forEach((button, index) => {
-            //     button.addEventListener('click', () => {
-            //         const countSpan = button.nextElementSibling;
-            //         const count = parseInt(countSpan.textContent, 10);
-            //         countSpan.textContent = count + 1;
-            //     });
-            // });
+        
         });
     </script>
     <!-- file upload and preview -->

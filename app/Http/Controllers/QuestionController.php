@@ -37,7 +37,6 @@ class QuestionController extends Controller
             ['path' => $request->url(), 'query' => $request->query()]
         );
 
-
         // dd($data);
         // Return the updated data
         return $paginator;

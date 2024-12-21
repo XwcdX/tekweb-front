@@ -27,25 +27,19 @@ class AnswerController extends Controller
     {
         // Validate the incoming data
         $validatedData = $request->validate([
-            'title' => 'required|string',
-            'question' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5042', // Single image
+            'answer' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5042',  // 5042 KB = 5 MB
         ]);
 
-        $data = [];
+        $image = $request->file('image');
         $answer = $request->input('answer');
         $data["answer"] = $answer;
-
-        // Process the image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image'); // Single image
+        if ($image) {
             $timestamp = now()->format('Y-m-d_H-i-s');
             $extension = $image->getClientOriginalExtension();
-            $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "." . $extension;
-
-            // Save the image to storage
+            $customFileName = "a_" . session('email') . "_" . $questionId . "_" . $timestamp . "_" . "." . $extension;
             $path = $image->storePubliclyAs("uploads/answers/" . $questionId, $customFileName, 'public');
-            $data['image_path'] = $path; // Store as a single string, not an array
+            $data['image'] = $path;
         }
 
         $data['email'] = session('email');

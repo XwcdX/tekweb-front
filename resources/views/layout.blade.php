@@ -112,6 +112,30 @@
             font-weight: normal;
             font-style: normal;
         }
+         /* Chrome, Edge and Safari */
+         *::-webkit-scrollbar {
+            height: 10px;
+            width: 10px;
+        }
+
+        *::-webkit-scrollbar-track {
+            /* border-radius: 6px; */
+            background-color: #633F92;
+        }
+
+        *::-webkit-scrollbar-track:hover {
+            background-color: #a87ddf;
+        }
+
+        *::-webkit-scrollbar-track:active {
+            background-color: #a87ddf;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background: linear-gradient(to bottom, transparent, #7494ec);
+        }
+
 
         .swal2-confirm {
             background: rgb(46, 143, 255) !important;
@@ -120,6 +144,26 @@
         .swal2-deny,
         .swal2-cancel {
             background: rgb(255, 79, 79) !important;
+        }
+
+        @keyframes animateText {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 500%;
+            }
+        }
+
+        @-webkit-keyframes animateText {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 500%;
+            }
         }
     </style>
     @yield('style')

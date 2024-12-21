@@ -48,13 +48,13 @@ class UserController extends Controller
         usort($usersByReputation, function ($a, $b) {
             return $b['reputation'] - $a['reputation']; // descending order
         });
-        
+
         // Sort users by vote (descending)
         $usersByVote = $users;
         usort($usersByVote, function ($a, $b) {
             return $b['vote_count'] - $a['vote_count']; // descending order
         });
-        
+
         $usersByNewest = $users;
         usort($usersByNewest, function ($a, $b) {
             // Ensure created_at is parsed as a DateTime object for proper comparison
@@ -62,15 +62,15 @@ class UserController extends Controller
             $dateB = new DateTime($b['created_at']);
             return $dateB <=> $dateA; // descending order
         });
-        
+
         // Search for recommended users (assuming 'is_recommended' is a boolean or 1/0)
         $recUser = array_filter($users, function ($user) {
             return isset($user['is_recommended']) && $user['is_recommended'] == true;
         });
-        
+
         // Convert the result to an array (since array_filter returns an array of matches)
         $recUser = array_values($recUser);
-        
+
         // Log the results for debugging
         Log::info("Users ordered by reputation: " . print_r($usersByReputation, true));
         Log::info("Users ordered by vote: " . print_r($usersByVote, true));
@@ -122,12 +122,10 @@ class UserController extends Controller
 
     public function nembakFollow(Request $reqs)
     {
-        $api_url = env('API_URL') . '/users/' . $reqs->id . '/follow';
+        $api_url = env('API_URL') . '/users/' . $reqs->email . '/follow';
         $response = Http::withToken(session('token'))->post($api_url, [
             'emailCurr' => session('email')
         ]);
-
-        Log::info($api_url);
 
         return response()->json([
             'ok' => isset($response['success']) ? $response['success'] : false,
@@ -135,6 +133,42 @@ class UserController extends Controller
             'data' => $response['data'] ?? ''
         ], $response->status());
     }
+    public function getRecommendation()
+    {
+        $users = $this->getAllUsers();
+        // Search for recommended users (assuming 'is_recommended' is a boolean or 1/0)
+        $recUser = array_filter($users, function ($user) {
+            return isset($user['is_recommended']) && $user['is_recommended'] == true;
+        });
+
+        // Convert the result to an array (since array_filter returns an array of matches)
+        $recUser = array_values($recUser);
+        return $recUser;
+    }
+
+    public function getMostViewedUser()
+    {
+        $api_url = env('API_URL') . '/getMostViewed/' . session('email');
+        try {
+            $response = Http::withToken(session('token'))->get($api_url);
+            if ($response->successful()) {
+                $responseData = $response->json();
+                return $responseData['data'] ?? [];
+            } else {
+                Log::error('Failed to fetch most viewed user. API Response: ' . $response->body());
+            }
+        } catch (\Exception $e) {
+            Log::error('Error fetching most viewed user: ' . $e->getMessage());
+        }
+        return [];
+    }
+
+    public function popular()
+    {
+        $data['title'] = 'Popular';
+        return view('popular', $data);
+    }
+
     public function seeProfile()
     {
         $data['title'] = 'My Profile';
@@ -208,20 +242,11 @@ class UserController extends Controller
         $data['image'] = $user['image'];
         return view('ask', $data);
     }
-    public function popular()
-    {
-        $data['title'] = 'Popular';
-        return view('popular', $data);
-    }
+
     public function testUI()
     {
         $data['title'] = 'Popular';
         return view('question', $data);
     }
 
-    public function viewTags()
-    {
-        $data['title'] = 'View Tags';
-        return view('viewTags', $data);
-    }
 }

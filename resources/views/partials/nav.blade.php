@@ -67,6 +67,7 @@
             <a href="{{route('viewAllUsers')}}" class="text-gray-900 hover:text-gray-700">Users</a>
             <a href="{{route('viewAllTags')}}" class="text-gray-900 hover:text-gray-700">Tags</a>
             <a href="{{route('askPage')}}" class="text-gray-900 hover:text-gray-700">Ask a Question</a>
+            <a href="{{route('user.leaderboard')}}" class="block text-gray-900">Leaderboard</a>
         </div>
 
 
@@ -119,6 +120,7 @@
             <a href="{{route('popular')}}" class="block text-gray-900">Popular</a>
             <a href="{{route('viewAllUsers')}}" class="block text-gray-900">Users</a>
             <a href="{{route('viewAllTags')}}" class="block text-gray-900">Tags</a>
+            <a href="{{route('user.leaderboard')}}" class="block text-gray-900">Leaderboard</a>
             <a href="{{route('askPage')}}" class="block text-gray-900">Ask a Question</a>
 
             <!-- Search Input -->
